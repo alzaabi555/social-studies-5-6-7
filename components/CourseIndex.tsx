@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { UNITS } from '../constants';
-import { Phone, Lock, ChevronLeft, BookOpen, LayoutGrid, List, Bell, Briefcase, History, PlayCircle, UserCog, Save, School } from 'lucide-react';
+import { Phone, Lock, ChevronLeft, BookOpen, LayoutGrid, List, Bell, Briefcase, History, PlayCircle, UserCog, Save, School, Radio } from 'lucide-react';
 import { LessonId, Lesson } from '../types';
 
 interface CourseIndexProps {
@@ -83,7 +84,17 @@ const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
                 </div>
                 <div>
                     <h1 className="text-xl font-black text-slate-800 leading-none mb-1">الحقيبة التفاعلية</h1>
-                    <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">نسخة المعلم</span>
+                    <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">نسخة المعلم</span>
+                        {/* Live Indicator */}
+                        <div className="flex items-center gap-1 bg-green-50 px-2 py-0.5 rounded-full border border-green-100">
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                            </span>
+                            <span className="text-[10px] font-bold text-green-700">بث نشط</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -203,7 +214,7 @@ const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
           <div className="max-w-6xl mx-auto relative z-10">
               <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                   <div>
-                      <div className="inline-block bg-indigo-500/30 backdrop-blur-sm border border-indigo-400/30 rounded-full px-4 py-1.5 text-xs font-bold text-indigo-100 mb-4 shadow-sm">
+                      <div className="inline-block bg-indigo-500/30 backdrop-blur-sm border border-indigo-400/30 rounded-full px-4 py-1.5 text-xs font-bold text-indigo-100 mb-4 shadow-sm animate-fade-in">
                           {greeting} يا أستاذ {teacherName.split(' ')[1] || teacherName} 👋
                       </div>
                       <h2 className="text-4xl md:text-5xl font-black mb-4 leading-tight">
