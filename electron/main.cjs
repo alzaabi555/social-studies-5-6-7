@@ -9,6 +9,7 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
     },
+    // التأكد من مسار الأيقونة
     icon: path.join(__dirname, '../public/icon.png')
   });
 
@@ -18,7 +19,7 @@ const createWindow = () => {
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools();
   } else {
-    // تحميل الملف من مجلد dist في مرحلة الإنتاج
+    // المسار الصحيح للملفات المبنية
     mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 };
