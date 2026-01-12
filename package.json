@@ -8,12 +8,13 @@
   "author": "Mohammed Darwish",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "electron:dev": "concurrently -k \"cross-env BROWSER=none npm run dev\" \"wait-on http://localhost:5173 && electron .\"",
     "electron:build": "npm run build && electron-builder",
-    "generate-icons": "capacitor-assets generate --android"
+    "cap:sync": "npx cap sync",
+    "cap:open": "npx cap open android"
   },
   "dependencies": {
     "@google/genai": "^0.2.0",
@@ -21,8 +22,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "@capacitor/core": "^5.7.0",
-    "@capacitor/android": "^5.7.0",
-    "electron-squirrel-startup": "^1.0.0"
+    "@capacitor/android": "^5.7.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",
@@ -43,7 +43,27 @@
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "wait-on": "^7.2.0",
-    "@capacitor/cli": "^5.7.0",
-    "@capacitor/assets": "^3.0.0"
+    "@capacitor/cli": "^5.7.0"
+  },
+  "build": {
+    "appId": "com.oman.socialstudies",
+    "productName": "الكتاب التفاعلي",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "public/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
   }
 }
