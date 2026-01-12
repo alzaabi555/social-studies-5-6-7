@@ -29,7 +29,7 @@ const assets = [
   'icon.png'
 ];
 
-// صورة عنصر نائب (Placeholder) عبارة عن 1x1 بكسل رمادي
+// صورة عنصر نائب (Placeholder) عبارة عن 1x1 بكسل
 const placeholderData = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=';
 const placeholderBuffer = Buffer.from(placeholderData, 'base64');
 
