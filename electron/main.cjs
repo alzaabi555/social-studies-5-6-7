@@ -1,66 +1,48 @@
-// هذا السطر ضروري جداً لإنشاء اختصارات سطح المكتب أثناء التثبيت
-if (require('electron-squirrel-startup')) {
-  require('electron').app.quit();
-  process.exit(0);
-}
-
-const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
-const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
+// تمت إزالة شرط electron-squirrel-startup الذي كان يسبب الخطأ
 
-function createWindow() {
+const createWindow = () => {
+  // إنشاء نافذة المتصفح
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 800,
-    // تأكد من وجود الأيقونة في مجلد public
-    icon: path.join(__dirname, '../public/icon.png'),
     webPreferences: {
-      // إعدادات الأمان والربط
-      preload: path.join(__dirname, 'preload.cjs'),
-      contextIsolation: true,
-      nodeIntegration: false,
-      sandbox: true
+      nodeIntegration: true,
+      contextIsolation: false,
     },
-    autoHideMenuBar: true,
-    title: "الكتاب التفاعلي",
-    backgroundColor: '#F8FAFC'
+    // تحديد مسار الأيقونة (تأكد من وجود icon.png في مجلد public)
+    icon: path.join(__dirname, '../public/icon.png')
   });
 
-  if (isDev) {
+  // تحميل التطبيق
+  if (!app.isPackaged) {
+    // في وضع التطوير
     mainWindow.loadURL('http://localhost:5173');
+    mainWindow.webContents.openDevTools();
   } else {
-    // في الإنتاج، تحميل الملف المبني
+    // في وضع الإنتاج (بعد التثبيت)
+    // المسار الصحيح للملف داخل حزمة asar
     mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
   }
+  
+  // إخفاء شريط القوائم العلوي لمظهر أفضل
+  mainWindow.setMenuBarVisibility(false);
+};
 
-  // فتح الروابط الخارجية في المتصفح
-  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    if (url.startsWith('https:') || url.startsWith('http:')) {
-      shell.openExternal(url);
-      return { action: 'deny' };
-    }
-    return { action: 'allow' };
-  });
-}
+// تشغيل التطبيق عند الجاهزية
+app.on('ready', createWindow);
 
-app.whenReady().then(() => {
-  createWindow();
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
-});
-
+// إنهاء التطبيق عند إغلاق النوافذ (ويندوز ولينكس)
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-// استقبال الرسائل من الواجهة
-ipcMain.on('toMain', (event, args) => {
-  console.log("Received:", args);
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
 });
