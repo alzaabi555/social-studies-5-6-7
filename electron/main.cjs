@@ -18,6 +18,7 @@ const createWindow = () => {
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools();
   } else {
+    // تحميل الملف من مجلد dist في مرحلة الإنتاج
     mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 };
