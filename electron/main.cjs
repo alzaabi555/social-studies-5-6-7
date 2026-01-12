@@ -8,22 +8,21 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      webSecurity: false // مطلوب أحياناً لتحميل الصور المحلية في بيئة الإلكترون
+      webSecurity: false // مطلوب لتحميل الصور المحلية
     },
     icon: path.join(__dirname, '../public/icon.png')
   });
 
-  // منح صلاحيات الميكروفون لاستخدام المعلم الذكي (Gemini Live)
+  // إعدادات صلاحيات الميكروفون لـ Gemini Live
   session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
-    const allowedPermissions = ['media', 'audioCapture']; 
+    const allowedPermissions = ['media', 'audioCapture', 'mediaKeySystem'];
     if (allowedPermissions.includes(permission)) {
-      callback(true); // السماح
+      callback(true);
     } else {
       callback(false);
     }
   });
   
-  // التحقق من الأجهزة
   session.defaultSession.setPermissionCheckHandler((webContents, permission) => {
       if (permission === 'media' || permission === 'audio-capture') {
           return true;
@@ -31,14 +30,12 @@ function createWindow() {
       return false;
   });
 
-  // تحديد الرابط بناءً على البيئة (تطوير أو إنتاج)
-  const isDev = process.env.BROWSER === 'none'; // يتم ضبط هذا المتغير في سكريبت electron:dev
+  // التحويل بين وضع التطوير والإنتاج
+  const isDev = process.env.BROWSER === 'none'; 
   
   if (isDev) {
-    // في وضع التطوير، الاتصال بسيرفر Vite
     win.loadURL('http://localhost:5173');
   } else {
-    // في وضع الإنتاج (التطبيق النهائي)، تحميل ملف index.html
     win.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 }
