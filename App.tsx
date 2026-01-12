@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CourseIndex from './components/CourseIndex';
 import WeatherLesson from './components/WeatherLesson';
 import OmanClimateLesson from './components/OmanClimateLesson';
@@ -14,12 +14,44 @@ import Unit2Assessment from './components/Unit2Assessment';
 import Unit3Assessment from './components/Unit3Assessment';
 import FinalExam from './components/FinalExam';
 import { LessonId } from './types';
+import { BookOpen } from 'lucide-react';
+
+const SplashScreen: React.FC = () => (
+  <div className="fixed inset-0 bg-gradient-to-br from-indigo-900 to-slate-900 z-50 flex flex-col items-center justify-center animate-fade-in">
+    <div className="relative">
+      <div className="absolute inset-0 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="bg-white/10 p-8 rounded-full backdrop-blur-md border border-white/20 relative z-10 mb-6">
+        <BookOpen size={64} className="text-white drop-shadow-lg" />
+      </div>
+    </div>
+    <h1 className="text-4xl font-black text-white mb-2 tracking-tight">الكتاب التفاعلي</h1>
+    <p className="text-indigo-200 text-lg font-medium">الدراسات الاجتماعية - الصف السابع</p>
+    <div className="mt-8 flex gap-2">
+      <div className="w-3 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
+      <div className="w-3 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+      <div className="w-3 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+    </div>
+  </div>
+);
 
 const App: React.FC = () => {
   const [activeLesson, setActiveLesson] = useState<LessonId>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time for splash screen
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <SplashScreen />;
+  }
 
   return (
-    <div className="relative min-h-screen bg-slate-50">
+    <div className="relative min-h-screen bg-slate-50 animate-fade-in">
       {activeLesson === 'WEATHER' ? (
         <WeatherLesson onBack={() => setActiveLesson(null)} />
       ) : activeLesson === 'OMAN_CLIMATE' ? (

@@ -11,8 +11,10 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "ensure-assets": "node scripts/generate-assets.cjs",
     "electron:dev": "concurrently -k \"cross-env BROWSER=none npm run dev\" \"wait-on http://localhost:5173 && electron .\"",
-    "electron:build": "npm run build && electron-builder"
+    "electron:build": "npm run ensure-assets && npm run build && electron-builder",
+    "generate-icons": "npm run ensure-assets && capacitor-assets generate --android"
   },
   "dependencies": {
     "@google/genai": "^0.2.0",
@@ -41,7 +43,8 @@
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "wait-on": "^7.2.0",
-    "@capacitor/cli": "^5.7.0"
+    "@capacitor/cli": "^5.7.0",
+    "@capacitor/assets": "^3.0.0"
   },
   "build": {
     "appId": "com.oman.socialstudies",
