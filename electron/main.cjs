@@ -1,4 +1,4 @@
-// هذا السطر هو الذي يعالج التثبيت، وبدونه لا يفتح التطبيق
+// هذا السطر ضروري جداً لإنشاء اختصارات سطح المكتب أثناء التثبيت
 if (require('electron-squirrel-startup')) {
   require('electron').app.quit();
   process.exit(0);
@@ -10,19 +10,17 @@ const path = require('path');
 const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
 
 function createWindow() {
-  const win = new BrowserWindow({
+  const mainWindow = new BrowserWindow({
     width: 1280,
     height: 800,
-    minWidth: 800,
-    minHeight: 600,
-    // تأكد من وجود الأيقونة في المجلد public
+    // تأكد من وجود الأيقونة في مجلد public
     icon: path.join(__dirname, '../public/icon.png'),
     webPreferences: {
+      // إعدادات الأمان والربط
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: true,
-      webSecurity: true
+      sandbox: true
     },
     autoHideMenuBar: true,
     title: "الكتاب التفاعلي",
@@ -30,15 +28,14 @@ function createWindow() {
   });
 
   if (isDev) {
-    win.loadURL('http://localhost:5173');
-    // win.webContents.openDevTools(); 
+    mainWindow.loadURL('http://localhost:5173');
   } else {
-    // في الإنتاج، يحمل الملف الذي تم بناؤه
-    win.loadFile(path.join(__dirname, '../dist/index.html'));
+    // في الإنتاج، تحميل الملف المبني
+    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 
-  // التعامل مع الروابط الخارجية
-  win.webContents.setWindowOpenHandler(({ url }) => {
+  // فتح الروابط الخارجية في المتصفح
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith('https:') || url.startsWith('http:')) {
       shell.openExternal(url);
       return { action: 'deny' };
@@ -63,8 +60,7 @@ app.on('window-all-closed', () => {
   }
 });
 
-// IPC Listeners (مثال لاستقبال الرسائل)
+// استقبال الرسائل من الواجهة
 ipcMain.on('toMain', (event, args) => {
   console.log("Received:", args);
-  event.sender.send('fromMain', `تم استلام الرسالة: ${args}`);
 });
