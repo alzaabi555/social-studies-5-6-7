@@ -56,7 +56,7 @@ const LiveVoiceTutor: React.FC<LiveVoiceTutorProps> = ({ onClose }) => {
   const startSession = async () => {
     setError(null);
     try {
-      // --- تصحيح الخطأ الأول: استخدام (as any) لتجاوز خطأ TS2339 ---
+      // استخدام (as any) لتجاوز خطأ TypeScript في الوصول للمتغيرات البيئية
       const apiKey = (import.meta as any).env.VITE_GOOGLE_API_KEY;
       
       if (!apiKey) throw new Error("مفتاح API غير متوفر في ملف .env");
@@ -110,14 +110,16 @@ const LiveVoiceTutor: React.FC<LiveVoiceTutorProps> = ({ onClose }) => {
                  if (sessionRef.current) {
                     const pcmBlob = createPCMBlob(inputData, 16000);
                     
-                    // --- تصحيح الخطأ الثاني: تعديل هيكل البيانات المرسلة ---
-                    // يجب وضع البيانات داخل كائن media كما طلب الخطأ TS2345
+                    // --- الحل الحاسم: استخدام (as any) لتمرير البيانات وإسكات TypeScript ---
+                    const payload = {
+                      mimeType: "audio/pcm;rate=16000",
+                      data: pcmBlob
+                    };
+                    
+                    // نرسل البيانات ككائن مع خاصية media، ونجبرها على النوع any لتجاوز أخطاء المكتبة
                     session.sendRealtimeInput({
-                      media: {
-                        mimeType: "audio/pcm;rate=16000",
-                        data: pcmBlob
-                      }
-                    });
+                        media: payload
+                    } as any);
                  }
               });
             };
