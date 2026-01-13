@@ -1,4 +1,4 @@
-name: Build App (Windows & Android)
+name: Build App (Android)
 
 on:
   push:
@@ -7,40 +7,6 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build React App
-        run: npm run build
-
-      - name: Build Electron App (Windows .exe)
-        run: npm run electron:build
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # إضافة خطوة لعرض الملفات للمساعدة في التشخيص إذا فشل الرفع
-      - name: List Release Directory
-        run: dir release
-        continue-on-error: true
-
-      - name: Upload Windows Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-app
-          # البحث عن أي ملف exe في أي مكان داخل المشروع لضمان التقاطه
-          path: "**/*.exe"
-
   build-android:
     runs-on: ubuntu-latest
     steps:
