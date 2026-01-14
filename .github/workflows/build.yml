@@ -1,34 +1,53 @@
-name: Build Windows App
+
+name: Build All Platforms
 
 on:
   push:
-    tags:
-      - 'v*' # Trigger build when a tag starting with v is pushed (e.g. v1.0.0)
-  workflow_dispatch: # Allow manual trigger
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
-  build-windows:
-    runs-on: windows-latest
-
+  build:
+    name: Build Web & Mobile
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out Git repository
+      - name: Checkout Source
         uses: actions/checkout@v4
 
-      - name: Install Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install Dependencies
         run: npm install
 
-      - name: Build Windows Installer (EXE)
-        run: npm run dist
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Web Project
+        run: npm run build
 
-      - name: Upload Artifacts
+      - name: Upload Web Artifact (Site)
         uses: actions/upload-artifact@v4
         with:
-          name: Windows-Installer
-          path: dist/*.exe
+          name: web-dist
+          path: dist
+
+      - name: Setup Java (for Android)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Build Android APK
+        run: |
+          npx cap add android
+          npx cap sync android
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload Android APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-app-debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
