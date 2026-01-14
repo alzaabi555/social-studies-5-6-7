@@ -127,7 +127,7 @@ const FinalExam: React.FC<FinalExamProps> = ({ onBack }) => {
                                   <div className="grid md:grid-cols-2 gap-3 pr-12">
                                       {q.options.map((opt, optIndex) => {
                                           let style = "bg-slate-50 text-slate-500 border-slate-100"; 
-                                          let icon = null;
+                                          let icon: React.ReactNode = null;
 
                                           if (optIndex === q.correctIndex) {
                                               style = "bg-green-100 text-green-900 border-green-200 font-bold ring-2 ring-green-500 ring-opacity-50";

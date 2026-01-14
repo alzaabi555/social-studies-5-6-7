@@ -106,7 +106,7 @@ const Unit1Assessment: React.FC<Unit1AssessmentProps> = ({ onBack }) => {
                                   <div className="space-y-2 pr-12">
                                       {q.options.map((opt, optIndex) => {
                                           let style = "bg-slate-50 text-slate-500 border-slate-100"; // Default
-                                          let icon = null;
+                                          let icon: React.ReactNode = null;
 
                                           if (optIndex === q.correctIndex) {
                                               style = "bg-green-100 text-green-900 border-green-200 font-bold ring-2 ring-green-500 ring-opacity-50";
