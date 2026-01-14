@@ -13,6 +13,7 @@ import Unit1Assessment from './components/Unit1Assessment';
 import Unit2Assessment from './components/Unit2Assessment';
 import Unit3Assessment from './components/Unit3Assessment';
 import FinalExam from './components/FinalExam';
+import LiveVoiceTutor from './components/LiveVoiceTutor';
 import { LessonId } from './types';
 import { BookOpen } from 'lucide-react';
 
@@ -37,9 +38,9 @@ const SplashScreen: React.FC = () => (
 const App: React.FC = () => {
   const [activeLesson, setActiveLesson] = useState<LessonId>(null);
   const [loading, setLoading] = useState(true);
+  const [showLiveTutor, setShowLiveTutor] = useState(false);
 
   useEffect(() => {
-    // Simulate loading time for splash screen
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2500);
@@ -52,6 +53,28 @@ const App: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-slate-50 animate-fade-in">
+      {/* Floating Live Tutor Button */}
+      {!showLiveTutor && (
+        <button 
+          onClick={() => setShowLiveTutor(true)}
+          className="fixed bottom-6 left-6 z-40 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-4 shadow-2xl transition-transform hover:scale-110 flex items-center gap-2 group border-4 border-white/20"
+          title="تحدث مع المعلم الذكي"
+        >
+          <div className="relative">
+             <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+          </div>
+          <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-in-out whitespace-nowrap font-bold">المعلم المباشر</span>
+        </button>
+      )}
+
+      {showLiveTutor && (
+        <LiveVoiceTutor 
+          onClose={() => setShowLiveTutor(false)} 
+          context={activeLesson ? `الدرس الحالي: ${activeLesson}` : "القائمة الرئيسية - الدراسات الاجتماعية"}
+        />
+      )}
+
       {activeLesson === 'WEATHER' ? (
         <WeatherLesson onBack={() => setActiveLesson(null)} />
       ) : activeLesson === 'OMAN_CLIMATE' ? (

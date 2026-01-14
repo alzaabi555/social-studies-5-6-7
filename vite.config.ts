@@ -9,7 +9,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    // Base must be relative for Capacitor/Android to load assets from local file system
+    // Base must be relative (./) for Electron and Capacitor to load assets from local file system correctly
+    // هذا التعديل ضروري جداً لنسخ الموبايل والويندوز
     base: './', 
     define: {
       'process.env.API_KEY': JSON.stringify(env.API_KEY),
@@ -19,9 +20,11 @@ export default defineConfig(({ mode }) => {
       assetsDir: 'assets',
       emptyOutDir: true,
       sourcemap: false,
+      chunkSizeWarningLimit: 1000,
     },
     server: {
-      host: true // Allow access from network for testing on device
+      host: true, // Allow access from network for testing on mobile devices
+      port: 5173
     }
   };
 });

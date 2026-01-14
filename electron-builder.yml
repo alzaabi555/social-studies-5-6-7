@@ -1,0 +1,33 @@
+appId: com.oman.socialstudies
+productName: الكتاب التفاعلي
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - "dist/**/*"
+  - "electron/main.cjs"
+  - "package.json"
+
+win:
+  target: nsis
+  icon: public/icon.png
+  legalTrademarks: "Mohammed Darwish"
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: الكتاب التفاعلي
+  artifactName: "Oman-Social-Studies-Setup.${ext}"
+  language: 1025
+  runAfterFinish: true
+  deleteAppDataOnUninstall: true
+
+# Linux configuration (Optional)
+linux:
+  target: AppImage
+  icon: public/icon.png
+  category: Education
