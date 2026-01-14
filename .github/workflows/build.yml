@@ -1,5 +1,5 @@
 
-name: Build All Platforms
+name: Build Apps (IPA & APK)
 
 on:
   push:
@@ -8,8 +8,9 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build:
-    name: Build Web & Mobile
+  # 1. Build Web Assets (Shared)
+  build-web:
+    name: Build Web Assets
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
@@ -26,28 +27,108 @@ jobs:
       - name: Build Web Project
         run: npm run build
 
-      - name: Upload Web Artifact (Site)
+      - name: Upload Web Dist
         uses: actions/upload-artifact@v4
         with:
           name: web-dist
           path: dist
 
-      - name: Setup Java (for Android)
+  # 2. Build Android APK
+  build-android:
+    name: Build Android APK
+    needs: build-web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Build Android APK
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Download Web Dist
+        uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: dist
+
+      - name: Add & Sync Android
         run: |
           npx cap add android
           npx cap sync android
+
+      - name: Build APK (Debug)
+        run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: Upload Android APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: android-app-debug
           path: android/app/build/outputs/apk/debug/app-debug.apk
+
+  # 3. Build iOS IPA (Unsigned)
+  build-ios:
+    name: Build iOS IPA (Unsigned)
+    needs: build-web
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Download Web Dist
+        uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: dist
+
+      - name: Setup iOS Platform
+        run: |
+          npx cap add ios
+          npx cap sync ios
+
+      - name: Build xArchive (No Signing)
+        run: |
+          cd ios/App
+          xcodebuild -workspace App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath App.xcarchive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            archive
+
+      - name: Export Unsigned IPA
+        run: |
+          cd ios/App
+          mkdir Payload
+          cp -r App.xcarchive/Products/Applications/App.app Payload/
+          zip -r App.ipa Payload
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-app-unsigned
+          path: ios/App/App.ipa
