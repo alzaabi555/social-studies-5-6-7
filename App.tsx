@@ -1,31 +1,32 @@
+
 import React, { useState, useEffect } from 'react';
-import CourseIndex from './components/CourseIndex';
-import WeatherLesson from './components/WeatherLesson';
-import OmanClimateLesson from './components/OmanClimateLesson';
-import EarthLesson from './components/EarthLesson';
-import ExternalLesson from './components/ExternalLesson';
-import UmayyadStateLesson from './components/UmayyadStateLesson';
-import OmanUmayyadLesson from './components/OmanUmayyadLesson';
-import OmanUmayyadAchievementsLesson from './components/OmanUmayyadAchievementsLesson'; // New Import
-import AbbasidLesson from './components/AbbasidLesson';
-import OmanAbbasidLesson from './components/OmanAbbasidLesson';
-import OmanCivilizationLesson from './components/OmanCivilizationLesson';
-import BasicStatuteLesson from './components/BasicStatuteLesson';
-import StateInstitutionsLesson from './components/StateInstitutionsLesson';
-import PopulationDataLesson from './components/grade6/PopulationDataLesson'; 
-import PopulationStructureLesson from './components/grade6/PopulationStructureLesson'; 
-import PopulationGrowthLesson from './components/grade6/PopulationGrowthLesson'; 
-import PopulationDensityLesson from './components/grade6/PopulationDensityLesson'; 
-import Unit1AssessmentG6 from './components/grade6/Unit1AssessmentG6'; 
-import Unit2AssessmentG6 from './components/grade6/Unit2AssessmentG6'; // New Import
-import Unit3AssessmentG6 from './components/grade6/Unit3AssessmentG6'; // New Import
-import CivilSocietyLesson from './components/grade6/civics/CivilSocietyLesson'; // New Import
-import CommunityParticipationLesson from './components/grade6/civics/CommunityParticipationLesson'; // New Import
-import Unit1Assessment from './components/Unit1Assessment';
-import Unit2Assessment from './components/Unit2Assessment';
-import Unit3Assessment from './components/Unit3Assessment';
-import FinalExam from './components/FinalExam';
-import { LessonId } from './types';
+import CourseIndex from '@/components/CourseIndex';
+import WeatherLesson from '@/components/WeatherLesson';
+import OmanClimateLesson from '@/components/OmanClimateLesson';
+import EarthLesson from '@/components/EarthLesson';
+import ExternalLesson from '@/components/ExternalLesson';
+import UmayyadStateLesson from '@/components/UmayyadStateLesson';
+import OmanUmayyadLesson from '@/components/OmanUmayyadLesson';
+import OmanUmayyadAchievementsLesson from '@/components/OmanUmayyadAchievementsLesson';
+import AbbasidLesson from '@/components/AbbasidLesson';
+import OmanAbbasidLesson from '@/components/OmanAbbasidLesson';
+import OmanCivilizationLesson from '@/components/OmanCivilizationLesson';
+import BasicStatuteLesson from '@/components/BasicStatuteLesson';
+import StateInstitutionsLesson from '@/components/StateInstitutionsLesson';
+import PopulationDataLesson from '@/components/grade6/PopulationDataLesson'; 
+import PopulationStructureLesson from '@/components/grade6/PopulationStructureLesson'; 
+import PopulationGrowthLesson from '@/components/grade6/PopulationGrowthLesson'; 
+import PopulationDensityLesson from '@/components/grade6/PopulationDensityLesson'; 
+import Unit1AssessmentG6 from '@/components/grade6/Unit1AssessmentG6'; 
+import Unit2AssessmentG6 from '@/components/grade6/Unit2AssessmentG6';
+import Unit3AssessmentG6 from '@/components/grade6/Unit3AssessmentG6';
+import CivilSocietyLesson from '@/components/grade6/civics/CivilSocietyLesson';
+import CommunityParticipationLesson from '@/components/grade6/civics/CommunityParticipationLesson';
+import Unit1Assessment from '@/components/Unit1Assessment';
+import Unit2Assessment from '@/components/Unit2Assessment';
+import Unit3Assessment from '@/components/Unit3Assessment';
+import FinalExam from '@/components/FinalExam';
+import { LessonId } from '@/types';
 import { BookOpen } from 'lucide-react';
 
 const SplashScreen: React.FC = () => (
