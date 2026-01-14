@@ -250,7 +250,7 @@ const UmayyadStateLesson: React.FC<Props> = ({ onBack }) => {
           <h1 className="text-xl font-black text-emerald-700 px-2">الدولة الأموية 🕌</h1>
         </div>
         <nav className="p-4 space-y-2 flex-1 overflow-y-auto">
-          {UMAYYAD_SECTIONS.map((section) => (
+          {UMAYYAD_SECTIONS.map((section: any) => (
             <button
               key={section.id}
               onClick={() => { setActiveSection(section.id); setMobileMenuOpen(false); }}

@@ -41,7 +41,7 @@ const PopulationDensityLesson: React.FC<Props> = ({ onBack }) => {
           <h1 className="text-xl font-black text-rose-700 px-2">الكثافة السكانية 🗺️</h1>
         </div>
         <nav className="p-4 space-y-2 flex-1 overflow-y-auto">
-          {SIXTH_DENSITY_SECTIONS.map((section) => (
+          {SIXTH_DENSITY_SECTIONS.map((section: any) => (
             <button key={section.id} onClick={() => { setActiveSection(section.id); setMobileMenuOpen(false); }} className={`w-full text-right p-4 rounded-xl flex items-center gap-3 transition-colors font-bold ${activeSection === section.id ? 'bg-rose-100 text-rose-800' : 'text-slate-600 hover:bg-slate-50'}`}>
               <span className="text-xl">{section.icon}</span> {section.label}
             </button>

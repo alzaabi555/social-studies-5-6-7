@@ -201,7 +201,7 @@ const OmanUmayyadLesson: React.FC<Props> = ({ onBack }) => {
           <h1 className="text-xl font-black text-orange-700 px-2">عمان والأمويون ⚔️</h1>
         </div>
         <nav className="p-4 space-y-2 flex-1 overflow-y-auto">
-          {OMAN_UMAYYAD_SECTIONS.map((section) => (
+          {OMAN_UMAYYAD_SECTIONS.map((section: any) => (
             <button
               key={section.id}
               onClick={() => { setActiveSection(section.id); setMobileMenuOpen(false); }}

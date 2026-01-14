@@ -69,7 +69,7 @@ const CivilSocietyLesson: React.FC<Props> = ({ onBack }) => {
           <h1 className="text-xl font-black text-teal-700 px-2">المجتمع المدني 🤝</h1>
         </div>
         <nav className="p-4 space-y-2 flex-1 overflow-y-auto">
-          {CIVIL_SOCIETY_SECTIONS.map((section) => (
+          {CIVIL_SOCIETY_SECTIONS.map((section: any) => (
             <button key={section.id} onClick={() => { setActiveSection(section.id); setMobileMenuOpen(false); }} className={`w-full text-right p-4 rounded-xl flex items-center gap-3 transition-colors font-bold ${activeSection === section.id ? 'bg-teal-100 text-teal-800' : 'text-slate-600 hover:bg-slate-50'}`}>
               <span className="text-xl">{section.icon}</span> {section.label}
             </button>
