@@ -14,7 +14,8 @@
     "preview": "vite preview",
     "electron:dev": "concurrently -k \"cross-env BROWSER=none npm run dev\" \"wait-on http://localhost:5173 && electron . --dev\"",
     "electron:build": "npm run build && electron-builder",
-    "generate-icons": "capacitor-assets generate --android"
+    "generate-icons": "capacitor-assets generate --android",
+    "ios:init": "npx cap add ios && npx cap sync ios"
   },
   "dependencies": {
     "@google/genai": "latest",
@@ -23,6 +24,7 @@
     "react-dom": "^18.2.0",
     "@capacitor/core": "^5.7.0",
     "@capacitor/android": "^5.7.0",
+    "@capacitor/ios": "^5.7.0",
     "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
