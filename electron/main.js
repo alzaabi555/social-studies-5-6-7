@@ -5,28 +5,28 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 800,
-    icon: path.join(__dirname, '../icon.png'),
+    icon: path.join(__dirname, '../public/icon.png'),
     webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      webSecurity: false 
+      nodeIntegration: true,
+      contextIsolation: false,
+      webSecurity: false
     }
   });
 
-  // Load the built index.html (Production) or localhost (Dev)
-  // For the distributed app, we load from the dist folder
-  const distPath = path.join(__dirname, '../dist/index.html');
-  
-  // Fallback to src if dist doesn't exist (for development without build)
-  const srcPath = path.join(__dirname, '../index.html');
+  // ملاحظة: تم إلغاء أكواد صلاحيات الميكروفون من هنا بناءً على طلبك.
 
-  const fs = require('fs');
-  if (fs.existsSync(distPath)) {
-    mainWindow.loadFile(distPath);
+  // تحديد المسار بناءً على البيئة
+  const isDev = process.env.BROWSER === 'none'; 
+
+  if (isDev) {
+    mainWindow.loadURL('http://localhost:5173');
   } else {
-    mainWindow.loadFile(srcPath);
+    // المسار الصحيح للملفات بعد البناء
+    const distPath = path.join(__dirname, '../dist-react/index.html');
+    mainWindow.loadFile(distPath);
   }
 
+  // إخفاء القوائم العلوية
   Menu.setApplicationMenu(null);
 }
 
