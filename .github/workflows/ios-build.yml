@@ -1,0 +1,54 @@
+name: Build iOS IPA (AltStore)
+
+on:
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  build-ios:
+    runs-on: macos-latest # Required for Xcode
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Web App
+        run: npm run build
+
+      - name: Setup Capacitor iOS
+        run: |
+          npm install @capacitor/ios
+          npx cap add ios
+          npx cap sync ios
+
+      - name: Build Unsigned IPA for AltStore
+        run: |
+          cd ios
+          # Disable signing to allow building without certificates on GitHub
+          # We build the 'App' scheme
+          xcodebuild -workspace App/App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+          # Create the IPA structure (Payload folder)
+          mkdir -p Payload
+          mv build/Build/Products/Release-iphoneos/App.app Payload/
+          
+          # Zip it to create .ipa
+          zip -r App.ipa Payload
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: census-app-altstore.ipa
+          path: ios/App.ipa
