@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Menu, ArrowRight, Scroll, Moon, Star, Mail, CheckCircle, Quote, Map, Hammer, Ship, BookOpen, Users, MapPin, Target, Swords, User, ListCheck, HelpCircle, Anchor, Flag, Palmtree, Coins, MessageCircle } from 'lucide-react';
+import { Menu, ArrowRight, Scroll, Moon, Star, Mail, CheckCircle, Quote, Map, Hammer, Ship, BookOpen, Users, MapPin, Target, Swords, User, ClipboardList, HelpCircle, Anchor, Flag, Palmtree, Coins, MessageCircle } from 'lucide-react';
 
 interface Props {
     onBack: () => void;
@@ -460,7 +460,7 @@ const OmanProphetEraLesson: React.FC<Props> = ({ onBack }) => {
               <div className="bg-white p-6 rounded-3xl shadow-lg border-2 border-indigo-100">
                   <div className="flex justify-between items-center mb-6">
                       <h3 className="text-xl font-black text-slate-800 flex items-center gap-2">
-                          <ListCheck className="text-indigo-600"/> صنف المدن (تفاعلي)
+                          <ClipboardList className="text-indigo-600"/> صنف المدن (تفاعلي)
                       </h3>
                       <button 
                           onClick={() => {setAnswers({}); setShowActivity(!showActivity);}}
