@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { OMAN_UMAYYAD_SECTIONS, OMAN_UMAYYAD_QUIZ_QUESTIONS } from '../constants';
 import { Section } from '../types';
-import { Menu, ArrowRight, Target, Shield, History, Users, UserCheck, Scroll, Swords, Flag, Smile, Frown } from 'lucide-react';
+import { Menu, ArrowRight, Target, Shield, Users, Swords, Anchor, Skull, Play, RefreshCw, Star, Info, Ship, AlertTriangle, Flag } from 'lucide-react';
 import SectionQuiz from './SectionQuiz';
 
 interface Props {
@@ -12,168 +13,195 @@ const OmanUmayyadLesson: React.FC<Props> = ({ onBack }) => {
   const [activeSection, setActiveSection] = useState<Section>(Section.OMAN_UMAYYAD_INTRO);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // --- 1. INTRO SECTION ---
-  const IntroSection = () => (
-      <div className="p-6 animate-fade-in space-y-8">
-          <div className="bg-gradient-to-r from-orange-600 to-amber-700 text-white p-8 rounded-3xl shadow-xl relative overflow-hidden">
-              <div className="relative z-10">
-                  <div className="flex items-center gap-4 mb-4">
-                      <div className="bg-white/20 p-3 rounded-full"><Scroll size={32} /></div>
-                      <h3 className="text-xl font-bold text-orange-200">من الخطاب السامي (2020م)</h3>
-                  </div>
-                  <p className="text-lg leading-loose font-serif italic mb-4 text-center">
-                      "وَعَلَى الصَّعِيدِ الْخَارِجِيِّ فَإِنَّنَا نَرْتَسِمُ خُطَى السُّلْطَانِ الرَّاحِلِ..."
-                  </p>
-                  <p className="text-left text-sm font-bold text-orange-200">- السلطان هيثم بن طارق حفظه الله</p>
-              </div>
-          </div>
-          <div className="bg-amber-50 border-r-4 border-amber-600 p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2">
-                  <Target size={24}/> أهداف الدرس:
-              </h3>
-              <ul className="grid gap-3 text-amber-800 font-medium text-lg">
-                  <li>1. التعرف على موقف عمان مع بداية حكم الدولة الأموية.</li>
-                  <li>2. تتبع مراحل استقلال عمان عن الدولة الأموية.</li>
-                  <li>3. استنتاج سياسة الولاة الأمويين في عمان.</li>
-                  <li>4. تحليل أسباب مقاومة العمانيين للسيطرة الأموية.</li>
-              </ul>
-          </div>
-      </div>
-  );
-
-  // --- 2. OMANI STANCE SECTION ---
-  const StanceSection = () => {
-      const [revealed, setRevealed] = useState(false);
+  // --- 1. INTRO & STANCE ---
+  const IntroSection = () => {
+      const [showReason, setShowReason] = useState(false);
       return (
           <div className="p-6 animate-fade-in space-y-8">
-              <div className="text-center mb-6">
-                  <h2 className="text-2xl font-black text-slate-800 mb-2">موقف عُمان</h2>
-                  <p className="text-slate-500">مع بداية الحكم الأموي</p>
-              </div>
-              <div className="bg-white p-6 rounded-2xl shadow-md border-t-4 border-green-500">
-                  <h3 className="font-bold text-lg text-slate-800 mb-3">الموقف العماني</h3>
-                  <p className="text-slate-600 leading-relaxed text-lg">
-                      ابتعـدت عُمان عـن الصراعـات، وأعلنـت عـدم ارتباطهـا بالدولـة الأمويـة.
-                  </p>
-              </div>
-              <div className="bg-orange-50 rounded-3xl p-8 border border-orange-200 mt-8 relative">
-                  <h3 className="text-xl font-black text-orange-900 mb-4 flex items-center gap-2">
-                      <Swords size={24}/> نافذة المعرفة: هجوم النجدات (69هـ)
+              <div className="bg-orange-50 border-r-4 border-orange-600 p-6 rounded-lg shadow-sm">
+                  <h3 className="text-xl font-bold text-orange-900 mb-4 flex items-center gap-2">
+                      <Target size={24}/> أهداف الدرس:
                   </h3>
-                  <div className="bg-white/80 p-4 rounded-xl text-slate-700 leading-relaxed shadow-sm">
-                      <p className="mb-2">دافع العمانيون عن بلادهم بشراسة.</p>
-                      <p className={`transition-all duration-500 ${revealed ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'}`}>
-                          انتهت المعركة بمقتل ملك عمان <strong>"عَبَّاد بن عَبد بن الجلندى"</strong> دفاعاً عن الوطن.
-                      </p>
-                      {!revealed && (
-                          <button onClick={() => setRevealed(true)} className="mt-2 text-orange-600 font-bold underline text-sm">
-                              اضغط لمعرفة نتيجة المعركة
-                          </button>
-                      )}
-                  </div>
-              </div>
-          </div>
-      );
-  };
-
-  // --- 3. INDEPENDENCE SECTION ---
-  const IndependenceSection = () => {
-      const timelineEvents = [
-          { year: '41هـ', oman: 'استقلال وعدم تبعية', umayyad: 'قيام الدولة الأموية' },
-          { year: '69هـ', oman: 'مقتل عَبَّاد وتولي ابنيه', umayyad: 'عهد عبدالملك بن مروان' },
-          { year: '81هـ', oman: 'دخول عمان تحت الحكم الأموي', umayyad: 'حملات الحجاج بن يوسف' }
-      ];
-      return (
-          <div className="p-6 animate-fade-in space-y-10">
-              <div className="bg-white rounded-3xl p-6 shadow-lg border border-slate-200">
-                  <h3 className="text-lg font-bold text-slate-700 mb-4 flex items-center gap-2">
-                      <History size={20}/> خط زمني مقارن:
-                  </h3>
-                  <div className="space-y-4">
-                      {timelineEvents.map((event, idx) => (
-                          <div key={idx} className="flex justify-between items-center bg-slate-50 p-3 rounded-lg">
-                              <span className="text-green-600 font-bold">{event.oman}</span>
-                              <span className="bg-slate-800 text-white text-xs font-bold px-2 py-1 rounded-full">{event.year}</span>
-                              <span className="text-orange-600 font-bold">{event.umayyad}</span>
-                          </div>
-                      ))}
-                  </div>
-              </div>
-              <div className="bg-slate-100 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8">
-                  <div className="md:w-1/3 flex flex-col items-center justify-center text-center">
-                      <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-4 text-slate-500 shadow-md">
-                          <Users size={48} />
-                      </div>
-                      <h3 className="font-bold text-xl text-slate-800">سعيد وسليمان</h3>
-                      <p className="text-sm text-slate-500 mt-1">ابنا عَبَّاد بن عَبد</p>
-                  </div>
-                  <div className="md:w-2/3">
-                      <h4 className="font-bold text-lg text-indigo-900 mb-4">كفاح من أجل الاستقلال</h4>
-                      <p className="text-slate-700 leading-loose mb-6 text-lg">
-                          بعد مقتل والدهما، قاد <strong>سعيد وسليمان</strong> المقاومة واستعادا استقلال عمان.
-                      </p>
-                      <div className="bg-white p-4 rounded-xl border-l-4 border-indigo-500 flex gap-4 items-center shadow-sm">
-                          <Shield size={32} className="text-indigo-600" />
-                          <div>
-                              <span className="block font-bold text-indigo-800">النتيجة:</span>
-                              <span className="text-sm text-indigo-700">تحرير البلاد وحكم مستقل حتى عام 81هـ.</span>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      );
-  };
-
-  // --- 4. CONTROL SECTION ---
-  const ControlSection = () => {
-      return (
-          <div className="p-6 animate-fade-in space-y-8">
-              <div className="text-center mb-6">
-                  <h2 className="text-2xl font-black text-slate-800 mb-2">سيطرة الدولة الأموية (81هـ)</h2>
-                  <p className="text-slate-500">حملات الحجاج بن يوسف الثقفي</p>
-              </div>
-              <div className="bg-blue-50 p-6 rounded-2xl border-l-4 border-blue-500 shadow-sm">
-                  <p className="text-blue-900 text-lg font-medium leading-relaxed">
-                      أرسل الحجاج بن يوسف حملات عسكرية للسيطرة على عمان، نجحت الحملة البحرية أخيراً في إخضاع عمان للحكم الأموي.
-                  </p>
-              </div>
-          </div>
-      );
-  };
-
-  // --- 5. GOVERNORS SECTION ---
-  const GovernorsSection = () => {
-      return (
-          <div className="p-6 animate-fade-in space-y-8">
-              <div className="text-center mb-6">
-                  <h2 className="text-2xl font-black text-slate-800 mb-2">عُمال الدولة الأموية</h2>
-              </div>
-              <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-100">
-                  <div className="flex items-center gap-3 mb-4">
-                      <div className="bg-slate-100 p-3 rounded-full text-slate-600"><UserCheck size={24}/></div>
-                      <h3 className="font-bold text-slate-800 text-lg">تعيين العمال</h3>
-                  </div>
-                  <p className="text-slate-600 text-base leading-relaxed">
-                      استمرت الدولة الأموية في تعيين العمال (الولاة) على عمان.
-                  </p>
-                  <ul className="mt-3 space-y-2 text-sm font-bold text-indigo-700">
-                      <li>• صالح بن عبد الرحمن الليثي</li>
-                      <li>• زياد بن المهلب (شخصية عمانية بارزة)</li>
+                  <ul className="grid gap-3 text-orange-800 font-medium text-lg">
+                      <li>• توضيح موقف عمان من قيام الدولة الأموية.</li>
+                      <li>• تتبع حملات الحجاج بن يوسف للسيطرة على عمان.</li>
+                      <li>• تقدير تضحيات العمانيين في الدفاع عن استقلالهم.</li>
+                      <li>• تعليل هجرة الأزد إلى البصرة وشرق أفريقيا.</li>
                   </ul>
               </div>
-              <div className="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-3xl p-8 text-white shadow-2xl mt-8">
-                  <h3 className="text-2xl font-black mb-6 text-center">موقف أهل عمان</h3>
-                  <div className="flex justify-center gap-8">
-                      <div className="flex flex-col items-center">
-                          <Smile size={40} className="text-yellow-300 mb-2"/>
-                          <span className="font-bold">العدل: الطاعة</span>
+
+              <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-200 text-center">
+                  <h2 className="text-3xl font-black text-slate-800 mb-4">الموقف العماني المبكر (41هـ)</h2>
+                  <div className="flex items-center justify-center gap-6 mb-6">
+                      <div className="bg-slate-100 px-6 py-3 rounded-full font-bold text-slate-700">الدولة الأموية (دمشق)</div>
+                      <div className="text-3xl text-red-500">❌</div>
+                      <div className="bg-green-100 px-6 py-3 rounded-full font-bold text-green-800">عمان (آل الجلندى)</div>
+                  </div>
+                  <button 
+                      onClick={() => setShowReason(!showReason)}
+                      className="bg-orange-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:scale-105 transition-transform"
+                  >
+                      {showReason ? 'إخفاء السبب' : 'لماذا رفضت عمان التبعية؟'}
+                  </button>
+                  {showReason && (
+                      <div className="mt-6 bg-orange-50 p-6 rounded-2xl text-orange-900 font-medium animate-slide-up">
+                          <p>
+                              حافظت عمان على استقلالها منذ إسلام أهلها طواعية. وعندما قامت الدولة الأموية، فضل العمانيون <strong>الاستقلال وعدم التدخل في الصراعات السياسية</strong> التي كانت تدور في مركز الخلافة.
+                          </p>
                       </div>
-                      <div className="flex flex-col items-center">
-                          <Frown size={40} className="text-red-300 mb-2"/>
-                          <span className="font-bold">الظلم: الرفض</span>
+                  )}
+              </div>
+          </div>
+      );
+  };
+
+  // --- 2. RESISTANCE (INDEPENDENCE) ---
+  const IndependenceSection = () => {
+      return (
+          <div className="p-6 animate-fade-in space-y-10">
+              <div className="text-center">
+                  <h2 className="text-2xl font-black text-slate-800 mb-2">مقاومة الغزو الأول (عهد عبدالملك)</h2>
+                  <p className="text-slate-500">حملة "النجدات" ومقتل عباد بن عبد</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                  <div className="relative h-64 bg-slate-200 rounded-3xl overflow-hidden border-4 border-slate-300 group">
+                      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-scales.png')] opacity-10"></div>
+                      <div className="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded text-xs font-bold">الخطر القادم</div>
+                      <div className="flex items-center justify-center h-full">
+                          <Swords size={64} className="text-slate-400 group-hover:scale-125 transition-transform duration-500" />
                       </div>
                   </div>
+
+                  <div className="space-y-4">
+                      <div className="bg-white p-6 rounded-2xl shadow-md border-l-4 border-red-500">
+                          <h4 className="font-bold text-red-900 mb-2">الهجوم الغادر:</h4>
+                          <p className="text-slate-700">تعرضت عمان لهجوم من "النجدات" (خوارج من البحرين). تصدى لهم الملك <strong>عباد بن عبد</strong> واستشهد دفاعاً عن وطنه (69هـ).</p>
+                      </div>
+                      <div className="bg-white p-6 rounded-2xl shadow-md border-l-4 border-green-500">
+                          <h4 className="font-bold text-green-900 mb-2">عودة الاستقلال:</h4>
+                          <p className="text-slate-700">تولى الحكم ابناه <strong>(سعيد وسليمان)</strong>، ونجحا في طرد الغزاة وإعادة توحيد عمان واستقلالها.</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      );
+  };
+
+  // --- 3. AL-HAJJAJ CAMPAIGNS (CONTROL) ---
+  const ControlSection = () => {
+      const [campaignStep, setCampaignStep] = useState(0);
+
+      return (
+          <div className="p-6 animate-fade-in space-y-8">
+              <div className="text-center mb-6">
+                  <h2 className="text-2xl font-black text-slate-800 mb-2">حملات الحجاج بن يوسف (81هـ)</h2>
+                  <p className="text-slate-500">أصر الحجاج (والي العراق) على إخضاع عمان بالقوة</p>
+              </div>
+
+              <div className="bg-slate-900 text-white rounded-3xl p-8 relative overflow-hidden shadow-2xl">
+                  {/* Campaign Simulator */}
+                  <div className="relative h-64 border-2 border-slate-600 rounded-xl bg-slate-800 flex items-center justify-center mb-6 overflow-hidden">
+                      {campaignStep === 0 && (
+                          <div className="text-center animate-fade-in">
+                              <h3 className="text-2xl font-bold text-yellow-400 mb-4">الحملة البرية الأولى (القاسم بن شعوة)</h3>
+                              <div className="flex gap-4 justify-center items-center">
+                                  <div className="bg-red-600 px-4 py-2 rounded text-sm">جيش الحجاج</div>
+                                  <Swords size={32} className="text-slate-400"/>
+                                  <div className="bg-green-600 px-4 py-2 rounded text-sm">جيش عمان (سعيد وسليمان)</div>
+                              </div>
+                              <p className="mt-4 text-green-300 font-bold bg-green-900/50 p-2 rounded">النتيجة: هزيمة جيش الحجاج ومقتل قائده</p>
+                          </div>
+                      )}
+                      {campaignStep === 1 && (
+                          <div className="text-center animate-fade-in">
+                              <h3 className="text-2xl font-bold text-orange-400 mb-4">الحملة البرية الثانية (مجاعة بن سعر)</h3>
+                              <p className="mb-4 text-slate-300">أرسل الحجاج جيشاً أكبر (40 ألف مقاتل) برياً.</p>
+                              <div className="flex gap-4 justify-center items-center">
+                                  <div className="bg-orange-600 px-4 py-2 rounded text-sm">جيش الحجاج</div>
+                                  <Swords size={32} className="text-slate-400"/>
+                                  <div className="bg-green-600 px-4 py-2 rounded text-sm">جيش عمان</div>
+                              </div>
+                              <p className="mt-4 text-orange-300 font-bold bg-orange-900/50 p-2 rounded">النتيجة: صمود العمانيين وفشل الحملة جزئياً</p>
+                          </div>
+                      )}
+                      {campaignStep === 2 && (
+                          <div className="text-center animate-fade-in">
+                              <h3 className="text-2xl font-bold text-red-500 mb-4">الحملة البحرية الحاسمة</h3>
+                              <p className="mb-4 text-slate-300">أدرك الحجاج صعوبة البر، فأرسل أسطولاً بحرياً ضخماً.</p>
+                              <div className="flex justify-center mb-4">
+                                  <Ship size={48} className="text-blue-400 animate-pulse" />
+                              </div>
+                              <p className="text-red-300 font-bold bg-red-900/50 p-2 rounded">النتيجة: السيطرة على عمان واضطرار سعيد وسليمان للخروج</p>
+                          </div>
+                      )}
+                  </div>
+
+                  <div className="flex justify-center gap-4">
+                      <button 
+                          onClick={() => setCampaignStep(prev => prev > 0 ? prev - 1 : 0)}
+                          className="px-6 py-2 bg-slate-700 hover:bg-slate-600 rounded-full font-bold transition-colors"
+                          disabled={campaignStep === 0}
+                      >
+                          السابق
+                      </button>
+                      <button 
+                          onClick={() => setCampaignStep(prev => prev < 2 ? prev + 1 : 0)}
+                          className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold transition-colors shadow-lg"
+                      >
+                          {campaignStep === 2 ? "إعادة" : "التالي"}
+                      </button>
+                  </div>
+              </div>
+          </div>
+      );
+  };
+
+  // --- 4. GOVERNORS & MIGRATION ---
+  const GovernorsSection = () => {
+      return (
+          <div className="p-6 animate-fade-in space-y-10">
+              {/* Migration Result */}
+              <div className="bg-white rounded-3xl p-8 shadow-xl border-t-8 border-purple-500">
+                  <h3 className="text-2xl font-black text-slate-800 mb-4 flex items-center gap-3">
+                      <Anchor className="text-purple-600"/> الهجرة الأزدية
+                  </h3>
+                  <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                      نتيجة لسياسة الحجاج القاسية والحروب المتواصلة، هاجرت قبائل الأزد العمانية (بقيادة سعيد وسليمان) إلى:
+                  </p>
+                  <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-purple-50 p-4 rounded-xl text-center border border-purple-200">
+                          <span className="block font-black text-purple-900 mb-1">شرق أفريقيا</span>
+                          <span className="text-xs text-purple-700">تأسيس حضارة جديدة</span>
+                      </div>
+                      <div className="bg-blue-50 p-4 rounded-xl text-center border border-blue-200">
+                          <span className="block font-black text-blue-900 mb-1">البصرة</span>
+                          <span className="text-xs text-blue-700">مركز علمي وتجاري</span>
+                      </div>
+                  </div>
+              </div>
+
+              {/* Omani Governors */}
+              <div className="bg-green-50 p-8 rounded-3xl border border-green-200">
+                  <h3 className="text-xl font-black text-green-900 mb-4 flex items-center gap-2">
+                      <Users size={24}/> ولاة عمان في العصر الأموي
+                  </h3>
+                  <ul className="space-y-4">
+                      <li className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm">
+                          <div className="bg-green-100 p-2 rounded-full text-green-600 mt-1"><Star size={16}/></div>
+                          <div>
+                              <span className="font-bold text-slate-800">زياد بن المهلب</span>
+                              <p className="text-sm text-slate-500">من الشخصيات العمانية البارزة التي تولت ولاية عمان.</p>
+                          </div>
+                      </li>
+                      <li className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm">
+                          <div className="bg-green-100 p-2 rounded-full text-green-600 mt-1"><Star size={16}/></div>
+                          <div>
+                              <span className="font-bold text-slate-800">الخيار بن سبرة</span>
+                              <p className="text-sm text-slate-500">والي أموي في أواخر عهد الدولة.</p>
+                          </div>
+                      </li>
+                  </ul>
               </div>
           </div>
       );
@@ -182,7 +210,7 @@ const OmanUmayyadLesson: React.FC<Props> = ({ onBack }) => {
   const renderSection = () => {
     switch (activeSection) {
       case Section.OMAN_UMAYYAD_INTRO: return <IntroSection />;
-      case Section.OMAN_UMAYYAD_STANCE: return <StanceSection />;
+      case Section.OMAN_UMAYYAD_STANCE: return <IntroSection />; // Re-using Intro for initial stance details
       case Section.OMAN_UMAYYAD_INDEPENDENCE: return <IndependenceSection />;
       case Section.OMAN_UMAYYAD_CONTROL: return <ControlSection />;
       case Section.OMAN_UMAYYAD_GOVERNORS: return <GovernorsSection />;
@@ -201,19 +229,23 @@ const OmanUmayyadLesson: React.FC<Props> = ({ onBack }) => {
           <h1 className="text-xl font-black text-orange-700 px-2">عمان والأمويون ⚔️</h1>
         </div>
         <nav className="p-4 space-y-2 flex-1 overflow-y-auto">
-          {OMAN_UMAYYAD_SECTIONS.map((section: any) => (
-            <button
-              key={section.id}
-              onClick={() => { setActiveSection(section.id); setMobileMenuOpen(false); }}
-              className={`w-full text-right p-4 rounded-xl flex items-center gap-3 transition-colors font-bold text-base ${activeSection === section.id ? 'bg-orange-100 text-orange-800' : 'text-slate-600 hover:bg-slate-50'}`}
-            >
-              <span className="text-xl">{section.icon}</span>
-              {section.label}
-            </button>
-          ))}
+          <button onClick={() => { setActiveSection(Section.OMAN_UMAYYAD_INTRO); setMobileMenuOpen(false); }} className={`w-full text-right p-4 rounded-xl flex items-center gap-3 transition-colors font-bold ${activeSection === Section.OMAN_UMAYYAD_INTRO ? 'bg-orange-100 text-orange-800' : 'text-slate-600 hover:bg-slate-50'}`}>
+              <Shield size={20}/> الموقف العماني
+          </button>
+          <button onClick={() => { setActiveSection(Section.OMAN_UMAYYAD_INDEPENDENCE); setMobileMenuOpen(false); }} className={`w-full text-right p-4 rounded-xl flex items-center gap-3 transition-colors font-bold ${activeSection === Section.OMAN_UMAYYAD_INDEPENDENCE ? 'bg-orange-100 text-orange-800' : 'text-slate-600 hover:bg-slate-50'}`}>
+              <Flag size={20}/> المقاومة والاستقلال
+          </button>
+          <button onClick={() => { setActiveSection(Section.OMAN_UMAYYAD_CONTROL); setMobileMenuOpen(false); }} className={`w-full text-right p-4 rounded-xl flex items-center gap-3 transition-colors font-bold ${activeSection === Section.OMAN_UMAYYAD_CONTROL ? 'bg-orange-100 text-orange-800' : 'text-slate-600 hover:bg-slate-50'}`}>
+              <Swords size={20}/> حملات الحجاج
+          </button>
+          <button onClick={() => { setActiveSection(Section.OMAN_UMAYYAD_GOVERNORS); setMobileMenuOpen(false); }} className={`w-full text-right p-4 rounded-xl flex items-center gap-3 transition-colors font-bold ${activeSection === Section.OMAN_UMAYYAD_GOVERNORS ? 'bg-orange-100 text-orange-800' : 'text-slate-600 hover:bg-slate-50'}`}>
+              <Users size={20}/> الولاة والهجرة
+          </button>
+          <button onClick={() => { setActiveSection(Section.QUIZ); setMobileMenuOpen(false); }} className={`w-full text-right p-4 rounded-xl flex items-center gap-3 transition-colors font-bold ${activeSection === Section.QUIZ ? 'bg-orange-100 text-orange-800' : 'text-slate-600 hover:bg-slate-50'}`}>
+              <Star size={20}/> الاختبار
+          </button>
         </nav>
       </aside>
-
       <main className="flex-1 min-h-screen overflow-y-auto">
         <header className="md:hidden bg-white p-4 shadow-sm flex justify-between items-center sticky top-0 z-10">
            <span className="font-bold text-lg text-orange-800">عمان والأمويون</span>

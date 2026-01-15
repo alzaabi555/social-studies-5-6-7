@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { UNITS, UNITS_SIXTH } from '../constants';
-import { Lock, ChevronLeft, LayoutGrid, List, Briefcase, History, PlayCircle, UserCog, Save, School, GraduationCap, Sparkles, BookOpenCheck } from 'lucide-react';
+import { UNITS, UNITS_SIXTH, UNITS_FIFTH } from '../constants';
+import { Lock, ChevronLeft, Briefcase, History, PlayCircle, UserCog, Save, School, GraduationCap, Sparkles, Globe2, BookOpen } from 'lucide-react';
 import { LessonId, Lesson } from '../types';
 
 interface CourseIndexProps {
@@ -9,8 +9,8 @@ interface CourseIndexProps {
 }
 
 const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [activeGrade, setActiveGrade] = useState<6 | 7>(7);
+  // Removed viewMode state to enforce list view
+  const [activeGrade, setActiveGrade] = useState<5 | 6 | 7>(5);
   const [greeting, setGreeting] = useState('');
   
   // --- State for Teacher Data & Progress ---
@@ -27,12 +27,17 @@ const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
     const savedName = localStorage.getItem('teacherName');
     const savedSchool = localStorage.getItem('schoolName');
     const savedLastLesson = localStorage.getItem('lastLessonId');
-    const savedGrade = localStorage.getItem('activeGrade');
+    const savedGrade = localStorage.getItem('selectedGradeLevel');
 
     if (savedName) setTeacherName(savedName);
     if (savedSchool) setSchoolName(savedSchool);
     if (savedLastLesson) setLastLessonId(savedLastLesson);
-    if (savedGrade) setActiveGrade(Number(savedGrade) as 6 | 7);
+    
+    if (savedGrade) {
+        setActiveGrade(Number(savedGrade) as 5 | 6 | 7);
+    } else {
+        setActiveGrade(5);
+    }
 
     const hour = new Date().getHours();
     if (hour < 12) setGreeting('صباح الخير');
@@ -40,16 +45,16 @@ const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
     else setGreeting('مساؤك سعيد');
   }, []);
 
-  const handleGradeChange = (grade: 6 | 7) => {
+  const handleGradeChange = (grade: 5 | 6 | 7) => {
       setActiveGrade(grade);
-      localStorage.setItem('activeGrade', String(grade));
+      localStorage.setItem('selectedGradeLevel', String(grade));
   };
 
-  const currentUnits = activeGrade === 6 ? UNITS_SIXTH : UNITS;
+  const currentUnits = activeGrade === 5 ? UNITS_FIFTH : activeGrade === 6 ? UNITS_SIXTH : UNITS;
 
   const getLastLessonDetails = (): Lesson | null => {
       if (!lastLessonId) return null;
-      const allUnits = [...UNITS, ...UNITS_SIXTH];
+      const allUnits = [...UNITS, ...UNITS_SIXTH, ...UNITS_FIFTH];
       for (const unit of allUnits) {
           const lesson = unit.lessons.find(l => l.id === lastLessonId);
           if (lesson) return lesson;
@@ -196,7 +201,6 @@ const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
       {/* Hero Section */}
       <div className="relative bg-gradient-to-b from-indigo-900 via-indigo-800 to-indigo-900 text-white py-12 px-6 overflow-hidden shadow-2xl">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-          {/* Animated Background Elements */}
           <div className="absolute top-10 left-10 w-32 h-32 bg-indigo-600 rounded-full blur-3xl opacity-30 animate-pulse"></div>
           <div className="absolute bottom-10 right-10 w-48 h-48 bg-purple-600 rounded-full blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '1s' }}></div>
 
@@ -209,7 +213,7 @@ const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
                       <h2 className="text-3xl md:text-5xl font-black mb-4 leading-tight">
                           مادة الدراسات الاجتماعية <br/>
                           <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-200 to-white">
-                              {activeGrade === 6 ? 'للصف السادس' : 'للصف السابع'}
+                              {activeGrade === 5 ? 'للصف الخامس' : activeGrade === 6 ? 'للصف السادس' : 'للصف السابع'}
                           </span>
                       </h2>
                       <div className="flex flex-wrap gap-3 mt-2 text-indigo-200 text-sm font-medium">
@@ -218,7 +222,6 @@ const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
                       </div>
                   </div>
 
-                  {/* Stats Card */}
                   <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl flex gap-8 shadow-xl hover:bg-white/20 transition-colors cursor-default">
                       <div className="text-center">
                           <div className="text-3xl font-black text-white">{totalUnits}</div>
@@ -238,8 +241,19 @@ const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
       <main className="max-w-6xl mx-auto px-4 md:px-6 py-10 -mt-8 relative z-20">
           
           {/* Grade Selector Tabs */}
-          <div className="flex justify-center mb-8">
-              <div className="bg-white p-1.5 rounded-2xl shadow-lg border border-indigo-100 flex gap-1 w-full max-w-md">
+          <div className="flex justify-center mb-10">
+              <div className="bg-white p-1.5 rounded-2xl shadow-lg border border-indigo-100 flex gap-1 w-full max-w-xl">
+                  <button 
+                      onClick={() => handleGradeChange(5)}
+                      className={`flex-1 px-4 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 relative ${activeGrade === 5 ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+                  >
+                      <Globe2 size={20} />
+                      الصف الخامس
+                      {activeGrade !== 5 && <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                      </span>}
+                  </button>
                   <button 
                       onClick={() => handleGradeChange(6)}
                       className={`flex-1 px-4 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 ${activeGrade === 6 ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
@@ -257,24 +271,6 @@ const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
               </div>
           </div>
 
-          {/* View Toggle */}
-          <div className="flex justify-end mb-6">
-              <div className="bg-white p-1 rounded-lg shadow-sm border border-slate-200 flex">
-                  <button 
-                      onClick={() => setViewMode('grid')}
-                      className={`p-2 rounded-md transition-all ${viewMode === 'grid' ? 'bg-slate-100 text-slate-800' : 'text-slate-400 hover:text-slate-600'}`}
-                  >
-                      <LayoutGrid size={20} />
-                  </button>
-                  <button 
-                      onClick={() => setViewMode('list')}
-                      className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-slate-100 text-slate-800' : 'text-slate-400 hover:text-slate-600'}`}
-                  >
-                      <List size={20} />
-                  </button>
-              </div>
-          </div>
-
           {/* Units */}
           <div className="space-y-12">
               {currentUnits.length > 0 ? currentUnits.map((unit) => (
@@ -287,62 +283,65 @@ const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
                           </div>
                       </div>
 
-                      <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
+                      {/* Horizontal List Layout */}
+                      <div className="grid grid-cols-1 gap-4">
                           {unit.lessons.map((lesson) => (
                               <div 
                                   key={lesson.id}
                                   onClick={() => lesson.available && handleLessonSelect(lesson.id as LessonId)}
-                                  className={`group relative bg-white rounded-3xl border-2 transition-all duration-300 overflow-hidden ${
+                                  className={`group relative bg-white rounded-2xl border-2 transition-all duration-300 overflow-hidden flex flex-col md:flex-row items-center hover:border-indigo-300 ${
                                       lesson.available 
-                                          ? 'cursor-pointer hover:shadow-2xl hover:-translate-y-2 hover:border-transparent' 
-                                          : 'opacity-70 cursor-not-allowed border-slate-100'
-                                  } ${viewMode === 'list' ? 'flex items-center p-4 gap-6' : 'flex flex-col'}`}
+                                          ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1' 
+                                          : 'opacity-60 cursor-not-allowed border-slate-100 grayscale-[0.5]'
+                                  }`}
                               >
                                   {/* Icon Area */}
-                                  <div className={`relative overflow-hidden ${viewMode === 'list' ? 'w-24 h-24 rounded-2xl flex-shrink-0' : 'h-40'} ${lesson.color} transition-colors group-hover:filter group-hover:brightness-95`}>
-                                      <div className="absolute inset-0 flex items-center justify-center text-6xl transform group-hover:scale-110 transition-transform duration-500">
-                                          {lesson.icon}
-                                      </div>
+                                  <div className={`w-full md:w-32 h-32 md:h-auto self-stretch flex items-center justify-center text-5xl ${lesson.color} group-hover:brightness-95 transition-all`}>
+                                      {lesson.icon}
                                       {!lesson.available && (
-                                          <div className="absolute inset-0 bg-slate-200/50 backdrop-blur-[1px] flex items-center justify-center">
-                                              <Lock className="text-slate-500" size={32} />
+                                          <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px] flex items-center justify-center">
+                                              <Lock className="text-slate-600" size={24} />
                                           </div>
                                       )}
                                   </div>
 
                                   {/* Content */}
-                                  <div className={`flex-1 ${viewMode === 'grid' ? 'p-6' : ''}`}>
-                                      <div className="flex justify-between items-start mb-2">
-                                          <span className={`text-[10px] font-extrabold uppercase tracking-wider ${lesson.textColor} bg-white/50 px-2 py-1 rounded-md`}>
-                                              {lesson.subtitle}
-                                          </span>
+                                  <div className="flex-1 p-5 text-center md:text-right">
+                                      <div className="flex flex-col md:flex-row justify-between items-center md:items-start mb-2">
+                                          <div>
+                                              <span className={`text-[10px] font-extrabold uppercase tracking-wider ${lesson.textColor} bg-opacity-10 bg-current px-2 py-1 rounded-md mb-2 inline-block`}>
+                                                  {lesson.subtitle}
+                                              </span>
+                                              <h4 className="text-xl font-bold text-slate-800 group-hover:text-indigo-700 transition-colors">
+                                                  {lesson.title}
+                                              </h4>
+                                          </div>
+                                          
                                           {/* Last Visited Indicator */}
                                           {lastLessonId === lesson.id && (
-                                              <span className="flex h-3 w-3 relative" title="آخر درس تمت زيارته">
-                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                              <span className="hidden md:flex bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full items-center gap-1 animate-pulse">
+                                                  <span className="w-2 h-2 bg-green-500 rounded-full"></span> آخر زيارة
                                               </span>
                                           )}
                                       </div>
-
-                                      <h4 className="text-xl font-bold text-slate-800 mb-2 leading-tight group-hover:text-indigo-700 transition-colors">
-                                          {lesson.title}
-                                      </h4>
-                                      <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">
+                                      
+                                      <p className="text-slate-500 text-sm leading-relaxed mb-4 md:mb-0 max-w-2xl">
                                           {lesson.description}
                                       </p>
+                                  </div>
 
-                                      {/* Action Footer */}
-                                      {viewMode === 'grid' && (
-                                          <div className="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center">
-                                              <span className="text-xs font-bold text-slate-400 flex items-center gap-1">
-                                                  <BookOpenCheck size={14}/> درس تفاعلي
-                                              </span>
-                                              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${lesson.available ? 'bg-slate-100 text-slate-400 group-hover:bg-indigo-600 group-hover:text-white' : 'bg-slate-100 text-slate-300'}`}>
-                                                  <ChevronLeft size={18} />
-                                              </div>
-                                          </div>
-                                      )}
+                                  {/* Action Arrow */}
+                                  <div className="p-5 border-t md:border-t-0 md:border-r border-slate-100 flex items-center justify-center w-full md:w-auto bg-slate-50 md:bg-transparent">
+                                      <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                                          lesson.available 
+                                              ? 'bg-white border border-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white shadow-sm' 
+                                              : 'bg-slate-100 text-slate-300'
+                                      }`}>
+                                          <ChevronLeft size={20} className={lesson.available ? 'group-hover:-translate-x-1 transition-transform' : ''} />
+                                      </div>
+                                      <span className="md:hidden mr-2 font-bold text-sm text-slate-600">
+                                          {lesson.available ? 'فتح الدرس' : 'مغلق'}
+                                      </span>
                                   </div>
                               </div>
                           ))}
@@ -350,6 +349,7 @@ const CourseIndex: React.FC<CourseIndexProps> = ({ onSelectLesson }) => {
                   </section>
               )) : (
                   <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-200">
+                      <BookOpen size={48} className="mx-auto text-slate-300 mb-4"/>
                       <p className="text-slate-400 text-xl font-bold">لا توجد وحدات متاحة لهذا الصف حالياً.</p>
                   </div>
               )}

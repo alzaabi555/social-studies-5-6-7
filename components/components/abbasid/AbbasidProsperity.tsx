@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BookOpen, Coins, Building2, Stethoscope, GraduationCap, Wheat, Lightbulb, PenTool } from 'lucide-react';
 

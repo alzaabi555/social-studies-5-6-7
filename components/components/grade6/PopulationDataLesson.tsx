@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { SIXTH_POPULATION_SECTIONS, SIXTH_POPULATION_QUIZ } from '../../constants';
 import { Section } from '../../types';
-import { Menu, ArrowRight, Target, Users } from 'lucide-react';
+import { Menu, ArrowRight, Target, Users, BookOpen, Star, HelpCircle, CheckCircle } from 'lucide-react';
 import SectionQuiz from '../SectionQuiz';
 import PopSources from './population/PopSources';
 import CensusJourney from './population/CensusJourney';
@@ -15,45 +15,144 @@ const PopulationDataLesson: React.FC<Props> = ({ onBack }) => {
   const [activeSection, setActiveSection] = useState<Section>(Section.INTRO);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const IntroSection = () => (
-      <div className="p-6 animate-fade-in space-y-8">
-          <div className="bg-blue-50 border-r-4 border-blue-600 p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
-                  <Target size={24}/> أهداف الدرس:
-              </h3>
-              <ul className="grid gap-3 text-blue-800 font-medium">
-                  <li>1. التعرف على مصادر البيانات السكانية.</li>
-                  <li>2. تتبع تطور التعداد السكاني في سلطنة عمان.</li>
-              </ul>
-          </div>
-          <div className="bg-white p-8 rounded-2xl shadow-xl text-center border border-blue-100">
-              <div className="inline-block bg-blue-100 p-4 rounded-full mb-4">
-                  <Users size={48} className="text-blue-600" />
+  // --- Interactive Intro Section ---
+  const IntroSection = () => {
+      const [step, setStep] = useState(0);
+      return (
+          <div className="p-6 animate-fade-in space-y-8">
+              {/* Objectives Card */}
+              <div className="bg-blue-50 border-r-4 border-blue-600 p-6 rounded-xl shadow-sm">
+                  <h3 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                      <Target size={24}/> أهداف الدرس:
+                  </h3>
+                  <ul className="grid gap-3 text-blue-800 font-medium text-lg leading-relaxed">
+                      <li className="flex items-center gap-2"><span className="text-blue-500">•</span> التعرف على مفهوم البيانات السكانية.</li>
+                      <li className="flex items-center gap-2"><span className="text-blue-500">•</span> التمييز بين المصادر الأولية والثانوية للبيانات.</li>
+                      <li className="flex items-center gap-2"><span className="text-blue-500">•</span> تتبع تطور التعداد السكاني في سلطنة عمان.</li>
+                      <li className="flex items-center gap-2"><span className="text-blue-500">•</span> استنتاج أهمية البيانات السكانية للتخطيط.</li>
+                  </ul>
               </div>
-              <h2 className="text-3xl font-black text-slate-800 mb-4">ما البيانات التي تريد معرفتها؟ 🤔</h2>
-              <p className="text-lg text-slate-600">هذا ما تقوم به الدولة من خلال "البيانات السكانية".</p>
-          </div>
-      </div>
-  );
 
-  const ImportanceSection = () => (
-      <div className="p-6 animate-fade-in space-y-6">
-          <div className="text-center mb-6">
-              <h2 className="text-2xl font-black text-slate-800 mb-2">أهمية دراسة السكان</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-green-50 p-6 rounded-2xl text-center"><h3 className="font-bold text-green-900 mb-2">1. توفير الخدمات</h3></div>
-              <div className="bg-orange-50 p-6 rounded-2xl text-center"><h3 className="font-bold text-orange-900 mb-2">2. إنشاء المشاريع</h3></div>
-              <div className="bg-purple-50 p-6 rounded-2xl text-center"><h3 className="font-bold text-purple-900 mb-2">3. التخطيط للمستقبل</h3></div>
-          </div>
-      </div>
-  );
+              {/* Interactive Hook: The City Mystery */}
+              <div className="bg-white p-8 rounded-3xl shadow-xl text-center border border-blue-100 transition-all duration-500">
+                  {step === 0 && (
+                      <div className="animate-fade-in py-4">
+                          <div className="inline-block bg-blue-100 p-6 rounded-full mb-6 animate-pulse">
+                              <HelpCircle size={64} className="text-blue-600" />
+                          </div>
+                          <h2 className="text-3xl font-black text-slate-800 mb-4">لغز المدينة الجديدة 🤔</h2>
+                          <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8">
+                              قررت الحكومة بناء مدينة جديدة متكاملة، المهندسون جاهزون، والأموال موجودة، لكنهم توقفوا فجأة... واجهتهم مشكلة كبيرة!
+                          </p>
+                          <button onClick={() => setStep(1)} className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 rounded-full font-bold text-lg shadow-lg hover:scale-105 transition-transform">
+                              ما هي المشكلة؟
+                          </button>
+                      </div>
+                  )}
 
+                  {step === 1 && (
+                      <div className="animate-slide-up py-4">
+                          <h3 className="text-2xl font-bold text-red-600 mb-6">المهندسون يسألون:</h3>
+                          <div className="grid md:grid-cols-3 gap-4 mb-8">
+                              <div className="bg-slate-50 p-4 rounded-xl font-bold text-slate-700 border border-slate-200">كم مدرسة نبني؟ 🏫</div>
+                              <div className="bg-slate-50 p-4 rounded-xl font-bold text-slate-700 border border-slate-200">كم مستشفى نحتاج؟ 🏥</div>
+                              <div className="bg-slate-50 p-4 rounded-xl font-bold text-slate-700 border border-slate-200">كم كمية المياه المطلوبة؟ 💧</div>
+                          </div>
+                          <p className="text-lg text-slate-600 mb-6">لا يمكنهم البناء عشوائياً! هم بحاجة لشيء واحد فقط للإجابة.</p>
+                          <button onClick={() => setStep(2)} className="bg-green-600 hover:bg-green-700 text-white px-10 py-3 rounded-full font-bold text-lg shadow-lg hover:scale-105 transition-transform">
+                              ما هو الحل؟
+                          </button>
+                      </div>
+                  )}
+
+                  {step === 2 && (
+                      <div className="animate-zoom-in py-4">
+                          <div className="inline-block bg-green-100 p-6 rounded-full mb-6">
+                              <CheckCircle size={64} className="text-green-600" />
+                          </div>
+                          <h2 className="text-4xl font-black text-blue-800 mb-4">البيانات السكانية 📊</h2>
+                          <p className="text-xl text-slate-700 mb-8 max-w-2xl mx-auto bg-blue-50 p-4 rounded-2xl border border-blue-200">
+                              هي المعلومات الرقمية (الأرقام) المتعلقة بالسكان، وهي المفتاح السحري لأي تخطيط ناجح!
+                          </p>
+                          <button onClick={() => setStep(0)} className="text-slate-400 font-bold hover:text-blue-600 underline">
+                              إعادة القصة
+                          </button>
+                      </div>
+                  )}
+              </div>
+          </div>
+      );
+  };
+
+  // --- Interactive Importance Section ---
+  const ImportanceSection = () => {
+      const [activeCard, setActiveCard] = useState<number | null>(null);
+      
+      const cards = [
+          { id: 1, title: 'توفير الخدمات', icon: <BookOpen size={32}/>, color: 'green', q: 'كيف نعرف عدد المدارس المطلوبة؟', a: 'من خلال معرفة عدد الأطفال في سن الدراسة في كل منطقة.' },
+          { id: 2, title: 'التخطيط للمستقبل', icon: <Star size={32}/>, color: 'orange', q: 'كيف نستعد للأجيال القادمة؟', a: 'بمعرفة معدلات المواليد والنمو السكاني، نخطط للوظائف والسكن.' },
+          { id: 3, title: 'توزيع الثروات', icon: <Target size={32}/>, color: 'purple', q: 'أين نبني المشاريع؟', a: 'في المناطق ذات الكثافة السكانية العالية لخدمة أكبر عدد من المواطنين.' },
+      ];
+
+      return (
+          <div className="p-6 animate-fade-in space-y-10">
+              <div className="text-center mb-6">
+                  <h2 className="text-2xl font-black text-slate-800 mb-2">لماذا نحتاج البيانات السكانية؟</h2>
+                  <p className="text-slate-500">اضغط على البطاقات لاكتشاف الأهمية الحقيقية للبيانات</p>
+              </div>
+              
+              <div className="grid md:grid-cols-3 gap-6">
+                  {cards.map((c) => (
+                      <div 
+                          key={c.id}
+                          onClick={() => setActiveCard(activeCard === c.id ? null : c.id)}
+                          className={`cursor-pointer bg-white p-6 rounded-3xl shadow-lg border-t-8 transition-all duration-300 transform ${activeCard === c.id ? 'scale-105 shadow-2xl' : 'hover:-translate-y-2'}`}
+                          style={{ borderColor: c.color === 'green' ? '#22c55e' : c.color === 'orange' ? '#f97316' : '#a855f7' }}
+                      >
+                          <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-white shadow-md transition-transform duration-500 ${activeCard === c.id ? 'rotate-12' : ''}`} style={{ backgroundColor: c.color === 'green' ? '#22c55e' : c.color === 'orange' ? '#f97316' : '#a855f7' }}>
+                              {c.icon}
+                          </div>
+                          <h3 className="font-bold text-xl text-slate-800 mb-3 text-center">{c.title}</h3>
+                          
+                          {activeCard === c.id ? (
+                              <div className="animate-fade-in bg-slate-50 p-4 rounded-2xl text-center border border-slate-100">
+                                  <p className="text-sm font-bold text-slate-800 mb-2">{c.q}</p>
+                                  <p className="text-sm text-slate-600 leading-relaxed">{c.a}</p>
+                              </div>
+                          ) : (
+                              <div className="text-center mt-4">
+                                  <span className="text-xs font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full">اضغط للتفاصيل</span>
+                              </div>
+                          )}
+                      </div>
+                  ))}
+              </div>
+          </div>
+      );
+  };
+
+  // --- Summary Section Component ---
   const SummarySection = () => (
-      <div className="p-6 animate-fade-in space-y-6 text-center">
-          <h2 className="text-2xl font-black text-slate-800 mb-2">ملخص الدرس</h2>
-          <div className="bg-white p-4 rounded-3xl shadow-xl border-2 border-slate-100">
-              <p className="text-slate-500">مخطط تفصيلي لمصادر البيانات (أولية وثانوية)</p>
+      <div className="p-6 animate-fade-in space-y-8">
+          <div className="bg-slate-800 text-white p-8 rounded-3xl shadow-xl text-center">
+              <h2 className="text-3xl font-black mb-6">خلاصة الدرس</h2>
+              <div className="grid md:grid-cols-2 gap-8 text-right">
+                  <div className="bg-white/10 p-6 rounded-xl backdrop-blur-md border border-white/10">
+                      <h4 className="text-yellow-400 font-bold text-lg mb-2">مصادر البيانات</h4>
+                      <ul className="text-slate-300 space-y-2 list-disc list-inside">
+                          <li><strong>أولية:</strong> التعداد السكاني (شامل)، الإحصاءات الحيوية.</li>
+                          <li><strong>ثانوية:</strong> سجلات المدارس، سجلات المستشفيات.</li>
+                      </ul>
+                  </div>
+                  <div className="bg-white/10 p-6 rounded-xl backdrop-blur-md border border-white/10">
+                      <h4 className="text-green-400 font-bold text-lg mb-2">تطور التعداد في عمان</h4>
+                      <ul className="text-slate-300 space-y-2 list-disc list-inside">
+                          <li>بدأ عام 1993 (ميداني).</li>
+                          <li>تطور إلى إلكتروني كامل في 2020.</li>
+                          <li>يعتمد الآن على السجل المدني الموحد.</li>
+                      </ul>
+                  </div>
+              </div>
           </div>
       </div>
   );
@@ -72,6 +171,7 @@ const PopulationDataLesson: React.FC<Props> = ({ onBack }) => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-blue-50 text-right font-tajawal">
+      {/* Sidebar */}
       <aside className={`fixed md:relative z-20 w-64 h-full bg-white shadow-xl transform transition-transform duration-300 ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'} right-0 md:right-auto border-l border-blue-100 flex flex-col`}>
         <div className="p-4 border-b border-blue-100">
           <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-blue-600 bg-slate-50 hover:bg-blue-50 px-3 py-2 rounded-lg w-full transition-colors mb-4 text-sm font-bold">
@@ -87,6 +187,8 @@ const PopulationDataLesson: React.FC<Props> = ({ onBack }) => {
           ))}
         </nav>
       </aside>
+
+      {/* Main Content */}
       <main className="flex-1 min-h-screen overflow-y-auto">
         <header className="md:hidden bg-white p-4 shadow-sm flex justify-between items-center sticky top-0 z-10">
            <span className="font-bold text-lg text-blue-800">البيانات السكانية</span>
