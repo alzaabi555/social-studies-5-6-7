@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import MapsLesson from './components/grade5/MapsLesson';
 import EarthSpheresLesson1 from './components/grade5/EarthSpheresLesson1';
 import EarthSpheresLesson2 from './components/grade5/EarthSpheresLesson2';
 import NaturalResourcesLesson from './components/grade5/NaturalResourcesLesson';
