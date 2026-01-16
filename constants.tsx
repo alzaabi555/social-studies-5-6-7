@@ -1,5 +1,4 @@
 
-// ... existing imports
 import { Unit, Section, QuizQuestion, WeatherElement, EarthLayer, OmanRegion } from './types';
 import { 
   CloudSun, Thermometer, Wind, Umbrella, CloudRain, Mountain, Globe2, 
@@ -8,8 +7,9 @@ import {
   Leaf, Sun, Droplet, Cloud, Coins, Shield, Castle, Star, ArrowDown,
   Swords, List, Target, ArrowLeftRight, AlertTriangle, Calculator,
   Building2, Layers, Book, Crown, Pickaxe, Moon, Mail, User, Heart, Scale3d,
-  Compass, History
+  Compass, History, Settings, BarChart2, Hammer, HelpCircle
 } from 'lucide-react';
+import React from 'react';
 
 // --- WEATHER ELEMENTS ---
 export const WEATHER_ELEMENTS_DATA: WeatherElement[] = [
@@ -70,754 +70,302 @@ export const WEATHER_ELEMENTS_DATA: WeatherElement[] = [
     }
 ];
 
-// --- GRADE 5 QUIZZES ---
-
-// Unit 1: Earth Spheres
-export const FIFTH_SPHERES_CONCEPT_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'المجرة التي تنتمي إليها مجموعتنا الشمسية تسمى:',
-        options: ['درب التبانة', 'المرأة المسلسلة', 'سحابة ماجلان', 'مجرة الدوامة'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'الكوكب الوحيد في المجموعة الشمسية الذي توجد عليه حياة هو:',
-        options: ['المريخ', 'الأرض', 'الزهرة', 'المشتري'],
-        correctIndex: 1
-    },
-    {
-        id: 3,
-        question: 'الغلاف الغازي الذي يحيط بالأرض يسمى:',
-        options: ['الغلاف الجوي', 'الغلاف المائي', 'الغلاف الصخري', 'الغلاف الحيوي'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'أي من الكواكب التالية يعتبر الأقرب إلى الشمس؟',
-        options: ['عطارد', 'الأرض', 'نبتون', 'زحل'],
-        correctIndex: 0
-    }
+// --- WEATHER LESSON SECTIONS ---
+export const SECTIONS = [
+    { id: Section.INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.DEFINITION, label: 'المفهوم', icon: <BookOpen /> },
+    { id: Section.FACTORS, label: 'العوامل المؤثرة', icon: <Settings /> },
+    { id: Section.ELEMENTS, label: 'عناصر الطقس', icon: <CloudSun /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
 ];
 
-export const FIFTH_SPHERES_RELATION_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'نسبة المياه على سطح الأرض تبلغ حوالي:',
-        options: ['29%', '50%', '71%', '90%'],
-        correctIndex: 2
-    },
-    {
-        id: 2,
-        question: 'النظام الذي يجمع بين الكائنات الحية ومكونات البيئة غير الحية يسمى:',
-        options: ['النظام البيئي', 'النظام الشمسي', 'النظام الجوي', 'النظام الصخري'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'أي من الآتي يمثل تفاعلاً بين الغلاف الجوي والمائي؟',
-        options: ['سقوط الأمطار', 'نمو النباتات', 'تفتت الصخور', 'تنفس الحيوان'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'من الأنشطة البشرية الضارة بالأغلفة الطبيعية:',
-        options: ['الزراعة', 'التلوث البيئي', 'الصيد المنظم', 'بناء المنازل'],
-        correctIndex: 1
-    }
-];
-
-export const FIFTH_RESOURCES_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'الموارد التي تتجدد باستمرار ولا تنفد تسمى:',
-        options: ['موارد متجددة', 'موارد غير متجددة', 'موارد ناضبة', 'موارد صناعية'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'أي مما يلي يعتبر مورداً غير متجدد؟',
-        options: ['النفط', 'طاقة الرياح', 'الطاقة الشمسية', 'الأشجار'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'من جهود سلطنة عمان لاستدامة الموارد:',
-        options: ['إنشاء المحميات الطبيعية', 'قطع الغابات', 'الصيد الجائر', 'حرق النفايات'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'تعد "محطة ظفار" مثالاً لاستغلال طاقة:',
-        options: ['الرياح', 'الشمس', 'المياه', 'النووية'],
-        correctIndex: 0
-    }
-];
-
-// Unit 2: Islamic State & Oman
-export const FIFTH_ISLAMIC_STATE_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'هاجر الرسول ﷺ من مكة إلى يثرب التي سميت لاحقاً بـ:',
-        options: ['المدينة المنورة', 'الطائف', 'القدس', 'تبوك'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'أول عمل قام به الرسول ﷺ عند وصوله المدينة:',
-        options: ['بناء المسجد النبوي', 'كتابة الصحيفة', 'تجهيز الجيش', 'المؤاخاة'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'وثيقة نظمت العلاقة بين سكان المدينة (المسلمين واليهود) تسمى:',
-        options: ['الصحيفة (وثيقة المدينة)', 'صلح الحديبية', 'بيعة العقبة', 'حجة الوداع'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'آخر غزوة قادها الرسول ﷺ بنفسه هي غزوة:',
-        options: ['تبوك', 'بدر', 'أحد', 'الخندق'],
-        correctIndex: 0
-    }
-];
-
-export const FIFTH_OMAN_PROPHET_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'أول صحابي من أهل عمان أسلم ولقي الرسول ﷺ:',
-        options: ['مازن بن غضوبة', 'عمرو بن العاص', 'أبو بكر الصديق', 'كعب بن برشة'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'بعث الرسول ﷺ رسالة يدعو فيها أهل عمان للإسلام إلى الملكين:',
-        options: ['عبد وجيفر', 'سعيد وسليمان', 'جلندى بن مسعود', 'المهلب وأخيه'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'الصحابي الذي حمل رسالة الرسول ﷺ إلى ملكي عمان هو:',
-        options: ['عمرو بن العاص', 'أبو عبيدة بن الجراح', 'خالد بن الوليد', 'علي بن أبي طالب'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'بنى مازن بن غضوبة مسجداً في سمائل يسمى مسجد:',
-        options: ['المضمار', 'الشواذنة', 'سعاد', 'الجامع'],
-        correctIndex: 0
-    }
-];
-
-export const FIFTH_OMAN_PERSONALITIES_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'الصحابي العماني الذي كان مستشاراً للملكين عبد وجيفر:',
-        options: ['كعب بن برشة الطاحي', 'مازن بن غضوبة', 'بيرح بن أسد', 'عبدالله بن وهب'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'صحابي وصفه الرسول ﷺ بأنه "سيد قومه":',
-        options: ['أبو صفرة العتكي', 'صالح بن المتوكل', 'صحار بن العباس', 'مسلمة بن هزان'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'رافق مازن بن غضوبة في رحلته إلى المدينة:',
-        options: ['صالح بن المتوكل', 'سلمة بن عياذ', 'كعب بن معدان', 'الخليل بن أحمد'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'مؤسس علم العروض وصاحب كتاب العين (شخصية عالمية):',
-        options: ['الخليل بن أحمد الفراهيدي', 'جابر بن زيد', 'ابن دريد', 'المبرد'],
-        correctIndex: 0
-    }
-];
-
-// Unit 3: Rights & Duties
-export const FIFTH_RIGHTS_DUTIES_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'الأشياء التي يستحقها المواطن من الدولة والمجتمع تسمى:',
-        options: ['الحقوق', 'الواجبات', 'العادات', 'التقاليد'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'الالتزام بالقوانين والمحافظة على الممتلكات العامة يعتبر من:',
-        options: ['الواجبات', 'الحقوق', 'الهوايات', 'الحريات'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'الحصول على التعليم والرعاية الصحية يعتبر من:',
-        options: ['الحقوق', 'الواجبات', 'المكرمات', 'الصدقات'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'الوثيقة التي تحدد الحقوق والواجبات في سلطنة عمان هي:',
-        options: ['النظام الأساسي للدولة', 'قانون المرور', 'كتاب المدرسة', 'الصحيفة'],
-        correctIndex: 0
-    }
-];
-
-export const FIFTH_INSTITUTIONS_CONVENTIONS_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'الجهة الوطنية المسؤولة عن متابعة ورصد حقوق الإنسان في عمان:',
-        options: ['اللجنة العمانية لحقوق الإنسان', 'وزارة التربية', 'مجلس الشورى', 'الشرطة'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'انضمت سلطنة عمان لاتفاقية حقوق الطفل عام:',
-        options: ['1996م', '1970م', '2020م', '1980م'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'تحتفل سلطنة عمان بيوم المرأة العمانية في تاريخ:',
-        options: ['17 أكتوبر', '18 نوفمبر', '23 يوليو', '11 يناير'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'اتفاقية (سيداو) تعنى بالقضاء على التمييز ضد:',
-        options: ['المرأة', 'الطفل', 'العمال', 'ذوي الإعاقة'],
-        correctIndex: 0
-    }
-];
-
-// --- Grade 6 Quizzes (Filling empty arrays) ---
-export const SIXTH_POPULATION_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'عملية حصر شامل لجميع السكان والمساكن في الدولة تسمى:',
-        options: ['التعداد السكاني', 'المسح بالعينة', 'السجل المدني', 'الإحصاء الحيوي'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'أجري أول تعداد سكاني في سلطنة عمان عام:',
-        options: ['1993م', '2003م', '2010م', '2020م'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'أي من الآتي يعتبر مصدراً ثانوياً للبيانات السكانية؟',
-        options: ['سجلات المدارس والمستشفيات', 'التعداد السكاني', 'المسح بالعينة', 'التسجيل الحيوي'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'الجهة المسؤولة عن التعداد السكاني في سلطنة عمان:',
-        options: ['المركز الوطني للإحصاء والمعلومات', 'وزارة الصحة', 'وزارة الداخلية', 'وزارة التربية'],
-        correctIndex: 0
-    }
-];
-
-export const SIXTH_STRUCTURE_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'تصنيف السكان إلى ذكور وإناث يسمى:',
-        options: ['التركيب النوعي', 'التركيب العمري', 'التركيب الاقتصادي', 'التركيب اللغوي'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'الفئة العمرية التي تمثل "قوة العمل" والإنتاج في المجتمع هي:',
-        options: ['متوسطو السن (15-64)', 'صغار السن (0-14)', 'كبار السن (65+)', 'الرضع'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'الشكل البياني الذي يوضح التركيب العمري والنوعي للسكان يسمى:',
-        options: ['الهرم السكاني', 'الرسم البياني الخطي', 'الدائرة النسبية', 'الخريطة السكانية'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'قاعدة الهرم السكاني العريضة تدل على:',
-        options: ['ارتفاع نسبة المواليد', 'ارتفاع نسبة الوفيات', 'ارتفاع نسبة كبار السن', 'قلة السكان'],
-        correctIndex: 0
-    }
-];
-
-export const SIXTH_GROWTH_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'الفرق بين عدد المواليد وعدد الوفيات يسمى:',
-        options: ['الزيادة الطبيعية', 'الزيادة غير الطبيعية', 'الكثافة السكانية', 'النمو الاقتصادي'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'انتقال الأفراد من مكان إقامتهم الأصلي إلى مكان آخر يسمى:',
-        options: ['الهجرة', 'السياحة', 'التنقل', 'الرحلة'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'من العوامل البشرية المؤثرة في توزيع السكان:',
-        options: ['توفر فرص العمل', 'المناخ', 'التضاريس', 'الموارد المائية'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'يؤدي النمو السكاني السريع (زيادة السكان عن الموارد) إلى:',
-        options: ['الضغط على الخدمات', 'زيادة الرفاهية', 'قلة الازدحام', 'تحسن البيئة'],
-        correctIndex: 0
-    }
-];
-
-export const SIXTH_DENSITY_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'عدد السكان مقسوماً على المساحة الكلية يعطينا:',
-        options: ['الكثافة السكانية', 'النمو السكاني', 'التوزيع السكاني', 'البنية السكانية'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'تعتبر محافظة ...... الأعلى كثافة سكانية في سلطنة عمان:',
-        options: ['مسقط', 'الوسطى', 'ظفار', 'الظاهرة'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'من العوامل الطبيعية الطاردة للسكان:',
-        options: ['المناخ الصحراوي الحار', 'التربة الخصبة', 'الأمطار الوفيرة', 'الأرض السهلية'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'إذا كان عدد سكان منطقة 1000 نسمة ومساحتها 100 كم²، فإن الكثافة هي:',
-        options: ['10 نسمة/كم²', '100 نسمة/كم²', '1 نسمة/كم²', '50 نسمة/كم²'],
-        correctIndex: 0
-    }
-];
-
-export const OMAN_UMAYYAD_QUIZ_QUESTIONS: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'كان موقف عمان من قيام الدولة الأموية في البداية:',
-        options: ['التبعية المطلقة', 'الاستقلال الداخلي', 'الحرب المستمرة', 'التحالف مع الروم'],
-        correctIndex: 1
-    },
-    {
-        id: 2,
-        question: 'قائد الحملات العسكرية التي أرسلها الحجاج بن يوسف للسيطرة على عمان:',
-        options: ['القاسم بن شعوة', 'موسى بن نصير', 'عقبة بن نافع', 'طارق بن زياد'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'هاجرت قبائل الأزد العمانية بعد سيطرة الأمويين إلى:',
-        options: ['الأندلس', 'شرق أفريقيا والبصرة', 'الشام', 'المغرب'],
-        correctIndex: 1
-    },
-    {
-        id: 4,
-        question: 'من الشخصيات العمانية التي برزت في قيادة الجيوش الأموية:',
-        options: ['المهلب بن أبي صفرة', 'الخليل بن أحمد', 'جابر بن زيد', 'ابن دريد'],
-        correctIndex: 0
-    }
-];
-
-export const OMAN_UMAYYAD_ACHIEVEMENTS_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'عالم لغوي عماني وضع علم العروض وألف كتاب "العين":',
-        options: ['الخليل بن أحمد الفراهيدي', 'جابر بن زيد', 'المبرد', 'ابن دريد'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'مؤسس المذهب الإباضي وأول من دون الفقه في الإسلام:',
-        options: ['جابر بن زيد', 'أبو عبيدة مسلم', 'عبدالله بن إباض', 'الربيع بن حبيب'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'تميزت العمارة العمانية في العصر الأموي ببناء:',
-        options: ['القلاع والحصون', 'القصور الفاخرة', 'الجسور المعلقة', 'الأبراج الزجاجية'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'كانت السفن العمانية تحمل البضائع مثل ...... إلى الصين والهند:',
-        options: ['اللبان والتمور', 'الذهب والفضة', 'الحرير', 'الأسلحة'],
-        correctIndex: 0
-    }
-];
-
-export const CIVIL_SOCIETY_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'مؤسسات أهلية تطوعية لا تهدف إلى الربح المادي تسمى:',
-        options: ['مؤسسات المجتمع المدني', 'الشركات الخاصة', 'المؤسسات الحكومية', 'البنوك'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'من الأمثلة على الجمعيات المهنية في سلطنة عمان:',
-        options: ['الجمعية الطبية العمانية', 'جمعية المرأة العمانية', 'جمعية دار العطاء', 'جمعية رعاية الأطفال المعوقين'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'تأسست أول جمعية للمرأة العمانية في مسقط عام:',
-        options: ['1971م', '1980م', '1990م', '2000م'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'الجهة الحكومية المسؤولة عن إشهار ومتابعة جمعيات المجتمع المدني:',
-        options: ['وزارة التنمية الاجتماعية', 'وزارة الداخلية', 'وزارة العدل', 'وزارة التجارة'],
-        correctIndex: 0
-    }
-];
-
-export const COMMUNITY_PARTICIPATION_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'مساهمة المواطن بجهده أو ماله أو فكره لخدمة وطنه تسمى:',
-        options: ['المشاركة المجتمعية', 'الوظيفة الحكومية', 'الاستثمار', 'الواجب المدرسي'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'يتم اختيار أعضاء مجلس الشورى عن طريق:',
-        options: ['الانتخابات (التصويت)', 'التعيين المباشر', 'القرعة', 'الأقدمية'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'العمل الذي يقوم به الفرد بمحض إرادته دون مقابل مادي يسمى:',
-        options: ['العمل التطوعي', 'العمل الإضافي', 'الوظيفة', 'التكليف'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'من فوائد المشاركة المجتمعية:',
-        options: ['تعزيز الانتماء والتكافل', 'زيادة الثروة الشخصية', 'الحصول على مناصب', 'السفر للخارج'],
-        correctIndex: 0
-    }
-];
-
-// --- QUIZ QUESTIONS (Existing, preserved for other grades/units) ---
-
-export const ABBASID_QUIZ_QUESTIONS: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'بدأ العصر العباسي الثاني بتولي الخليفة:',
-        options: ['المتوكل', 'هارون الرشيد', 'المعتصم', 'المأمون'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'أي من الدول التالية استقلت عن الدولة العباسية في مصر؟',
-        options: ['الدولة الفاطمية', 'دولة القرامطة', 'الدولة الأموية', 'الدولة السلجوقية'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'القائد المسلم الذي انتصر على الصليبيين في معركة حطين هو:',
-        options: ['صلاح الدين الأيوبي', 'قطز', 'بيبرس', 'نور الدين زنكي'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'المعركة التي أوقفت الزحف المغولي على العالم الإسلامي هي:',
-        options: ['عين جالوت', 'حطين', 'الزاب', 'ملاذ كرد'],
-        correctIndex: 0
-    },
-    {
-        id: 5,
-        question: 'استفاد الأوروبيون من المسلمين في الحروب الصليبية بنقل:',
-        options: ['الحمام الزاجل والمنجنيق', 'البارود', 'الدبابات', 'الطائرات'],
-        correctIndex: 0
-    }
-];
-
-export const UMAYYAD_QUIZ_QUESTIONS: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'مؤسس الدولة الأموية هو:',
-        options: ['معاوية بن أبي سفيان', 'عبدالملك بن مروان', 'يزيد بن معاوية', 'مروان بن الحكم'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'يعد المؤسس الثاني للدولة الأموية:',
-        options: ['عبدالملك بن مروان', 'الوليد بن عبدالملك', 'عمر بن عبدالعزيز', 'سليمان بن عبدالملك'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'وصلت الدولة الأموية لأقصى اتساع لها في عهد:',
-        options: ['الوليد بن عبدالملك', 'معاوية بن أبي سفيان', 'عمر بن عبدالعزيز', 'هشام بن عبدالملك'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'سقطت الدولة الأموية بعد معركة:',
-        options: ['الزاب', 'القادسية', 'اليرموك', 'صفين'],
-        correctIndex: 0
-    }
-];
-
-// --- G7 UNIT 1: Weather & Climate ---
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
     {
         id: 1,
-        question: 'وصف حالة الجو في مكان معين لفترة زمنية قصيرة يسمى:',
-        options: ['الطقس', 'المناخ', 'الغلاف الجوي', 'الضغط الجوي'],
+        question: 'وصف حالة الجو في مكان معين خلال فترة زمنية قصيرة يسمى:',
+        options: ['الطقس', 'المناخ', 'الغلاف الجوي', 'الضغط'],
         correctIndex: 0
     },
     {
         id: 2,
-        question: 'الجهاز المستخدم لقياس الضغط الجوي هو:',
+        question: 'متوسط حالة الجو في مكان ما لفترة زمنية طويلة يسمى:',
+        options: ['المناخ', 'الطقس', 'الرياح', 'الحرارة'],
+        correctIndex: 0
+    },
+    {
+        id: 3,
+        question: 'الجهاز المستخدم لقياس الضغط الجوي:',
         options: ['البارومتر', 'الأنيمومتر', 'الثرمومتر', 'الهيجرومتر'],
         correctIndex: 0
     },
     {
-        id: 3,
-        question: 'العامل الرئيسي المؤثر في توزيع الحرارة على سطح الأرض هو:',
-        options: ['أشعة الشمس', 'الرياح', 'الرطوبة', 'الأمطار'],
-        correctIndex: 0
-    },
-    {
         id: 4,
-        question: 'كلما ارتفعنا عن سطح البحر 150 متراً، تنخفض درجة الحرارة بمقدار:',
-        options: ['1 درجة مئوية', '2 درجة مئوية', '5 درجات مئوية', '10 درجات مئوية'],
+        question: 'أي مما يلي ليس من عناصر المناخ؟',
+        options: ['التربة', 'الحرارة', 'الضغط الجوي', 'الرياح'],
         correctIndex: 0
     }
 ];
 
-// --- G7 UNIT 1: Oman Climate ---
+// --- OMAN CLIMATE LESSON ---
+export const OMAN_SECTIONS = [
+    { id: Section.INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.FACTORS, label: 'العوامل المؤثرة', icon: <Settings /> },
+    { id: Section.REGIONS, label: 'الأقاليم المناخية', icon: <Map /> },
+    { id: Section.SEASONS, label: 'فصول السنة', icon: <CloudSun /> },
+    { id: Section.DATA_ANALYSIS, label: 'تحليل البيانات', icon: <BarChart2 /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
+export const OMAN_REGIONS_DATA: OmanRegion[] = [
+    { id: 'semi_desert', name: 'شبه الصحراوي', description: 'يسود في شمال السلطنة', characteristics: 'حار صيفاً ودافئ شتاءً', location: 'شمال السلطنة', color: 'bg-yellow-100' },
+    { id: 'mediterranean', name: 'البحر المتوسط', description: 'في المناطق الجبلية المرتفعة', characteristics: 'معتدل صيفاً وبارد شتاءً', location: 'الجبل الأخضر', color: 'bg-green-100' },
+    { id: 'dry_desert', name: 'الصحراوي الجاف', description: 'يغطي معظم مساحة السلطنة', characteristics: 'شديد الحرارة والجفاف', location: 'الوسطى والربع الخالي', color: 'bg-orange-100' },
+    { id: 'monsoon', name: 'الموسمي', description: 'في محافظة ظفار', characteristics: 'أمطار صيفية وحرارة معتدلة', location: 'محافظة ظفار', color: 'bg-teal-100' }
+];
+
 export const OMAN_QUIZ_QUESTIONS: QuizQuestion[] = [
     {
         id: 1,
-        question: 'دائرة العرض الرئيسية التي تمر عبر سلطنة عمان (مسقط) هي:',
-        options: ['مدار السرطان', 'خط الاستواء', 'مدار الجدي', 'الدائرة القطبية'],
+        question: 'يسود المناخ الصحراوي الحار في:',
+        options: ['معظم محافظات السلطنة', 'الجبل الأخضر', 'محافظة ظفار', 'مسندم'],
         correctIndex: 0
     },
     {
         id: 2,
-        question: 'تهب الرياح الموسمية الصيفية الممطرة (الخريف) على محافظة:',
-        options: ['ظفار', 'مسقط', 'مسندم', 'الباطنة'],
+        question: 'تهب الرياح الموسمية الصيفية على محافظة:',
+        options: ['ظفار', 'مسقط', 'البريمي', 'شمال الباطنة'],
         correctIndex: 0
     },
     {
         id: 3,
-        question: 'يتميز مناخ الجبل الأخضر باعتدال الحرارة صيفاً بسبب عامل:',
-        options: ['الارتفاع (التضاريس)', 'القرب من البحر', 'التيارات البحرية', 'الغطاء النباتي'],
+        question: 'يمر مدار السرطان عبر مدينة:',
+        options: ['مسقط', 'صلالة', 'صحار', 'صور'],
         correctIndex: 0
     },
     {
         id: 4,
-        question: 'تسقط الأمطار الشتوية في شمال عمان بسبب:',
-        options: ['المنخفضات الجوية', 'الرياح الموسمية', 'الرياح التجارية', 'الأعاصير المدارية'],
+        question: 'يتميز مناخ الجبل الأخضر بـ:',
+        options: ['اعتدال الحرارة صيفاً', 'الحرارة الشديدة صيفاً', 'الجفاف التام', 'انعدام الأمطار'],
         correctIndex: 0
     }
 ];
 
-// --- G7 UNIT 1: Earth Internal ---
+// --- EARTH LAYERS LESSON ---
+export const EARTH_LAYERS_DATA: EarthLayer[] = [
+    { id: 'crust', name: 'القشرة الأرضية', depth: '0-100 كم', temp: 'متفاوتة', description: 'الطبقة الخارجية الصلبة التي نعيش عليها.', state: 'صلبة', color: '#8B4513' },
+    { id: 'mantle', name: 'الوشاح', depth: '2900 كم', temp: '1000-3700°C', description: 'طبقة سميكة من الصخور المنصهرة (الماجما).', state: 'لدنة', color: '#D2691E' },
+    { id: 'outer_core', name: 'اللب الخارجي', depth: '2200 كم', temp: '4500-5500°C', description: 'طبقة سائلة من الحديد والنيكل.', state: 'سائلة', color: '#FF8C00' },
+    { id: 'inner_core', name: 'اللب الداخلي', depth: '1220 كم', temp: '6000°C', description: 'مركز الأرض، صلب بسبب الضغط الهائل.', state: 'صلبة', color: '#FF4500' }
+];
+
+export const EARTH_SECTIONS = [
+    { id: Section.INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.LAYERS, label: 'طبقات الأرض', icon: <Layers /> },
+    { id: Section.TECTONICS, label: 'الصفائح التكتونية', icon: <Activity /> },
+    { id: Section.PROCESSES, label: 'العمليات الداخلية', icon: <Mountain /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
 export const EARTH_QUIZ_QUESTIONS: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'الطبقة الخارجية الصلبة للأرض التي نعيش عليها تسمى:',
-        options: ['القشرة الأرضية', 'الوشاح', 'اللب الخارجي', 'اللب الداخلي'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'حركة الصفائح التكتونية التي تسبب تكون الجبال الالتوائية هي حركة:',
-        options: ['تقارب', 'تباعد', 'انزلاق', 'ثبات'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'خروج الصهارة والغازات من باطن الأرض إلى السطح يسمى:',
-        options: ['بركان', 'زلزال', 'تجوية', 'تعرية'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'الجهاز المستخدم لرصد وتسجيل الزلازل يسمى:',
-        options: ['السيزموجراف', 'الباروجراف', 'الثرموجراف', 'الهيجروجراف'],
-        correctIndex: 0
-    }
+    { id: 1, question: 'الطبقة التي نعيش عليها تسمى:', options: ['القشرة الأرضية', 'الوشاح', 'اللب', 'الغلاف الجوي'], correctIndex: 0 },
+    { id: 2, question: 'الطبقة التي تتكون من مواد منصهرة (الماجما) هي:', options: ['الوشاح', 'القشرة', 'اللب الداخلي', 'الغلاف الجوي'], correctIndex: 0 }
 ];
 
-// --- G7 UNIT 1: Earth External ---
+// --- EXTERNAL PROCESSES LESSON ---
+export const EXTERNAL_SECTIONS = [
+    { id: Section.INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.WEATHERING, label: 'التجوية', icon: <Sun /> },
+    { id: Section.EROSION, label: 'التعرية', icon: <Wind /> },
+    { id: Section.DEPOSITION, label: 'الترسب', icon: <Layers /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
 export const EXTERNAL_QUIZ_QUESTIONS: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'تفتت الصخور وتحللها في مكانها دون نقلها يسمى:',
-        options: ['التجوية', 'التعرية', 'الترسيب', 'النقل'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'من الأشكال الناتجة عن النحت الهوائي (الرياح):',
-        options: ['الموائد الصخرية', 'الكهوف الجيرية', 'الأخاديد', 'الشلالات'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'الكثبان الرملية هي أحد مظاهر عملية:',
-        options: ['الترسيب', 'النحت', 'النقل', 'التجوية'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'تتكون الكهوف الجيرية (مثل كهف الهوتة) بفعل:',
-        options: ['المياه الجوفية', 'الرياح', 'الأمواج', 'الجليد'],
-        correctIndex: 0
-    }
+    { id: 1, question: 'تفتت الصخور في مكانها دون انتقال يسمى:', options: ['التجوية', 'التعرية', 'الترسيب', 'النقل'], correctIndex: 0 }
 ];
 
-// --- G7 UNIT 2: Oman in Abbasid Era ---
+// --- ABBASID LESSON ---
+export const ABBASID_SECTIONS = [
+    { id: Section.INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.POLITICAL_MAP, label: 'الخريطة السياسية', icon: <Map /> },
+    { id: Section.PROSPERITY, label: 'الازدهار الحضاري', icon: <Star /> },
+    { id: Section.CRUSADES, label: 'الحروب الصليبية', icon: <Shield /> },
+    { id: Section.MONGOLS, label: 'الغزو المغولي', icon: <Flag /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
+export const ABBASID_QUIZ_QUESTIONS: QuizQuestion[] = [
+    { id: 1, question: 'انتهت الدولة العباسية على يد:', options: ['المغول', 'الصليبيين', 'الفاطميين', 'الأمويين'], correctIndex: 0 }
+];
+
+// --- OMAN ABBASID LESSON ---
+export const OMAN_ABBASID_SECTIONS = [
+    { id: Section.INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.IMAMATE_STABILITY, label: 'الاستقرار', icon: <Shield /> },
+    { id: Section.SOCOTRA_CAMPAIGN, label: 'حملة سقطرى', icon: <Flag /> },
+    { id: Section.ABBASID_INVASION, label: 'الغزو العباسي', icon: <Swords /> },
+    { id: Section.NABHANID_ERA, label: 'دولة النباهنة', icon: <Crown /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
 export const OMAN_ABBASID_QUIZ_QUESTIONS: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'قاد حملة تحرير جزيرة سقطرى من النصارى الإمام:',
-        options: ['الصلت بن مالك', 'المهلب بن أبي صفرة', 'غسان بن عبدالله', 'الوارث بن كعب'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'أطلق العمانيون لقب "محمد بن بور" على القائد العباسي:',
-        options: ['محمد بن نور', 'محمد بن القاسم', 'موسى بن نصير', 'يوسف بن تاشفين'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'المدينة العمانية التي كانت هدفاً لحملات العباسيين للسيطرة عليها هي:',
-        options: ['نزوى', 'صور', 'ظفار', 'مسندم'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'انتهت الإمامة الثانية في عمان بسبب:',
-        options: ['الغزو العباسي وانقسام الصف', 'الكوارث الطبيعية', 'الغزو البرتغالي', 'هجرة السكان'],
-        correctIndex: 0
-    }
+    { id: 1, question: 'قاد حملة تحرير سقطرى الإمام:', options: ['الصلت بن مالك', 'المهلب بن أبي صفرة', 'ناصر بن مرشد', 'أحمد بن سعيد'], correctIndex: 0 }
 ];
 
-// --- G7 UNIT 2: Omani Civilization ---
+// --- OMAN CIVILIZATION LESSON ---
+export const OMAN_CIVILIZATION_SECTIONS = [
+    { id: Section.OMAN_CIV_INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.OMAN_CIV_CULTURE, label: 'الثقافة', icon: <BookOpen /> },
+    { id: Section.OMAN_CIV_ECONOMY, label: 'الاقتصاد', icon: <Coins /> },
+    { id: Section.OMAN_CIV_ARCH, label: 'العمارة', icon: <Hammer /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
 export const OMAN_CIVILIZATION_QUIZ_QUESTIONS: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'من أشهر العلماء العمانيين الذين أسسوا مدارس علمية (مدرسة بهلاء):',
-        options: ['أبو المؤثر (ابن بركة)', 'الخليل بن أحمد', 'ابن دريد', 'المبرد'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'نظام اجتماعي تكافلي ساهم في تمويل التعليم والمساجد في عمان:',
-        options: ['الوقف', 'الزكاة', 'الجزية', 'الخراج'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'من أهم المحاصيل الزراعية التي اشتهرت عمان بتصديرها:',
-        options: ['التمور واللبان', 'القمح', 'الأرز', 'القطن'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'تعد القلاع والحصون في عمان مثالاً على العمارة:',
-        options: ['العسكرية', 'الدينية', 'المدنية', 'التجارية'],
-        correctIndex: 0
-    }
+    { id: 1, question: 'مؤلف كتاب "العين" هو:', options: ['الخليل بن أحمد', 'ابن دريد', 'المبرد', 'السيرافي'], correctIndex: 0 }
 ];
 
-// --- G7 UNIT 3: Basic Statute ---
+// --- BASIC STATUTE LESSON ---
+export const BASIC_STATUTE_SECTIONS = [
+    { id: Section.STATUTE_INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.STATUTE_STRUCTURE, label: 'الهيكل', icon: <Layers /> },
+    { id: Section.STATUTE_PILLARS, label: 'المرتكزات', icon: <Building2 /> },
+    { id: Section.STATUTE_PRINCIPLES, label: 'المبادئ', icon: <BookOpen /> },
+    { id: Section.STATUTE_RUMORS, label: 'الإشاعات', icon: <HelpCircle /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
 export const BASIC_STATUTE_QUIZ_QUESTIONS: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'الوثيقة الرسمية التي تحدد نظام الحكم وحقوق وواجبات المواطنين تسمى:',
-        options: ['النظام الأساسي للدولة', 'القانون المدني', 'قانون الجزاء', 'قانون المرور'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'صدر النظام الأساسي للدولة (الحالي) في عهد السلطان:',
-        options: ['هيثم بن طارق', 'قابوس بن سعيد', 'سعيد بن تيمور', 'فيصل بن تركي'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'دين الدولة في سلطنة عمان هو:',
-        options: ['الإسلام', 'المسيحية', 'اليهودية', 'البوذية'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'نظام الحكم في سلطنة عمان هو:',
-        options: ['سلطاني وراثي', 'جمهوري', 'ملكي دستوري', 'أميري'],
-        correctIndex: 0
-    }
+    { id: 1, question: 'صدر النظام الأساسي للدولة عام:', options: ['1996م', '1970م', '2020م', '2011م'], correctIndex: 0 }
 ];
 
-// --- G7 UNIT 3: State Institutions ---
+// --- STATE INSTITUTIONS LESSON ---
+export const STATE_INSTITUTIONS_SECTIONS = [
+    { id: Section.STATE_INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.STATE_STRUCTURE, label: 'الهيكل التنظيمي', icon: <Layers /> },
+    { id: Section.HEAD_OF_STATE, label: 'رئيس الدولة', icon: <Crown /> },
+    { id: Section.GOV_INSTITUTIONS, label: 'المؤسسات', icon: <Building2 /> },
+    { id: Section.GOV_SERVICES, label: 'الخدمات', icon: <HeartHandshake /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
 export const STATE_INSTITUTIONS_QUIZ_QUESTIONS: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'السلطة المسؤولة عن إصدار القوانين والتشريعات في الدولة هي:',
-        options: ['السلطة التشريعية (مجلس عمان)', 'السلطة التنفيذية', 'السلطة القضائية', 'السلطة العسكرية'],
-        correctIndex: 0
-    },
-    {
-        id: 2,
-        question: 'يتكون مجلس عمان من مجلسين هما:',
-        options: ['الدولة والشورى', 'الوزراء والشورى', 'القضاء والدفاع', 'الدولة والوزراء'],
-        correctIndex: 0
-    },
-    {
-        id: 3,
-        question: 'الجهة المسؤولة عن تنفيذ السياسة العامة للدولة وتقديم الخدمات:',
-        options: ['الحكومة (السلطة التنفيذية)', 'المحاكم', 'مجلس الشورى', 'الادعاء العام'],
-        correctIndex: 0
-    },
-    {
-        id: 4,
-        question: 'المؤسسة التي تفصل في المنازعات وتحقق العدالة هي:',
-        options: ['السلطة القضائية', 'الشرطة', 'الجيش', 'البلدية'],
-        correctIndex: 0
-    }
+    { id: 1, question: 'رئيس الدولة هو:', options: ['السلطان', 'رئيس الوزراء', 'رئيس مجلس الشورى', 'رئيس المحكمة العليا'], correctIndex: 0 }
 ];
 
-export const UNIT_1_ASSESSMENT_QUESTIONS: QuizQuestion[] = [];
-export const UNIT_2_ASSESSMENT_QUESTIONS: QuizQuestion[] = [];
-export const UNIT_3_ASSESSMENT_QUESTIONS: QuizQuestion[] = [];
+// --- GRADE 6 SECTIONS ---
+export const SIXTH_POPULATION_SECTIONS = [
+    { id: Section.INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.POP_SOURCES, label: 'مصادر البيانات', icon: <BookOpen /> },
+    { id: Section.CENSUS_EVOLUTION, label: 'تطور التعداد', icon: <Activity /> },
+    { id: Section.POP_IMPORTANCE, label: 'الأهمية', icon: <Star /> },
+    { id: Section.SUMMARY, label: 'ملخص', icon: <FileText /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
 
-// --- MAPS LESSON CONSTANTS ---
-export const MAPS_QUIZ: QuizQuestion[] = [
-    {
-        id: 1,
-        question: 'ما هو العنصر الذي يوضح دلالات الرموز والألوان في الخريطة؟',
-        options: ['عنوان الخريطة', 'مفتاح الخريطة', 'مقياس الرسم', 'اتجاه الشمال'],
-        correctIndex: 1
-    },
-    {
-        id: 2,
-        question: 'النسبة بين المسافة على الخريطة وما يقابلها على الطبيعة تسمى:',
-        options: ['إطار الخريطة', 'شبكة الإحداثيات', 'مقياس الرسم', 'الرموز'],
-        correctIndex: 2
-    },
-    {
-        id: 3,
-        question: 'لون يستخدم عادة لتمثيل المسطحات المائية على الخريطة:',
-        options: ['الأخضر', 'البني', 'الأزرق', 'الأصفر'],
-        correctIndex: 2
-    }
+export const SIXTH_POPULATION_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'عملية حصر شامل لجميع السكان والمساكن في الدولة تسمى:', options: ['التعداد السكاني', 'المسح بالعينة', 'السجل المدني', 'الإحصاء الحيوي'], correctIndex: 0 },
+    { id: 2, question: 'أجري أول تعداد سكاني في سلطنة عمان عام:', options: ['1993م', '2003م', '2010م', '2020م'], correctIndex: 0 },
+    { id: 3, question: 'أي من الآتي يعتبر مصدراً ثانوياً للبيانات السكانية؟', options: ['سجلات المدارس والمستشفيات', 'التعداد السكاني', 'المسح بالعينة', 'التسجيل الحيوي'], correctIndex: 0 },
+    { id: 4, question: 'الجهة المسؤولة عن التعداد السكاني في سلطنة عمان:', options: ['المركز الوطني للإحصاء والمعلومات', 'وزارة الصحة', 'وزارة الداخلية', 'وزارة التربية'], correctIndex: 0 }
+];
+
+export const SIXTH_STRUCTURE_SECTIONS = [
+    { id: Section.INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.FACTORS, label: 'النوع', icon: <Users /> },
+    { id: Section.REGIONS, label: 'العمر', icon: <Activity /> },
+    { id: Section.DATA_ANALYSIS, label: 'الهرم السكاني', icon: <BarChart2 /> },
+    { id: Section.PROCESSES, label: 'البنية الاقتصادية', icon: <Coins /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
+export const SIXTH_STRUCTURE_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'يقصد بالبنية النوعية للسكان تقسيمهم إلى:', options: ['ذكور وإناث', 'صغار وكبار', 'عاملين وغير عاملين', 'حضر وريف'], correctIndex: 0 }
+];
+
+export const SIXTH_GROWTH_SECTIONS = [
+    { id: Section.GROWTH_INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.OMAN_GROWTH_CHART, label: 'تحليل النمو', icon: <BarChart2 /> },
+    { id: Section.NATURAL_INCREASE, label: 'الزيادة الطبيعية', icon: <Sun /> },
+    { id: Section.MIGRATION_IMPACT, label: 'الهجرة', icon: <Flag /> },
+    { id: Section.GROWTH_EFFECTS, label: 'آثار النمو', icon: <Activity /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
+export const SIXTH_GROWTH_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'الفرق بين عدد المواليد وعدد الوفيات يسمى:', options: ['الزيادة الطبيعية', 'الزيادة غير الطبيعية', 'الكثافة السكانية', 'النمو السكاني'], correctIndex: 0 }
+];
+
+export const SIXTH_DENSITY_SECTIONS = [
+    { id: Section.DENSITY_INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.DENSITY_FACTORS, label: 'العوامل المؤثرة', icon: <Settings /> },
+    { id: Section.CITY_VILLAGE, label: 'المدينة والريف', icon: <Building2 /> },
+    { id: Section.DENSITY_CALC, label: 'حساب الكثافة', icon: <Activity /> },
+    { id: Section.DENSITY_MAP_ANALYSIS, label: 'تحليل الخرائط', icon: <Map /> },
+    { id: Section.OMAN_DENSITY, label: 'كثافة عمان', icon: <Flag /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
+export const SIXTH_DENSITY_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'تحسب الكثافة السكانية بقسمة عدد السكان على:', options: ['المساحة', 'المواليد', 'الوفيات', 'الموارد'], correctIndex: 0 }
+];
+
+export const UMAYYAD_SECTIONS = [
+    { id: Section.UMAYYAD_RISE, label: 'التأسيس', icon: <Crown /> },
+    { id: Section.UMAYYAD_CONQUESTS, label: 'الفتوحات', icon: <Map /> },
+    { id: Section.UMAYYAD_ACHIEVEMENTS, label: 'المنجزات', icon: <Star /> },
+    { id: Section.UMAYYAD_FALL, label: 'السقوط', icon: <Flag /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
+export const UMAYYAD_QUIZ_QUESTIONS: QuizQuestion[] = [
+    { id: 1, question: 'مؤسس الدولة الأموية هو:', options: ['معاوية بن أبي سفيان', 'عبدالملك بن مروان', 'عمر بن عبدالعزيز', 'الوليد بن عبدالملك'], correctIndex: 0 }
+];
+
+export const OMAN_UMAYYAD_SECTIONS = [
+    { id: Section.OMAN_UMAYYAD_INTRO, label: 'الموقف العماني', icon: <Shield /> },
+    { id: Section.OMAN_UMAYYAD_INDEPENDENCE, label: 'الاستقلال', icon: <Flag /> },
+    { id: Section.OMAN_UMAYYAD_CONTROL, label: 'حملات الحجاج', icon: <Swords /> },
+    { id: Section.OMAN_UMAYYAD_GOVERNORS, label: 'الولاة', icon: <Users /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
+export const OMAN_UMAYYAD_QUIZ_QUESTIONS: QuizQuestion[] = [
+    { id: 1, question: 'القائد العماني الذي قاوم حملات الحجاج:', options: ['سعيد بن عباد', 'المهلب بن أبي صفرة', 'الجلندى بن مسعود', 'الصلت بن مالك'], correctIndex: 0 }
+];
+
+export const OMAN_UMAYYAD_ACHIEVEMENTS_SECTIONS = [
+    { id: Section.OMAN_ACHIEVEMENTS_INTRO, label: 'مقدمة', icon: <Target /> },
+    { id: Section.OMAN_ACHIEVEMENTS_CULTURE, label: 'الثقافة', icon: <BookOpen /> },
+    { id: Section.OMAN_ACHIEVEMENTS_MILITARY, label: 'الجيش', icon: <Swords /> },
+    { id: Section.OMAN_ACHIEVEMENTS_ECONOMY, label: 'الاقتصاد', icon: <Coins /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
+export const OMAN_UMAYYAD_ACHIEVEMENTS_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'مؤسس علم العروض هو:', options: ['الخليل بن أحمد', 'ابن دريد', 'المبرد', 'سيبويه'], correctIndex: 0 }
+];
+
+export const CIVIL_SOCIETY_SECTIONS = [
+    { id: Section.CIVIL_SOCIETY_INTRO, label: 'المفهوم', icon: <BookOpen /> },
+    { id: Section.CIVIL_SOCIETY_TYPES, label: 'الأنواع', icon: <Building2 /> },
+    { id: Section.CIVIL_SOCIETY_IMPORTANCE, label: 'الأهمية', icon: <Star /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
+export const CIVIL_SOCIETY_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'من خصائص مؤسسات المجتمع المدني أنها:', options: ['غير ربحية', 'حكومية', 'إجبارية', 'عسكرية'], correctIndex: 0 }
+];
+
+export const COMMUNITY_PARTICIPATION_SECTIONS = [
+    { id: Section.COMMUNITY_INTRO, label: 'المفهوم', icon: <Crown /> },
+    { id: Section.COMMUNITY_FORMS, label: 'الصور', icon: <Users /> },
+    { id: Section.COMMUNITY_IMPORTANCE, label: 'الأهمية', icon: <Star /> },
+    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+];
+
+export const COMMUNITY_PARTICIPATION_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'المشاركة في انتخابات مجلس الشورى تعتبر:', options: ['مشاركة سياسية', 'مشاركة اجتماعية', 'مشاركة اقتصادية', 'مشاركة ثقافية'], correctIndex: 0 }
 ];
 
 export const MAPS_SECTIONS = [
@@ -828,333 +376,38 @@ export const MAPS_SECTIONS = [
     { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
 ];
 
-// --- LESSON SECTIONS ---
-
-export const ABBASID_SECTIONS = [
-    { id: Section.INTRO, label: 'المقدمة والسمات', icon: <BookOpen /> },
-    { id: Section.POLITICAL_MAP, label: 'الدول المستقلة', icon: <Map /> },
-    { id: Section.PROSPERITY, label: 'مظاهر الازدهار', icon: <Coins /> },
-    { id: Section.CRUSADES, label: 'الأخطار (الصليبيون)', icon: <Swords /> },
-    { id: Section.MONGOLS, label: 'الأخطار (المغول)', icon: <Flag /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+export const MAPS_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'يوضح موضوع الخريطة وما تحتويه:', options: ['عنوان الخريطة', 'مفتاح الخريطة', 'مقياس الرسم', 'اتجاه الشمال'], correctIndex: 0 }
 ];
 
-export const UMAYYAD_SECTIONS = [
-    { id: Section.UMAYYAD_RISE, label: 'قيام الدولة', icon: <Flag /> },
-    { id: Section.UMAYYAD_CONQUESTS, label: 'الفتوحات', icon: <Map /> },
-    { id: Section.UMAYYAD_ACHIEVEMENTS, label: 'المنجزات', icon: <Star /> },
-    { id: Section.UMAYYAD_FALL, label: 'النهاية', icon: <ArrowDown /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+// --- ASSESSMENT QUESTIONS ---
+export const UNIT_1_ASSESSMENT_QUESTIONS: QuizQuestion[] = [
+    { id: 1, question: 'أحد المكونات التالية ليس من مكونات الغلاف الجوي:', options: ['الصخور', 'الأكسجين', 'النيتروجين', 'بخار الماء'], correctIndex: 0 },
+    { id: 2, question: 'عملية تحول الماء من الحالة السائلة إلى الغازية تسمى:', options: ['التبخر', 'التكاثف', 'التساقط', 'الانصهار'], correctIndex: 0 },
+    { id: 3, question: 'أي الموارد التالية يعتبر مورداً غير متجدد؟', options: ['النفط', 'الرياح', 'الشمس', 'النبات'], correctIndex: 0 }
 ];
 
-export const SECTIONS = [
-  { id: Section.INTRO, label: 'مقدمة', icon: <BookOpen /> },
-  { id: Section.DEFINITION, label: 'الطقس والمناخ', icon: <CloudSun /> },
-  { id: Section.FACTORS, label: 'العوامل المؤثرة', icon: <Activity /> },
-  { id: Section.ELEMENTS, label: 'عناصر الطقس', icon: <Thermometer /> },
-  { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
+export const UNIT_2_ASSESSMENT_QUESTIONS: QuizQuestion[] = [
+    { id: 1, question: 'وثيقة نظمت العلاقة بين سكان المدينة المنورة:', options: ['الصحيفة', 'القرآن', 'الدستور', 'المعاهدة'], correctIndex: 0 },
+    { id: 2, question: 'الملكان اللذان حكما عمان عند وصول رسالة النبي ﷺ هما:', options: ['جيفر وعبد', 'سعيد وسليمان', 'الصلت ومهنا', 'مالك وعمر'], correctIndex: 0 }
 ];
 
-export const OMAN_SECTIONS = [
-    { id: Section.INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.FACTORS, label: 'العوامل المؤثرة', icon: <Activity /> },
-    { id: Section.REGIONS, label: 'الأقاليم المناخية', icon: <Map /> },
-    { id: Section.SEASONS, label: 'فصول السنة', icon: <Sun /> },
-    { id: Section.DATA_ANALYSIS, label: 'تحليل البيانات', icon: <Activity /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const EARTH_SECTIONS = [
-    { id: Section.INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.LAYERS, label: 'طبقات الأرض', icon: <Layers /> },
-    { id: Section.TECTONICS, label: 'الصفائح التكتونية', icon: <Activity /> },
-    { id: Section.PROCESSES, label: 'العمليات الداخلية', icon: <Activity /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const EXTERNAL_SECTIONS = [
-    { id: Section.INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.WEATHERING, label: 'التجوية', icon: <Activity /> },
-    { id: Section.EROSION, label: 'التعرية', icon: <Wind /> },
-    { id: Section.DEPOSITION, label: 'الترسب', icon: <Mountain /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const OMAN_ABBASID_SECTIONS = [
-    { id: Section.INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.IMAMATE_STABILITY, label: 'استقرار الإمامة', icon: <Shield /> },
-    { id: Section.SOCOTRA_CAMPAIGN, label: 'حملة سقطرى', icon: <Flag /> },
-    { id: Section.ABBASID_INVASION, label: 'الغزو العباسي', icon: <Flag /> },
-    { id: Section.NABHANID_ERA, label: 'دولة النباهنة', icon: <Castle /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const OMAN_CIVILIZATION_SECTIONS = [
-    { id: Section.OMAN_CIV_INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.OMAN_CIV_CULTURE, label: 'الحياة الثقافية', icon: <Book /> },
-    { id: Section.OMAN_CIV_ECONOMY, label: 'الحياة الاقتصادية', icon: <Coins /> },
-    { id: Section.OMAN_CIV_ARCH, label: 'العمارة', icon: <Castle /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const BASIC_STATUTE_SECTIONS = [
-    { id: Section.STATUTE_INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.STATUTE_STRUCTURE, label: 'هيكل النظام', icon: <Briefcase /> },
-    { id: Section.STATUTE_PILLARS, label: 'المرتكزات', icon: <Landmark /> },
-    { id: Section.STATUTE_PRINCIPLES, label: 'المبادئ', icon: <Scale /> },
-    { id: Section.STATUTE_RUMORS, label: 'توعية قانونية', icon: <Shield /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const STATE_INSTITUTIONS_SECTIONS = [
-    { id: Section.STATE_INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.STATE_STRUCTURE, label: 'سلطات الدولة', icon: <Landmark /> },
-    { id: Section.HEAD_OF_STATE, label: 'رئيس الدولة', icon: <Crown /> },
-    { id: Section.GOV_INSTITUTIONS, label: 'المؤسسات', icon: <Building2 /> },
-    { id: Section.GOV_SERVICES, label: 'الخدمات', icon: <HeartHandshake /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-// ... Grade 6 Sections ...
-export const SIXTH_POPULATION_SECTIONS = [
-    { id: Section.INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.POP_SOURCES, label: 'مصادر البيانات', icon: <Database /> },
-    { id: Section.CENSUS_EVOLUTION, label: 'تطور التعداد', icon: <Activity /> },
-    { id: Section.POP_IMPORTANCE, label: 'أهمية البيانات', icon: <Target /> },
-    { id: Section.SUMMARY, label: 'الخلاصة', icon: <FileText /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const SIXTH_STRUCTURE_SECTIONS = [
-    { id: Section.INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.FACTORS, label: 'البنية النوعية', icon: <Users /> },
-    { id: Section.REGIONS, label: 'البنية العمرية', icon: <Users /> },
-    { id: Section.DATA_ANALYSIS, label: 'الهرم السكاني', icon: <Activity /> },
-    { id: Section.PROCESSES, label: 'البنية الاقتصادية', icon: <Briefcase /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const SIXTH_GROWTH_SECTIONS = [
-    { id: Section.GROWTH_INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.OMAN_GROWTH_CHART, label: 'نمو السكان في عمان', icon: <Activity /> },
-    { id: Section.NATURAL_INCREASE, label: 'الزيادة الطبيعية', icon: <Users /> },
-    { id: Section.MIGRATION_IMPACT, label: 'الهجرة', icon: <ArrowLeftRight /> },
-    { id: Section.GROWTH_EFFECTS, label: 'الآثار', icon: <AlertTriangle /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const SIXTH_DENSITY_SECTIONS = [
-    { id: Section.DENSITY_INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.DENSITY_FACTORS, label: 'عوامل التوزيع', icon: <Map /> },
-    { id: Section.CITY_VILLAGE, label: 'المدينة والريف', icon: <Building2 /> },
-    { id: Section.DENSITY_CALC, label: 'مفهوم الكثافة', icon: <Calculator /> },
-    { id: Section.DENSITY_MAP_ANALYSIS, label: 'تحليل الخرائط', icon: <Map /> },
-    { id: Section.OMAN_DENSITY, label: 'كثافة عمان', icon: <Map /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const OMAN_UMAYYAD_SECTIONS = [
-    { id: Section.OMAN_UMAYYAD_INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.OMAN_UMAYYAD_STANCE, label: 'الموقف العماني', icon: <Shield /> },
-    { id: Section.OMAN_UMAYYAD_INDEPENDENCE, label: 'الاستقلال', icon: <Flag /> },
-    { id: Section.OMAN_UMAYYAD_CONTROL, label: 'السيطرة الأموية', icon: <Swords /> },
-    { id: Section.OMAN_UMAYYAD_GOVERNORS, label: 'العمال', icon: <Users /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const OMAN_UMAYYAD_ACHIEVEMENTS_SECTIONS = [
-    { id: Section.OMAN_ACHIEVEMENTS_INTRO, label: 'مقدمة', icon: <BookOpen /> },
-    { id: Section.OMAN_ACHIEVEMENTS_CULTURE, label: 'ثقافياً', icon: <Book /> },
-    { id: Section.OMAN_ACHIEVEMENTS_MILITARY, label: 'عسكرياً', icon: <Shield /> },
-    { id: Section.OMAN_ACHIEVEMENTS_ECONOMY, label: 'اقتصادياً', icon: <Coins /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const CIVIL_SOCIETY_SECTIONS = [
-    { id: Section.CIVIL_SOCIETY_INTRO, label: 'المفهوم', icon: <BookOpen /> },
-    { id: Section.CIVIL_SOCIETY_TYPES, label: 'الأنواع', icon: <List /> },
-    { id: Section.CIVIL_SOCIETY_IMPORTANCE, label: 'الأهمية', icon: <Star /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const COMMUNITY_PARTICIPATION_SECTIONS = [
-    { id: Section.COMMUNITY_INTRO, label: 'المفهوم', icon: <BookOpen /> },
-    { id: Section.COMMUNITY_FORMS, label: 'الصور', icon: <List /> },
-    { id: Section.COMMUNITY_IMPORTANCE, label: 'الأهمية', icon: <Star /> },
-    { id: Section.QUIZ, label: 'اختبار', icon: <Activity /> }
-];
-
-export const EARTH_LAYERS_DATA: EarthLayer[] = [
-    { id: 'crust', name: 'القشرة الأرضية', depth: '8 - 60 كم', temp: 'معتدلة', description: 'الطبقة الخارجية الصلبة التي نعيش عليها.', state: 'صلبة', color: '#8B4513' },
-    { id: 'mantle', name: 'الوشاح (الستار)', depth: '2900 كم', temp: 'عالية جداً', description: 'طبقة سميكة من الصخور المنصهرة (الماجما).', state: 'شبه سائلة', color: '#D2691E' },
-    { id: 'outer_core', name: 'اللب الخارجي', depth: '2250 كم', temp: '4000°C', description: 'طبقة سائلة من الحديد والنيكل.', state: 'سائلة', color: '#FF8C00' },
-    { id: 'inner_core', name: 'اللب الداخلي', depth: '1250 كم', temp: '5000°C', description: 'مركز الأرض، صلب جداً بسبب الضغط الهائل.', state: 'صلبة', color: '#FF4500' }
-];
-
-export const OMAN_REGIONS_DATA: OmanRegion[] = [
-    { id: 'semi_desert', name: 'المناخ شبه الصحراوي', description: 'حار صيفاً ودافئ شتاءً مع أمطار قليلة.', characteristics: 'يسود في معظم شمال السلطنة.', location: 'السهول الساحلية (الباطنة)', color: 'bg-yellow-100 border-yellow-300' },
-    { id: 'mediterranean', name: 'مناخ البحر المتوسط', description: 'معتدل صيفاً وبارد شتاءً.', characteristics: 'أمطار شتوية وأحياناً صيفية.', location: 'الجبل الأخضر وجبل شمس', color: 'bg-green-100 border-green-300' },
-    { id: 'dry_desert', name: 'المناخ الصحراوي الجاف', description: 'شديد الحرارة والجفاف طوال العام.', characteristics: 'ندرة الأمطار والغطاء النباتي.', location: 'الربع الخالي والوسطى', color: 'bg-orange-100 border-orange-300' },
-    { id: 'monsoon', name: 'المناخ الموسمي', description: 'معتدل طوال العام مع أمطار موسمية صيفية (الخريف).', characteristics: 'ضباب وأمطار رذاذية في الصيف.', location: 'محافظة ظفار', color: 'bg-teal-100 border-teal-300' }
-];
-
-export const UNITS: Unit[] = [
-    // ... Grade 7 Units ...
-    {
-        id: 'UNIT_1',
-        title: 'الوحدة الأولى: الغلاف الحيوي والنظم البيئية',
-        description: 'دراسة التفاعلات بين الكائنات الحية وبيئتها',
-        lessons: [
-            {
-                id: 'WEATHER',
-                title: 'الدرس الأول: الطقس والمناخ',
-                subtitle: 'مفاهيم أساسية',
-                description: 'الفرق بين الطقس والمناخ وعناصرهما.',
-                icon: '🌦️',
-                color: 'bg-sky-50 hover:bg-sky-100 border-sky-200',
-                textColor: 'text-sky-700',
-                available: true
-            },
-            {
-                id: 'OMAN_CLIMATE',
-                title: 'الدرس الثاني: مناخ سلطنة عمان',
-                subtitle: 'دراسة حالة',
-                description: 'العوامل المؤثرة في مناخ السلطنة وتنوعه.',
-                icon: '🇴🇲',
-                color: 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200',
-                textColor: 'text-emerald-700',
-                available: true
-            },
-            {
-                id: 'EARTH_LAYERS',
-                title: 'الدرس الثالث: تشكيل سطح الأرض (1)',
-                subtitle: 'عوامل باطنية',
-                description: 'طبقات الأرض والبراكين والزلازل.',
-                icon: '🌋',
-                color: 'bg-orange-50 hover:bg-orange-100 border-orange-200',
-                textColor: 'text-orange-700',
-                available: true
-            },
-            {
-                id: 'EXTERNAL_PROCESSES',
-                title: 'الدرس الرابع: تشكيل سطح الأرض (2)',
-                subtitle: 'عوامل خارجية',
-                description: 'التجوية والتعرية وتأثير الرياح والمياه.',
-                icon: '🏜️',
-                color: 'bg-amber-50 hover:bg-amber-100 border-amber-200',
-                textColor: 'text-amber-700',
-                available: true
-            },
-            {
-                id: 'UNIT_1_ASSESSMENT',
-                title: 'تقويم الوحدة الأولى',
-                subtitle: 'اختبار شامل',
-                description: 'أسئلة مراجعة وتطبيق لما سبق.',
-                icon: '📝',
-                color: 'bg-indigo-50 hover:bg-indigo-100 border-indigo-200',
-                textColor: 'text-indigo-700',
-                available: true
-            }
-        ]
-    },
-    {
-        id: 'UNIT_2',
-        title: 'الوحدة الثانية: التاريخ الإسلامي (العصر العباسي)',
-        description: 'تاريخ الحضارة الإسلامية في العصر العباسي الثاني',
-        lessons: [
-            {
-                id: 'ABBASID_STATE',
-                title: 'الدرس الأول: العصر العباسي الثاني',
-                subtitle: 'تاريخ وسياسة',
-                description: 'الأوضاع السياسية، الدول المستقلة، والازدهار الحضاري.',
-                icon: '🕌',
-                color: 'bg-purple-50 hover:bg-purple-100 border-purple-200',
-                textColor: 'text-purple-700',
-                available: true
-            },
-            {
-                id: 'OMAN_ABBASID',
-                title: 'الدرس الثاني: عمان في العصر العباسي',
-                subtitle: 'علاقات وتحديات',
-                description: 'استقلال عمان وعلاقتها بالخلافة العباسية.',
-                icon: '⚔️',
-                color: 'bg-rose-50 hover:bg-rose-100 border-rose-200',
-                textColor: 'text-rose-700',
-                available: true
-            },
-            {
-                id: 'OMAN_CIVILIZATION',
-                title: 'الدرس الثالث: المنجزات الحضارية العمانية',
-                subtitle: 'تراث وأصالة',
-                description: 'العمارة، الزراعة، والتجارة في عمان قديماً.',
-                icon: '🏺',
-                color: 'bg-amber-50 hover:bg-amber-100 border-amber-200',
-                textColor: 'text-amber-700',
-                available: true
-            },
-            {
-                id: 'UNIT_2_ASSESSMENT',
-                title: 'تقويم الوحدة الثانية',
-                subtitle: 'اختبار شامل',
-                description: 'مراجعة شاملة للوحدة الثانية.',
-                icon: '📜',
-                color: 'bg-purple-50 hover:bg-purple-100 border-purple-200',
-                textColor: 'text-purple-700',
-                available: true
-            }
-        ]
-    },
-    {
-        id: 'UNIT_3',
-        title: 'الوحدة الثالثة: التربية الوطنية',
-        description: 'مؤسسات الدولة والنظام الأساسي',
-        lessons: [
-            {
-                id: 'BASIC_STATUTE',
-                title: 'الدرس الأول: النظام الأساسي للدولة',
-                subtitle: 'الدستور والقانون',
-                description: 'أهمية النظام الأساسي ومبادئه.',
-                icon: '⚖️',
-                color: 'bg-teal-50 hover:bg-teal-100 border-teal-200',
-                textColor: 'text-teal-700',
-                available: true
-            },
-            {
-                id: 'STATE_INSTITUTIONS',
-                title: 'الدرس الثاني: مؤسسات الدولة',
-                subtitle: 'سلطات وخدمات',
-                description: 'السلطات الثلاث والخدمات الحكومية.',
-                icon: '🏛️',
-                color: 'bg-cyan-50 hover:bg-cyan-100 border-cyan-200',
-                textColor: 'text-cyan-700',
-                available: true
-            },
-            {
-                id: 'UNIT_3_ASSESSMENT',
-                title: 'تقويم الوحدة الثالثة',
-                subtitle: 'اختبار شامل',
-                description: 'مراجعة لمفاهيم المواطنة والمؤسسات.',
-                icon: '🇴🇲',
-                color: 'bg-blue-50 hover:bg-blue-100 border-blue-200',
-                textColor: 'text-blue-700',
-                available: true
-            }
-        ]
-    }
+export const UNIT_3_ASSESSMENT_QUESTIONS: QuizQuestion[] = [
+    { id: 1, question: 'الالتزام بالقوانين يعتبر:', options: ['واجباً', 'حقاً', 'تطوعاً', 'منحة'], correctIndex: 0 },
+    { id: 2, question: 'المؤسسة الوطنية التي تعنى بحقوق الإنسان في عمان:', options: ['اللجنة العمانية لحقوق الإنسان', 'الشورى', 'الدفاع', 'البلدية'], correctIndex: 0 }
 ];
 
 export const UNITS_SIXTH: Unit[] = [
-    // ... Grade 6 Units ...
     {
         id: 'UNIT_1_G6',
         title: 'الوحدة الأولى: السكان في العالم',
-        description: 'دراسة البيانات السكانية والنمو',
+        description: 'دراسة جغرافية السكان',
         lessons: [
             {
                 id: 'SIXTH_POPULATION',
                 title: 'الدرس الأول: البيانات السكانية',
-                subtitle: 'مصادر وأنواع',
-                description: 'مصادر البيانات السكانية وأهميتها.',
+                subtitle: 'المصادر والأهمية',
+                description: 'مصادر البيانات السكانية (تعداد، تسجيل حيوي)، وتطور التعداد في عمان.',
                 icon: '📊',
                 color: 'bg-blue-50 hover:bg-blue-100 border-blue-200',
                 textColor: 'text-blue-700',
@@ -1162,9 +415,9 @@ export const UNITS_SIXTH: Unit[] = [
             },
             {
                 id: 'SIXTH_STRUCTURE',
-                title: 'الدرس الثاني: البنية السكانية',
-                subtitle: 'نوع وعمر',
-                description: 'التركيب النوعي والعمري للسكان.',
+                title: 'الدرس الثاني: بنية السكان',
+                subtitle: 'النوع والعمر',
+                description: 'التركيب النوعي والعمري، والهرم السكاني.',
                 icon: '👥',
                 color: 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200',
                 textColor: 'text-emerald-700',
@@ -1173,8 +426,8 @@ export const UNITS_SIXTH: Unit[] = [
             {
                 id: 'SIXTH_GROWTH',
                 title: 'الدرس الثالث: النمو السكاني',
-                subtitle: 'زيادة وتغير',
-                description: 'معدلات النمو وعوامل التغير السكاني.',
+                subtitle: 'الزيادة والتغير',
+                description: 'الزيادة الطبيعية وغير الطبيعية (الهجرة)، وحساب معدلات النمو.',
                 icon: '📈',
                 color: 'bg-indigo-50 hover:bg-indigo-100 border-indigo-200',
                 textColor: 'text-indigo-700',
@@ -1183,8 +436,8 @@ export const UNITS_SIXTH: Unit[] = [
             {
                 id: 'SIXTH_DENSITY',
                 title: 'الدرس الرابع: الكثافة السكانية',
-                subtitle: 'توزيع السكان',
-                description: 'حساب الكثافة وتوزيع السكان في العالم.',
+                subtitle: 'التوزيع والتركز',
+                description: 'مفهوم الكثافة، والعوامل المؤثرة في توزيع السكان.',
                 icon: '🗺️',
                 color: 'bg-rose-50 hover:bg-rose-100 border-rose-200',
                 textColor: 'text-rose-700',
@@ -1193,8 +446,8 @@ export const UNITS_SIXTH: Unit[] = [
             {
                 id: 'UNIT_1_G6_ASSESSMENT',
                 title: 'تقويم الوحدة الأولى',
-                subtitle: 'مراجعة',
-                description: 'اختبار في مفاهيم السكان.',
+                subtitle: 'مراجعة شاملة',
+                description: 'أسئلة وتطبيقات على جغرافية السكان.',
                 icon: '📝',
                 color: 'bg-slate-50 hover:bg-slate-100 border-slate-200',
                 textColor: 'text-slate-700',
@@ -1204,24 +457,24 @@ export const UNITS_SIXTH: Unit[] = [
     },
     {
         id: 'UNIT_2_G6',
-        title: 'الوحدة الثانية: الحضارة العربية الإسلامية',
-        description: 'الدولة الأموية وتاريخ عمان',
+        title: 'الوحدة الثانية: الدولة الأموية',
+        description: 'تاريخ الدولة الأموية وعلاقتها بعمان',
         lessons: [
             {
                 id: 'SIXTH_UMAYYAD_STATE',
-                title: 'الدرس الأول: قيام الدولة الأموية',
-                subtitle: 'خلفاء وفتوحات',
-                description: 'تأسيس الدولة، أبرز خلفائها، والفتوحات الإسلامية.',
-                icon: '🏳️',
+                title: 'الدرس الأول: الدولة الأموية',
+                subtitle: 'النشأة والامتداد',
+                description: 'قيام الدولة، خلفاؤها، والفتوحات الإسلامية.',
+                icon: '🏰',
                 color: 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200',
                 textColor: 'text-emerald-700',
                 available: true
             },
             {
                 id: 'OMAN_UMAYYAD',
-                title: 'الدرس الثاني: عمان والأمويون',
-                subtitle: 'علاقات سياسية',
-                description: 'موقف عمان من الدولة الأموية واستقلالها.',
+                title: 'الدرس الثاني: عمان في العصر الأموي',
+                subtitle: 'العلاقات السياسية',
+                description: 'موقف عمان من الدولة الأموية، ومقاومة الحملات.',
                 icon: '⚔️',
                 color: 'bg-orange-50 hover:bg-orange-100 border-orange-200',
                 textColor: 'text-orange-700',
@@ -1229,9 +482,9 @@ export const UNITS_SIXTH: Unit[] = [
             },
             {
                 id: 'OMAN_UMAYYAD_ACHIEVEMENTS',
-                title: 'الدرس الثالث: المنجزات الحضارية',
-                subtitle: 'ثقافة وعمارة',
-                description: 'الإنجازات العمانية في العصر الأموي.',
+                title: 'الدرس الثالث: منجزات عمانية',
+                subtitle: 'الحضارة والتراث',
+                description: 'الإنجازات الفكرية والعمرانية والاقتصادية لعمان في تلك الفترة.',
                 icon: '🏺',
                 color: 'bg-teal-50 hover:bg-teal-100 border-teal-200',
                 textColor: 'text-teal-700',
@@ -1240,11 +493,11 @@ export const UNITS_SIXTH: Unit[] = [
             {
                 id: 'UNIT_2_G6_ASSESSMENT',
                 title: 'تقويم الوحدة الثانية',
-                subtitle: 'مراجعة',
-                description: 'اختبار في التاريخ الأموي والعماني.',
-                icon: '📜',
-                color: 'bg-amber-50 hover:bg-amber-100 border-amber-200',
-                textColor: 'text-amber-700',
+                subtitle: 'مراجعة تاريخية',
+                description: 'اختبر معلوماتك عن الدولة الأموية.',
+                icon: '📝',
+                color: 'bg-slate-50 hover:bg-slate-100 border-slate-200',
+                textColor: 'text-slate-700',
                 available: true
             }
         ]
@@ -1252,13 +505,13 @@ export const UNITS_SIXTH: Unit[] = [
     {
         id: 'UNIT_3_G6',
         title: 'الوحدة الثالثة: المجتمع المدني',
-        description: 'المشاركة والعمل التطوعي',
+        description: 'التربية للمواطنة',
         lessons: [
             {
                 id: 'SIXTH_CIVIL_SOCIETY',
                 title: 'الدرس الأول: مؤسسات المجتمع المدني',
-                subtitle: 'جمعيات وتطوع',
-                description: 'دور الجمعيات الأهلية في خدمة المجتمع.',
+                subtitle: 'المفهوم والأهمية',
+                description: 'تعريف المجتمع المدني، أنواعه، ودوره في التنمية.',
                 icon: '🤝',
                 color: 'bg-teal-50 hover:bg-teal-100 border-teal-200',
                 textColor: 'text-teal-700',
@@ -1267,8 +520,8 @@ export const UNITS_SIXTH: Unit[] = [
             {
                 id: 'SIXTH_COMMUNITY_PARTICIPATION',
                 title: 'الدرس الثاني: المشاركة المجتمعية',
-                subtitle: 'واجب وطني',
-                description: 'أهمية المشاركة في خدمة الوطن.',
+                subtitle: 'العمل التطوعي',
+                description: 'أهمية المشاركة، صورها، وفوائدها للفرد والمجتمع.',
                 icon: '🙌',
                 color: 'bg-blue-50 hover:bg-blue-100 border-blue-200',
                 textColor: 'text-blue-700',
@@ -1277,148 +530,217 @@ export const UNITS_SIXTH: Unit[] = [
             {
                 id: 'UNIT_3_G6_ASSESSMENT',
                 title: 'تقويم الوحدة الثالثة',
-                subtitle: 'مراجعة',
-                description: 'اختبار في مفاهيم المجتمع المدني.',
-                icon: '🌟',
-                color: 'bg-purple-50 hover:bg-purple-100 border-purple-200',
-                textColor: 'text-purple-700',
+                subtitle: 'مراجعة شاملة',
+                description: 'تطبيقات على مفاهيم المواطنة والمجتمع المدني.',
+                icon: '📝',
+                color: 'bg-slate-50 hover:bg-slate-100 border-slate-200',
+                textColor: 'text-slate-700',
                 available: true
             }
         ]
     }
 ];
 
-export const UNITS_FIFTH: Unit[] = [
-    // ... Grade 5 Units ...
+export const UNITS: Unit[] = [
     {
-        id: 'UNIT_1_G5',
-        title: 'الوحدة الأولى: كوكب الأرض',
-        description: 'دراسة الأغلفة الطبيعية للأرض والموارد',
+        id: 'UNIT_1',
+        title: 'الوحدة الأولى: الغلاف الجوي',
+        description: 'دراسة الطقس والمناخ والعوامل المؤثرة',
         lessons: [
             {
-                id: 'FIFTH_SPHERES_CONCEPT',
-                title: 'الدرس الأول: أغلفة كوكب الأرض (1)',
-                subtitle: 'المفهوم والمكونات',
-                description: 'المجموعة الشمسية والتعريف بأغلفة الأرض الأربعة.',
-                icon: '🌌',
-                color: 'bg-indigo-50 hover:bg-indigo-100 border-indigo-200',
-                textColor: 'text-indigo-700',
+                id: 'WEATHER',
+                title: 'الدرس الأول: الطقس والمناخ',
+                subtitle: 'المفهوم والعناصر',
+                description: 'الفرق بين الطقس والمناخ، وعناصر المناخ الرئيسية.',
+                icon: '🌦️',
+                color: 'bg-sky-50 hover:bg-sky-100 border-sky-200',
+                textColor: 'text-sky-700',
                 available: true
             },
             {
-                id: 'FIFTH_SPHERES_RELATION',
-                title: 'الدرس الثاني: أغلفة كوكب الأرض (2)',
-                subtitle: 'الأهمية والعلاقة',
-                description: 'أهمية الأغلفة للحياة، العلاقات التفاعلية بينها، وتأثير الإنسان.',
-                icon: '🌍',
-                color: 'bg-green-50 hover:bg-green-100 border-green-200',
-                textColor: 'text-green-700',
-                available: true
-            },
-            {
-                id: 'FIFTH_RESOURCES',
-                title: 'الدرس الثالث: الموارد الطبيعية',
-                subtitle: 'الأنواع والأهمية',
-                description: 'الموارد المتجددة وغير المتجددة، التوزيع في عمان، وجهود الاستدامة.',
-                icon: '💎',
-                color: 'bg-amber-50 hover:bg-amber-100 border-amber-200',
-                textColor: 'text-amber-700',
-                available: true
-            },
-            {
-                id: 'UNIT_1_G5_ASSESSMENT',
-                title: 'أقيّم تعلمي (الوحدة الأولى)',
-                subtitle: 'مراجعة شاملة',
-                description: 'أنشطة تفاعلية لحل أسئلة نهاية الوحدة (ص 44-45).',
-                icon: '📝',
-                color: 'bg-purple-50 hover:bg-purple-100 border-purple-200',
-                textColor: 'text-purple-700',
-                available: true
-            }
-        ]
-    },
-    {
-        id: 'UNIT_2_G5',
-        title: 'الوحدة الثانية: الدولة الإسلامية وعُمان',
-        description: 'الدولة في عهد الرسول ﷺ وعلاقة أهل عمان بالإسلام',
-        lessons: [
-            {
-                id: 'FIFTH_ISLAMIC_STATE',
-                title: 'الدرس الأول: الدولة الإسلامية',
-                subtitle: 'عهد الرسول ﷺ',
-                description: 'هجرة الرسول للمدينة، بناء المسجد، الوثيقة، وحماية الدولة.',
-                icon: '🕌',
+                id: 'OMAN_CLIMATE',
+                title: 'الدرس الثاني: مناخ سلطنة عمان',
+                subtitle: 'الخصائص والعوامل',
+                description: 'العوامل المؤثرة في مناخ عمان، والأقاليم المناخية.',
+                icon: '🇴🇲',
                 color: 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200',
                 textColor: 'text-emerald-700',
                 available: true
             },
             {
-                id: 'FIFTH_OMAN_PROPHET',
-                title: 'الدرس الثاني: عُمان في عهد الرسول',
-                subtitle: 'إسلام أهل عمان',
-                description: 'قصة إسلام مازن بن غضوبة، ورسالة الرسول لملكي عمان.',
-                icon: '📜',
+                id: 'EARTH_LAYERS',
+                title: 'الدرس الثالث: تشكيل سطح الأرض',
+                subtitle: 'عوامل تشكيل الأرض',
+                description: 'طبقات الأرض، والعمليات الداخلية (زلازل، براكين).',
+                icon: '🌋',
+                color: 'bg-orange-50 hover:bg-orange-100 border-orange-200',
+                textColor: 'text-orange-700',
+                available: true
+            },
+            {
+                id: 'EXTERNAL_PROCESSES',
+                title: 'الدرس الرابع: العمليات الخارجية',
+                subtitle: 'التجوية والتعرية',
+                description: 'العوامل الخارجية التي تشكل سطح الأرض.',
+                icon: '🏜️',
                 color: 'bg-amber-50 hover:bg-amber-100 border-amber-200',
                 textColor: 'text-amber-700',
                 available: true
             },
             {
-                id: 'FIFTH_OMAN_PERSONALITIES',
-                title: 'الدرس الثالث: شخصيات عمانية',
-                subtitle: 'صحابة من عمان',
-                description: 'مازن بن غضوبة، كعب بن برشة، ودورهم في نشر الإسلام.',
-                icon: '👥',
-                color: 'bg-blue-50 hover:bg-blue-100 border-blue-200',
-                textColor: 'text-blue-700',
-                available: true
-            },
-            {
-                id: 'UNIT_2_G5_ASSESSMENT',
-                title: 'أقيّم تعلمي (الوحدة الثانية)',
-                subtitle: 'مراجعة وتقييم',
-                description: 'اختبار تفاعلي شامل لمواضيع الوحدة.',
-                icon: '✨',
-                color: 'bg-yellow-50 hover:bg-yellow-100 border-yellow-200',
-                textColor: 'text-yellow-700',
+                id: 'UNIT_1_ASSESSMENT',
+                title: 'تقويم الوحدة الأولى',
+                subtitle: 'مراجعة شاملة',
+                description: 'أسئلة وتطبيقات على الوحدة الأولى.',
+                icon: '📝',
+                color: 'bg-slate-50 hover:bg-slate-100 border-slate-200',
+                textColor: 'text-slate-700',
                 available: true
             }
         ]
     },
     {
-        id: 'UNIT_3_G5',
-        title: 'الوحدة الثالثة: وطني عُمان.. الحقوق والواجبات',
-        description: 'حقوق المواطن وواجباته والمؤسسات الوطنية',
+        id: 'UNIT_2',
+        title: 'الوحدة الثانية: الدولة العباسية',
+        description: 'تاريخ الدولة العباسية وعمان في عهدها',
         lessons: [
             {
-                id: 'FIFTH_RIGHTS_DUTIES',
-                title: 'الدرس الأول: حقوق المواطن وواجباته',
-                subtitle: 'المواطنة الصالحة',
-                description: 'التمييز بين الحقوق والواجبات، وأمثلة عليها من واقع الحياة.',
-                icon: '⚖️',
+                id: 'ABBASID_STATE',
+                title: 'الدرس الأول: العصر العباسي الثاني',
+                subtitle: 'الضعف والانقسام',
+                description: 'الأوضاع السياسية والحضارية في العصر العباسي الثاني.',
+                icon: '🕌',
+                color: 'bg-purple-50 hover:bg-purple-100 border-purple-200',
+                textColor: 'text-purple-700',
+                available: true
+            },
+            {
+                id: 'OMAN_ABBASID',
+                title: 'الدرس الثاني: عمان في العصر العباسي',
+                subtitle: 'الاستقلال والتحدي',
+                description: 'علاقة عمان بالدولة العباسية، ودولة النباهنة.',
+                icon: '⚔️',
+                color: 'bg-rose-50 hover:bg-rose-100 border-rose-200',
+                textColor: 'text-rose-700',
+                available: true
+            },
+            {
+                id: 'OMAN_CIVILIZATION',
+                title: 'الدرس الثالث: المنجزات الحضارية',
+                subtitle: 'تراث وإنجاز',
+                description: 'الإنجازات الحضارية لعمان في العصر العباسي.',
+                icon: '🏺',
+                color: 'bg-amber-50 hover:bg-amber-100 border-amber-200',
+                textColor: 'text-amber-800',
+                available: true
+            },
+            {
+                id: 'UNIT_2_ASSESSMENT',
+                title: 'تقويم الوحدة الثانية',
+                subtitle: 'مراجعة شاملة',
+                description: 'اختبر معلوماتك التاريخية.',
+                icon: '📝',
+                color: 'bg-slate-50 hover:bg-slate-100 border-slate-200',
+                textColor: 'text-slate-700',
+                available: true
+            }
+        ]
+    },
+    {
+        id: 'UNIT_3',
+        title: 'الوحدة الثالثة: مؤسسات الدولة',
+        description: 'النظام الأساسي ومؤسسات الدولة',
+        lessons: [
+            {
+                id: 'BASIC_STATUTE',
+                title: 'الدرس الأول: النظام الأساسي للدولة',
+                subtitle: 'الدستور والمرجع',
+                description: 'أهمية النظام الأساسي ومحتوياته.',
+                icon: '📜',
                 color: 'bg-teal-50 hover:bg-teal-100 border-teal-200',
                 textColor: 'text-teal-700',
                 available: true
             },
             {
-                id: 'FIFTH_INSTITUTIONS_CONVENTIONS',
-                title: 'الدرس الثاني: الحقوق والمؤسسات',
-                subtitle: 'حماية ورعاية',
-                description: 'دور المؤسسات الوطنية والاتفاقيات الدولية في حماية حقوق الإنسان والطفل.',
+                id: 'STATE_INSTITUTIONS',
+                title: 'الدرس الثاني: مؤسسات الدولة',
+                subtitle: 'التنظيم والإدارة',
+                description: 'السلطات الثلاث (التشريعية، التنفيذية، القضائية).',
                 icon: '🏛️',
                 color: 'bg-cyan-50 hover:bg-cyan-100 border-cyan-200',
                 textColor: 'text-cyan-700',
                 available: true
             },
             {
-                id: 'UNIT_3_G5_ASSESSMENT',
-                title: 'أقيّم تعلمي (الوحدة الثالثة)',
-                subtitle: 'تقييم شامل',
-                description: 'اختبار وتطبيقات على الحقوق والواجبات والمؤسسات.',
-                icon: '✅',
-                color: 'bg-rose-50 hover:bg-rose-100 border-rose-200',
-                textColor: 'text-rose-700',
+                id: 'UNIT_3_ASSESSMENT',
+                title: 'تقويم الوحدة الثالثة',
+                subtitle: 'مراجعة شاملة',
+                description: 'تطبيقات على التربية للمواطنة.',
+                icon: '📝',
+                color: 'bg-slate-50 hover:bg-slate-100 border-slate-200',
+                textColor: 'text-slate-700',
+                available: true
+            },
+            {
+                id: 'FINAL_EXAM_G5',
+                title: 'الاختبار النهائي',
+                subtitle: 'قياس الأداء',
+                description: 'اختبار شامل لجميع الوحدات.',
+                icon: '🏆',
+                color: 'bg-yellow-50 hover:bg-yellow-100 border-yellow-200',
+                textColor: 'text-yellow-700',
                 available: true
             }
         ]
     }
+];
+
+// --- GRADE 5 QUIZZES ---
+
+export const FIFTH_SPHERES_CONCEPT_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'مركز المجموعة الشمسية هو:', options: ['الأرض', 'الشمس', 'المشتري', 'القمر'], correctIndex: 1 },
+    { id: 2, question: 'الكوكب الذي نعيش عليه يسمى:', options: ['المريخ', 'الزهرة', 'الأرض', 'عطارد'], correctIndex: 2 },
+    { id: 3, question: 'أقرب الكواكب إلى الشمس:', options: ['نبتون', 'عطارد', 'زحل', 'المشتري'], correctIndex: 1 }
+];
+
+export const FIFTH_SPHERES_RELATION_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'الغلاف الذي يشمل جميع الكائنات الحية:', options: ['الصخري', 'المائي', 'الحيوي', 'الجوي'], correctIndex: 2 },
+    { id: 2, question: 'عملية تحول بخار الماء إلى قطرات ماء (سائل) تسمى:', options: ['التبخر', 'التكاثف', 'التساقط', 'الانصهار'], correctIndex: 1 },
+    { id: 3, question: 'نسبة المياه على سطح الكرة الأرضية:', options: ['29%', '50%', '71%', '90%'], correctIndex: 2 }
+];
+
+export const FIFTH_RESOURCES_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'من الموارد الطبيعية المتجددة:', options: ['النفط', 'الغاز الطبيعي', 'الشمس', 'الفحم'], correctIndex: 2 },
+    { id: 2, question: 'مورد طبيعي غير متجدد وقابل للنفاذ:', options: ['الرياح', 'النبات الطبيعي', 'المعادن', 'المياه'], correctIndex: 2 },
+    { id: 3, question: 'تعتمد النباتات في غذائها بشكل أساسي على:', options: ['ضوء الشمس', 'النفط', 'الغاز', 'الصخور'], correctIndex: 0 }
+];
+
+export const FIFTH_ISLAMIC_STATE_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'أول عمل قام به الرسول ﷺ عند وصوله المدينة:', options: ['بناء السوق', 'بناء المسجد النبوي', 'بناء القلاع', 'زراعة النخيل'], correctIndex: 1 },
+    { id: 2, question: 'نظم الرسول ﷺ العلاقة بين المسلمين واليهود عن طريق:', options: ['المؤاخاة', 'الصحيفة (الوثيقة)', 'القتال', 'التجارة'], correctIndex: 1 },
+    { id: 3, question: 'المؤاخاة كانت بين:', options: ['الأوس والخزرج', 'المهاجرين والأنصار', 'المسلمين واليهود', 'العرب والعجم'], correctIndex: 1 }
+];
+
+export const FIFTH_OMAN_PROPHET_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'الصحابي الذي حمل رسالة النبي ﷺ إلى أهل عمان:', options: ['عمرو بن العاص', 'أبو بكر الصديق', 'عمر بن الخطاب', 'علي بن أبي طالب'], correctIndex: 0 },
+    { id: 2, question: 'ملكا عمان اللذان استقبلا رسالة النبي ﷺ:', options: ['سعيد وسليمان', 'عبد وجيفر', 'مالك وعمر', 'الصلت ومهنا'], correctIndex: 1 },
+    { id: 3, question: 'أول من أسلم من أهل عمان:', options: ['مازن بن غضوبة', 'كعب بن برشة', 'عبد بن الجلندى', 'جيفر بن الجلندى'], correctIndex: 0 }
+];
+
+export const FIFTH_OMAN_PERSONALITIES_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'مؤسس علم العروض ومؤلف كتاب العين:', options: ['الخليل بن أحمد الفراهيدي', 'ابن دريد', 'المبرد', 'جابر بن زيد'], correctIndex: 0 },
+    { id: 2, question: 'صحابي جليل من عمان وفد إلى النبي ﷺ:', options: ['كعب بن برشة', 'أحمد بن ماجد', 'المهلب بن أبي صفرة', 'ناصر بن مرشد'], correctIndex: 0 },
+    { id: 3, question: 'شخصية عمانية برزت في القيادة والعلم:', options: ['عبدالله بن وهب الراسبي', 'أحمد بن سعيد', 'سلطان بن سيف', 'قيد الأرض'], correctIndex: 0 }
+];
+
+export const FIFTH_RIGHTS_DUTIES_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'من حقوق المواطن في سلطنة عمان:', options: ['دفع الضرائب', 'الدفاع عن الوطن', 'الحصول على التعليم', 'احترام القانون'], correctIndex: 2 },
+    { id: 2, question: 'من واجبات المواطن:', options: ['الرعاية الصحية', 'الأمن والأمان', 'المحافظة على الممتلكات العامة', 'حرية التعبير'], correctIndex: 2 },
+    { id: 3, question: 'العلاقة بين الحقوق والواجبات علاقة:', options: ['تنافر', 'تكامل (أخذ وعطاء)', 'تضاد', 'انفصال'], correctIndex: 1 }
+];
+
+export const FIFTH_INSTITUTIONS_CONVENTIONS_QUIZ: QuizQuestion[] = [
+    { id: 1, question: 'المؤسسة التي تعنى بحماية حقوق الإنسان في السلطنة:', options: ['اللجنة العمانية لحقوق الإنسان', 'وزارة الزراعة', 'وزارة النقل', 'الهيئة العامة للمياه'], correctIndex: 0 },
+    { id: 2, question: 'اتفاقية دولية انضمت إليها السلطنة لحماية الأطفال:', options: ['اتفاقية التجارة', 'اتفاقية حقوق الطفل', 'اتفاقية المناخ', 'اتفاقية البحار'], correctIndex: 1 },
+    { id: 3, question: 'تقوم وزارة التنمية الاجتماعية برعاية:', options: ['الشوارع', 'الفئات الخاصة والأسر', 'المباني الحكومية', 'الحدائق العامة'], correctIndex: 1 }
 ];
