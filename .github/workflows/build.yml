@@ -63,8 +63,10 @@ jobs:
           path: dist
 
       - name: Add & Sync Android
+        # Here we generate icons AFTER creating the android folder but BEFORE syncing/building
         run: |
           npx cap add android
+          npx capacitor-assets generate --android
           npx cap sync android
 
       - name: Build APK (Debug)
@@ -103,8 +105,10 @@ jobs:
           path: dist
 
       - name: Setup iOS Platform
+        # Here we generate icons AFTER creating the ios folder but BEFORE syncing/building
         run: |
           npx cap add ios
+          npx capacitor-assets generate --ios
           npx cap sync ios
 
       - name: Build xArchive (No Signing)
