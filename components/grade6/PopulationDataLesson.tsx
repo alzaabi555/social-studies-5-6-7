@@ -4,7 +4,7 @@ import { SIXTH_POPULATION_SECTIONS, SIXTH_POPULATION_QUIZ } from '../../constant
 import { Section } from '../../types';
 import { Menu, ArrowRight, Target, Users, BookOpen, Star, HelpCircle, CheckCircle } from 'lucide-react';
 import SectionQuiz from '../SectionQuiz';
-import PopSources from './population/PopSources';
+import { SourcesSection, CensusFormSim, ImportanceSection, SortingGame } from './population/PopSources';
 import CensusJourney from './population/CensusJourney';
 
 interface Props {
@@ -84,53 +84,6 @@ const PopulationDataLesson: React.FC<Props> = ({ onBack }) => {
       );
   };
 
-  // --- Interactive Importance Section ---
-  const ImportanceSection = () => {
-      const [activeCard, setActiveCard] = useState<number | null>(null);
-      
-      const cards = [
-          { id: 1, title: 'توفير الخدمات', icon: <BookOpen size={32}/>, color: 'green', q: 'كيف نعرف عدد المدارس المطلوبة؟', a: 'من خلال معرفة عدد الأطفال في سن الدراسة في كل منطقة.' },
-          { id: 2, title: 'التخطيط للمستقبل', icon: <Star size={32}/>, color: 'orange', q: 'كيف نستعد للأجيال القادمة؟', a: 'بمعرفة معدلات المواليد والنمو السكاني، نخطط للوظائف والسكن.' },
-          { id: 3, title: 'توزيع الثروات', icon: <Target size={32}/>, color: 'purple', q: 'أين نبني المشاريع؟', a: 'في المناطق ذات الكثافة السكانية العالية لخدمة أكبر عدد من المواطنين.' },
-      ];
-
-      return (
-          <div className="p-6 animate-fade-in space-y-10">
-              <div className="text-center mb-6">
-                  <h2 className="text-2xl font-black text-slate-800 mb-2">لماذا نحتاج البيانات السكانية؟</h2>
-                  <p className="text-slate-500">اضغط على البطاقات لاكتشاف الأهمية الحقيقية للبيانات</p>
-              </div>
-              
-              <div className="grid md:grid-cols-3 gap-6">
-                  {cards.map((c) => (
-                      <div 
-                          key={c.id}
-                          onClick={() => setActiveCard(activeCard === c.id ? null : c.id)}
-                          className={`cursor-pointer bg-white p-6 rounded-3xl shadow-lg border-t-8 transition-all duration-300 transform ${activeCard === c.id ? 'scale-105 shadow-2xl' : 'hover:-translate-y-2'}`}
-                          style={{ borderColor: c.color === 'green' ? '#22c55e' : c.color === 'orange' ? '#f97316' : '#a855f7' }}
-                      >
-                          <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-white shadow-md transition-transform duration-500 ${activeCard === c.id ? 'rotate-12' : ''}`} style={{ backgroundColor: c.color === 'green' ? '#22c55e' : c.color === 'orange' ? '#f97316' : '#a855f7' }}>
-                              {c.icon}
-                          </div>
-                          <h3 className="font-bold text-xl text-slate-800 mb-3 text-center">{c.title}</h3>
-                          
-                          {activeCard === c.id ? (
-                              <div className="animate-fade-in bg-slate-50 p-4 rounded-2xl text-center border border-slate-100">
-                                  <p className="text-sm font-bold text-slate-800 mb-2">{c.q}</p>
-                                  <p className="text-sm text-slate-600 leading-relaxed">{c.a}</p>
-                              </div>
-                          ) : (
-                              <div className="text-center mt-4">
-                                  <span className="text-xs font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full">اضغط للتفاصيل</span>
-                              </div>
-                          )}
-                      </div>
-                  ))}
-              </div>
-          </div>
-      );
-  };
-
   // --- Summary Section Component ---
   const SummarySection = () => (
       <div className="p-6 animate-fade-in space-y-8">
@@ -160,9 +113,11 @@ const PopulationDataLesson: React.FC<Props> = ({ onBack }) => {
   const renderSection = () => {
     switch (activeSection) {
       case Section.INTRO: return <IntroSection />;
-      case Section.POP_SOURCES: return <PopSources />;
+      case Section.POP_SOURCES: return <SourcesSection />;
+      case Section.POP_CENSUS_FORM: return <CensusFormSim />;
       case Section.CENSUS_EVOLUTION: return <CensusJourney />;
       case Section.POP_IMPORTANCE: return <ImportanceSection />;
+      case Section.POP_ACTIVITY: return <SortingGame />;
       case Section.SUMMARY: return <SummarySection />; 
       case Section.QUIZ: return <SectionQuiz questions={SIXTH_POPULATION_QUIZ} />;
       default: return <IntroSection />;

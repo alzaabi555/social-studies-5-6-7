@@ -6,53 +6,10 @@ import {
     Lightbulb, Crown, ArrowLeft, BookOpen, BarChart, Info
 } from 'lucide-react';
 
-const PopSources: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<'sources' | 'form' | 'importance' | 'activity'>('sources');
-
-    return (
-        <div className="p-4 md:p-6 animate-fade-in space-y-6">
-            
-            {/* Navigation Tabs */}
-            <div className="flex flex-wrap justify-center bg-blue-50 p-2 rounded-2xl gap-2 shadow-inner">
-                <button 
-                    onClick={() => setActiveTab('sources')}
-                    className={`flex-1 min-w-[120px] py-2 px-4 rounded-xl font-bold text-sm md:text-base transition-all flex items-center justify-center gap-2 ${activeTab === 'sources' ? 'bg-white shadow text-blue-700' : 'text-slate-500 hover:bg-white/50'}`}
-                >
-                    <Database size={18} /> المصادر
-                </button>
-                <button 
-                    onClick={() => setActiveTab('form')}
-                    className={`flex-1 min-w-[120px] py-2 px-4 rounded-xl font-bold text-sm md:text-base transition-all flex items-center justify-center gap-2 ${activeTab === 'form' ? 'bg-white shadow text-emerald-700' : 'text-slate-500 hover:bg-white/50'}`}
-                >
-                    <ClipboardList size={18} /> استمارة التعداد
-                </button>
-                <button 
-                    onClick={() => setActiveTab('importance')}
-                    className={`flex-1 min-w-[120px] py-2 px-4 rounded-xl font-bold text-sm md:text-base transition-all flex items-center justify-center gap-2 ${activeTab === 'importance' ? 'bg-white shadow text-purple-700' : 'text-slate-500 hover:bg-white/50'}`}
-                >
-                    <PieChart size={18} /> الأهمية
-                </button>
-                <button 
-                    onClick={() => setActiveTab('activity')}
-                    className={`flex-1 min-w-[120px] py-2 px-4 rounded-xl font-bold text-sm md:text-base transition-all flex items-center justify-center gap-2 ${activeTab === 'activity' ? 'bg-white shadow text-orange-700' : 'text-slate-500 hover:bg-white/50'}`}
-                >
-                    <Activity size={18} /> نشاط
-                </button>
-            </div>
-
-            {/* CONTENT RENDERER */}
-            <div className="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden min-h-[500px]">
-                {activeTab === 'sources' && <SourcesSection />}
-                {activeTab === 'form' && <CensusFormSim />}
-                {activeTab === 'importance' && <ImportanceSection />}
-                {activeTab === 'activity' && <SortingGame />}
-            </div>
-        </div>
-    );
-};
+// Export sub-components individually for sidebar navigation usage
 
 // --- 1. SOURCES SECTION (TEXTBOOK PAGES 18-22) ---
-const SourcesSection = () => {
+export const SourcesSection = () => {
     return (
         <div className="p-6 md:p-8 space-y-10 animate-slide-up">
             
@@ -135,7 +92,7 @@ const SourcesSection = () => {
 };
 
 // --- 2. CENSUS FORM SIMULATION (BASED ON IMAGE 9) ---
-const CensusFormSim = () => {
+export const CensusFormSim = () => {
     const [hoveredField, setHoveredField] = useState<string | null>(null);
 
     const fields = [
@@ -214,7 +171,7 @@ const CensusFormSim = () => {
 };
 
 // --- 3. IMPORTANCE SECTION (TEXTBOOK PAGE 23) ---
-const ImportanceSection = () => {
+export const ImportanceSection = () => {
     return (
         <div className="p-6 md:p-8 animate-fade-in">
             <div className="text-center mb-8">
@@ -280,7 +237,7 @@ const ImportanceSection = () => {
 };
 
 // --- 4. ACTIVITY: SORTING GAME ---
-const SortingGame = () => {
+export const SortingGame = () => {
     const [items, setItems] = useState([
         { id: 1, text: 'التعداد السكاني الشامل', type: 'primary' },
         { id: 2, text: 'سجلات المدارس والجامعات', type: 'secondary' },
@@ -362,8 +319,13 @@ const SortingGame = () => {
     );
 };
 
-// --- ICONS ---
-const BookOpenIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>;
-const PuzzleIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19.439 7.85c0 .249.027.449.082.6.502 1.396 2.023 2.158 2.023 4.678 0 2.762-2.198 4.792-4.545 4.792h-5.454v-5.55c0-2.31 1.764-3.791 3.527-3.791 2.336 0 4.367-2.31 4.367-4.792 0-2.228-1.562-4.083-3.667-4.667"/></svg>;
+// Main container component if used directly
+const PopSources: React.FC = () => {
+    return (
+        <div className="p-4 text-center">
+            <p>يرجى استخدام الأقسام الفردية من القائمة الجانبية.</p>
+        </div>
+    );
+};
 
 export default PopSources;
