@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 export type LessonId = 
@@ -9,7 +10,12 @@ export type LessonId =
   | 'SIXTH_POPULATION' | 'SIXTH_STRUCTURE' | 'SIXTH_GROWTH' | 'SIXTH_DENSITY' | 'UNIT_1_G6_ASSESSMENT'
   | 'SIXTH_UMAYYAD_STATE' | 'OMAN_UMAYYAD' | 'OMAN_UMAYYAD_ACHIEVEMENTS' | 'UNIT_2_G6_ASSESSMENT'
   | 'SIXTH_CIVIL_SOCIETY' | 'SIXTH_COMMUNITY_PARTICIPATION' | 'UNIT_3_G6_ASSESSMENT' 
-  | 'FINAL_EXAM_G5' 
+  // Grade 5
+  | 'FIFTH_SPHERES_1' | 'FIFTH_SPHERES_2' | 'FIFTH_RESOURCES' | 'FIFTH_UNIT_1_ASSESSMENT'
+  | 'FIFTH_ISLAMIC_STATE' | 'FIFTH_OMAN_PROPHET' | 'FIFTH_OMAN_PERSONALITIES' | 'FIFTH_UNIT_2_ASSESSMENT'
+  | 'FIFTH_RIGHTS_DUTIES' | 'FIFTH_INSTITUTIONS' | 'FIFTH_UNIT_3_ASSESSMENT'
+  // Exams
+  | 'FINAL_EXAM_G5' // Used for Grade 7 currently (Legacy ID)
   | 'FINAL_EXAM_G6'
   | null;
 
@@ -61,7 +67,6 @@ export enum Section {
   POLITICAL_MAP = 'POLITICAL_MAP',
   PROSPERITY = 'PROSPERITY',
   CRUSADES = 'CRUSADES',
-  HATTIN = 'HATTIN', // ✅ تمت الإضافة هنا
   MONGOLS = 'MONGOLS',
 
   IMAMATE_STABILITY = 'IMAMATE_STABILITY',
@@ -119,7 +124,8 @@ export enum Section {
   COMMUNITY_FORMS = 'COMMUNITY_FORMS',
   COMMUNITY_IMPORTANCE = 'COMMUNITY_IMPORTANCE',
 
-  // Grade 5 Maps
+  // Grade 5 Maps (Common concept, keeping maps sections for now or remove if strictly G5)
+  // Keeping general map concepts as they might be reused or relevant
   MAPS_INTRO = 'MAPS_INTRO',
   MAPS_TYPES = 'MAPS_TYPES',
   MAPS_ELEMENTS = 'MAPS_ELEMENTS',

@@ -4,8 +4,12 @@ import React, { useState, useEffect } from 'react';
 // Common Imports
 import WelcomeScreen from './components/WelcomeScreen';
 import CourseIndex from './components/CourseIndex';
-import { LessonId } from './types';
+import { LessonId, Lesson } from './types';
 import { BookOpen } from 'lucide-react';
+
+// Question Bank Imports
+import QuestionBankDashboard from './components/QuestionBank/QuestionBankDashboard';
+import QuestionBankSession from './components/QuestionBank/QuestionBankSession';
 
 // Grade 7 Lesson Imports
 import WeatherLesson from './components/WeatherLesson';
@@ -37,6 +41,20 @@ import CommunityParticipationLesson from './components/grade6/civics/CommunityPa
 import Unit3AssessmentG6 from './components/grade6/Unit3AssessmentG6';
 import FinalExamG6 from './components/FinalExamG6';
 
+// Grade 5 Lesson Imports
+import EarthSpheresLesson1 from './components/grade5/EarthSpheresLesson1';
+import EarthSpheresLesson2 from './components/grade5/EarthSpheresLesson2';
+import NaturalResourcesLesson from './components/grade5/NaturalResourcesLesson';
+import Unit1AssessmentG5 from './components/grade5/Unit1AssessmentG5';
+import IslamicStateLesson from './components/grade5/IslamicStateLesson';
+import OmanProphetEraLesson from './components/grade5/OmanProphetEraLesson';
+import OmanPersonalitiesLesson from './components/grade5/OmanPersonalitiesLesson';
+import Unit2AssessmentG5 from './components/grade5/Unit2AssessmentG5';
+import OmanRightsDutiesLesson from './components/grade5/OmanRightsDutiesLesson';
+import OmanInstitutionsLesson from './components/grade5/OmanInstitutionsLesson';
+import Unit3AssessmentG5 from './components/grade5/Unit3AssessmentG5';
+import MapsLesson from './components/grade5/MapsLesson'; // Ensure this is imported if exists
+
 // Splash Screen Component
 const SplashScreen = () => (
   <div className="fixed inset-0 bg-indigo-900 flex flex-col items-center justify-center z-50 animate-fade-out">
@@ -49,12 +67,15 @@ const SplashScreen = () => (
 );
 
 // Types for View State
-type ViewState = 'splash' | 'welcome' | 'course_index' | 'lesson';
+type ViewState = 'splash' | 'welcome' | 'course_index' | 'lesson' | 'qbank_dashboard' | 'qbank_session';
 
 const App: React.FC = () => {
   const [viewState, setViewState] = useState<ViewState>('splash');
-  const [selectedGrade, setSelectedGrade] = useState<6 | 7 | null>(null);
+  const [selectedGrade, setSelectedGrade] = useState<5 | 6 | 7 | null>(null);
   const [activeLesson, setActiveLesson] = useState<LessonId>(null);
+  
+  // Question Bank State
+  const [qBankLesson, setQBankLesson] = useState<Lesson | null>(null);
 
   // Handle Splash Screen Logic
   useEffect(() => {
@@ -65,7 +86,7 @@ const App: React.FC = () => {
   }, []);
 
   // Navigation Handlers
-  const handleGradeSelection = (grade: 6 | 7) => {
+  const handleGradeSelection = (grade: 5 | 6 | 7) => {
     setSelectedGrade(grade);
     setViewState('course_index');
   };
@@ -85,17 +106,35 @@ const App: React.FC = () => {
     setViewState('welcome');
   };
 
+  // Question Bank Handlers
+  const openQuestionBank = () => {
+    setViewState('qbank_dashboard');
+  };
+
+  const startQuestionBankQuiz = (lesson: Lesson, grade: number) => {
+    setQBankLesson(lesson);
+    setSelectedGrade(grade as 5|6|7); // Reuse selectedGrade for context if needed
+    setViewState('qbank_session');
+  };
+
+  const exitQuestionBankQuiz = () => {
+    setQBankLesson(null);
+    setViewState('qbank_dashboard');
+  };
+
   // 1. Splash Screen
-  if (viewState === 'splash') {
-    return <SplashScreen />;
-  }
+  if (viewState === 'splash') return <SplashScreen />;
 
   // 2. Welcome Screen
-  if (viewState === 'welcome') {
-    return <WelcomeScreen onSelectGrade={handleGradeSelection} />;
-  }
+  if (viewState === 'welcome') return <WelcomeScreen onSelectGrade={handleGradeSelection} onOpenQuestionBank={openQuestionBank} />;
 
-  // 3. Course Index (Dashboard for selected Grade)
+  // 3. Question Bank Dashboard
+  if (viewState === 'qbank_dashboard') return <QuestionBankDashboard onBack={handleBackToWelcome} onStartQuiz={startQuestionBankQuiz} />;
+
+  // 4. Question Bank Session
+  if (viewState === 'qbank_session' && qBankLesson && selectedGrade) return <QuestionBankSession lesson={qBankLesson} grade={selectedGrade} onExit={exitQuestionBankQuiz} />;
+
+  // 5. Course Index (Dashboard for selected Grade)
   if (viewState === 'course_index' && selectedGrade) {
     return (
       <CourseIndex 
@@ -106,78 +145,69 @@ const App: React.FC = () => {
     );
   }
 
-  // 4. Lesson View
+  // 6. Lesson View
   if (viewState === 'lesson' && activeLesson) {
     return (
       <div className="relative min-h-screen bg-slate-50 animate-fade-in">
         
         {/* Grade 7 Lessons */}
-        {activeLesson === 'WEATHER' ? (
-          <WeatherLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'OMAN_CLIMATE' ? (
-          <OmanClimateLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'EARTH_LAYERS' ? (
-          <EarthLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'EXTERNAL_PROCESSES' ? (
-          <ExternalLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'UNIT_1_ASSESSMENT' ? (
-          <Unit1Assessment onBack={handleBackToCourseIndex} />
+        {activeLesson === 'WEATHER' ? ( <WeatherLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'OMAN_CLIMATE' ? ( <OmanClimateLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'EARTH_LAYERS' ? ( <EarthLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'EXTERNAL_PROCESSES' ? ( <ExternalLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'UNIT_1_ASSESSMENT' ? ( <Unit1Assessment onBack={handleBackToCourseIndex} />
         
         /* Grade 7 Unit 2 */
-        ) : activeLesson === 'ABBASID_STATE' ? (
-          <AbbasidLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'OMAN_ABBASID' ? (
-          <OmanAbbasidLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'OMAN_CIVILIZATION' ? (
-          <OmanCivilizationLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'UNIT_2_ASSESSMENT' ? (
-          <Unit2Assessment onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'ABBASID_STATE' ? ( <AbbasidLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'OMAN_ABBASID' ? ( <OmanAbbasidLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'OMAN_CIVILIZATION' ? ( <OmanCivilizationLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'UNIT_2_ASSESSMENT' ? ( <Unit2Assessment onBack={handleBackToCourseIndex} />
         
         /* Grade 7 Unit 3 */
-        ) : activeLesson === 'BASIC_STATUTE' ? (
-          <BasicStatuteLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'STATE_INSTITUTIONS' ? (
-          <StateInstitutionsLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'UNIT_3_ASSESSMENT' ? (
-          <Unit3Assessment onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'FINAL_EXAM_G5' ? ( // Reusing G5 ID for G7 Exam
-           <FinalExam onBack={handleBackToCourseIndex} /> 
+        ) : activeLesson === 'BASIC_STATUTE' ? ( <BasicStatuteLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'STATE_INSTITUTIONS' ? ( <StateInstitutionsLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'UNIT_3_ASSESSMENT' ? ( <Unit3Assessment onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'FINAL_EXAM_G5' ? ( <FinalExam onBack={handleBackToCourseIndex} /> 
 
         /* Grade 6 Lessons (Unit 1) */
-        ) : activeLesson === 'SIXTH_POPULATION' ? (
-          <PopulationDataLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'SIXTH_STRUCTURE' ? (
-          <PopulationStructureLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'SIXTH_GROWTH' ? (
-          <PopulationGrowthLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'SIXTH_DENSITY' ? (
-          <PopulationDensityLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'UNIT_1_G6_ASSESSMENT' ? (
-          <Unit1AssessmentG6 onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'SIXTH_POPULATION' ? ( <PopulationDataLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'SIXTH_STRUCTURE' ? ( <PopulationStructureLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'SIXTH_GROWTH' ? ( <PopulationGrowthLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'SIXTH_DENSITY' ? ( <PopulationDensityLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'UNIT_1_G6_ASSESSMENT' ? ( <Unit1AssessmentG6 onBack={handleBackToCourseIndex} />
         
         /* Grade 6 Lessons (Unit 2) */
-        ) : activeLesson === 'SIXTH_UMAYYAD_STATE' ? (
-          <UmayyadStateLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'OMAN_UMAYYAD' ? (
-          <OmanUmayyadLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'OMAN_UMAYYAD_ACHIEVEMENTS' ? (
-          <OmanUmayyadAchievementsLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'UNIT_2_G6_ASSESSMENT' ? (
-          <Unit2AssessmentG6 onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'SIXTH_UMAYYAD_STATE' ? ( <UmayyadStateLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'OMAN_UMAYYAD' ? ( <OmanUmayyadLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'OMAN_UMAYYAD_ACHIEVEMENTS' ? ( <OmanUmayyadAchievementsLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'UNIT_2_G6_ASSESSMENT' ? ( <Unit2AssessmentG6 onBack={handleBackToCourseIndex} />
 
         /* Grade 6 Lessons (Unit 3) */
-        ) : activeLesson === 'SIXTH_CIVIL_SOCIETY' ? (
-          <CivilSocietyLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'SIXTH_COMMUNITY_PARTICIPATION' ? (
-          <CommunityParticipationLesson onBack={handleBackToCourseIndex} />
-        ) : activeLesson === 'UNIT_3_G6_ASSESSMENT' ? (
-          <Unit3AssessmentG6 onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'SIXTH_CIVIL_SOCIETY' ? ( <CivilSocietyLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'SIXTH_COMMUNITY_PARTICIPATION' ? ( <CommunityParticipationLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'UNIT_3_G6_ASSESSMENT' ? ( <Unit3AssessmentG6 onBack={handleBackToCourseIndex} />
         
-        ) : activeLesson === 'FINAL_EXAM_G6' ? ( 
-          <FinalExamG6 onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'FINAL_EXAM_G6' ? ( <FinalExamG6 onBack={handleBackToCourseIndex} />
+
+        /* Grade 5 Lessons (Unit 1) */
+        ) : activeLesson === 'FIFTH_SPHERES_1' ? ( <EarthSpheresLesson1 onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'FIFTH_SPHERES_2' ? ( <EarthSpheresLesson2 onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'FIFTH_RESOURCES' ? ( <NaturalResourcesLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'FIFTH_UNIT_1_ASSESSMENT' ? ( <Unit1AssessmentG5 onBack={handleBackToCourseIndex} />
+
+        /* Grade 5 Lessons (Unit 2) */
+        ) : activeLesson === 'FIFTH_ISLAMIC_STATE' ? ( <IslamicStateLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'FIFTH_OMAN_PROPHET' ? ( <OmanProphetEraLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'FIFTH_OMAN_PERSONALITIES' ? ( <OmanPersonalitiesLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'FIFTH_UNIT_2_ASSESSMENT' ? ( <Unit2AssessmentG5 onBack={handleBackToCourseIndex} />
+
+        /* Grade 5 Lessons (Unit 3) */
+        ) : activeLesson === 'FIFTH_RIGHTS_DUTIES' ? ( <OmanRightsDutiesLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'FIFTH_INSTITUTIONS' ? ( <OmanInstitutionsLesson onBack={handleBackToCourseIndex} />
+        ) : activeLesson === 'FIFTH_UNIT_3_ASSESSMENT' ? ( <Unit3AssessmentG5 onBack={handleBackToCourseIndex} />
 
         ) : (
-          /* Fallback if lesson ID not found, go back to index */
+          /* Fallback */
           <div className="flex items-center justify-center min-h-screen">
              <button onClick={handleBackToCourseIndex}>العودة</button>
           </div>
