@@ -1,15 +1,16 @@
-
 import React from 'react';
-import { GraduationCap, Library, Globe, Star, BookOpen, Layers, FileQuestion } from 'lucide-react';
+// تم إضافة User, School, Phone إلى الاستيرادات
+import { GraduationCap, Library, Globe, Star, FileQuestion, User, School, Phone } from 'lucide-react';
 
 interface WelcomeScreenProps {
   onSelectGrade: (grade: 5 | 6 | 7) => void;
-  onOpenQuestionBank: () => void; // New prop
+  onOpenQuestionBank: () => void;
 }
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectGrade, onOpenQuestionBank }) => {
   return (
-    <div className="min-h-screen bg-[#0f172a] relative overflow-hidden font-tajawal text-right flex flex-col items-center justify-center p-6" dir="rtl">
+    // الحاوية الرئيسية - تمتد لتشمل الصفحة كاملة
+    <div className="min-h-screen bg-[#0f172a] relative overflow-hidden font-tajawal text-right flex flex-col justify-between" dir="rtl">
       
       {/* Background Gradients/Effects */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -18,7 +19,8 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectGrade, onOpenQues
           <div className="absolute top-[20%] left-[20%] w-[300px] h-[300px] bg-blue-900/10 rounded-full blur-[80px]"></div>
       </div>
 
-      <div className="relative z-10 max-w-6xl w-full flex flex-col items-center">
+      {/* Main Content Area */}
+      <div className="relative z-10 w-full flex flex-col items-center flex-grow p-6 justify-center">
         
         {/* Logo & Header Area */}
         <div className="mb-12 text-center animate-fade-in">
@@ -34,7 +36,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectGrade, onOpenQues
         </div>
 
         {/* Grade Selection Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full animate-slide-up mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl animate-slide-up mb-8">
             {/* Grade 7 Card */}
             <button onClick={() => onSelectGrade(7)} className="group relative h-56 rounded-3xl overflow-hidden text-right p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/20 bg-[#1e293b] border border-white/10">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -85,9 +87,9 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectGrade, onOpenQues
         </button>
 
       </div>
-    </div>
-        {/* Footer / Contact Info */}
-      <footer className="relative z-10 bg-black/20 backdrop-blur-md border-t border-white/5 py-6">
+
+      {/* Footer / Contact Info - الآن داخل الحاوية بشكل صحيح */}
+      <footer className="relative z-10 bg-black/20 backdrop-blur-md border-t border-white/5 py-6 w-full">
         <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-300 text-sm">
             
             <div className="flex items-center gap-6">
@@ -104,7 +106,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectGrade, onOpenQues
 
             <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/10">
                 <Phone size={16} className="text-yellow-400" />
-                <span className="font-mono dir-ltr">98344555</span> {/* Placeholder for phone number */}
+                <span className="font-mono dir-ltr">98344555</span>
             </div>
 
         </div>
@@ -115,4 +117,3 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSelectGrade, onOpenQues
 };
 
 export default WelcomeScreen;
-
