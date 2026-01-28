@@ -1,19 +1,28 @@
-import { Unit, Section, WeatherElement, EarthLayer, OmanRegion } from './types';
+
+import { Unit, Section, QuizQuestion, WeatherElement, EarthLayer, OmanRegion, Lesson, LessonId } from './types';
 import { 
   CloudSun, Thermometer, Wind, Droplet, CloudRain, Mountain, Globe2, 
-  BookOpen, Scale, Landmark, Users, Briefcase, 
+  BookOpen, Flag, Scale, Landmark, Users, Briefcase, 
   Map as MapIcon, Activity, Star, ArrowDown,
   Swords, AlertTriangle, 
-  Building2, Layers, Crown, Heart, 
-  BarChart2, CheckCircle,
-  TrendingUp, MapPin, Trophy, 
-  Info, Hand, Leaf, Ship, Target, Book, LayoutDashboard,
-  Sun, Shield, Database, FileText, History, RefreshCw, Mail,
+  Building2, Layers, Crown, Moon, User, Heart, 
+  Compass, Settings, BarChart2, CheckCircle,
+  TrendingUp, MapPin, Trophy, Award, Scroll, 
+  PieChart, Info, Zap, MessageCircle, 
+  Search, Eye, Hand, Leaf, Box, Anchor, Ship, Hammer, Target, Book, LayoutDashboard,
+  Calendar, Sun, Shield, Database, FileText, History, RefreshCw, Mail,
   Clock, Navigation
 } from 'lucide-react';
 import React from 'react';
+import { GRADE_5_QUESTIONS } from './data/grade5Questions';
+import { GRADE_6_QUESTIONS } from './data/grade6Questions';
+import { GRADE_7_QUESTIONS } from './data/grade7Questions';
 
-// --- 1. بيانات المحتوى التعليمي (Content Data) ---
+// --- SHARED / COMMON ---
+export const QUIZ_QUESTIONS: QuizQuestion[] = [
+    { id: 1, question: "سؤال تجريبي 1", options: ["أ", "ب", "ج"], correctIndex: 0 },
+    { id: 2, question: "سؤال تجريبي 2", options: ["أ", "ب", "ج"], correctIndex: 1 },
+];
 
 export const WEATHER_ELEMENTS_DATA: WeatherElement[] = [
   { id: 'temp', name: 'درجة الحرارة', instrument: 'الثرمومتر', unit: 'درجة مئوية', definition: 'مقدار سخونة أو برودة الجو', mechanism: 'تؤثر في جميع العناصر', importance: 'تحدد نوع الملابس والنشاط', realWorldExample: 'ارتفاع الحرارة ظهراً', icon: <Thermometer /> },
@@ -23,12 +32,31 @@ export const WEATHER_ELEMENTS_DATA: WeatherElement[] = [
   { id: 'precipitation', name: 'الأمطار', instrument: 'مقياس المطر', unit: 'ملم', definition: 'سقوط الماء من السحب', mechanism: 'دورة الماء', importance: 'الحياة والزراعة', realWorldExample: 'المطر الغزير', icon: <CloudRain /> }
 ];
 
+export const SECTIONS = [
+  { id: Section.INTRO, label: 'المقدمة', icon: <Info /> },
+  { id: Section.DEFINITION, label: 'المفهوم', icon: <BookOpen /> },
+  { id: Section.FACTORS, label: 'العوامل', icon: <Settings /> },
+  { id: Section.ELEMENTS, label: 'العناصر', icon: <CloudSun /> },
+  { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
+];
+
+// --- GRADE 7 CONSTANTS ---
 export const OMAN_REGIONS_DATA: OmanRegion[] = [
     { id: 'semi_desert', name: 'شبه الصحراوي', description: 'حار صيفاً دافئ شتاءً', characteristics: 'أمطار قليلة', location: 'شمال عمان', color: 'bg-yellow-100' },
     { id: 'mediterranean', name: 'البحر المتوسط', description: 'معتدل صيفاً بارد شتاءً', characteristics: 'أمطار شتوية', location: 'الجبل الأخضر', color: 'bg-green-100' },
     { id: 'dry_desert', name: 'الصحراوي', description: 'حار جداً وجاف', characteristics: 'ندرة الأمطار', location: 'الوسطى', color: 'bg-orange-100' },
     { id: 'monsoon', name: 'الموسمي', description: 'معتدل صيفاً', characteristics: 'أمطار موسمية', location: 'ظفار', color: 'bg-teal-100' }
 ];
+
+export const OMAN_SECTIONS = [
+    { id: Section.INTRO, label: 'مقدمة', icon: <Info /> },
+    { id: Section.FACTORS, label: 'العوامل المؤثرة', icon: <Settings /> },
+    { id: Section.REGIONS, label: 'الأقاليم المناخية', icon: <MapIcon /> },
+    { id: Section.SEASONS, label: 'فصول السنة', icon: <Sun /> },
+    { id: Section.DATA_ANALYSIS, label: 'تحليل البيانات', icon: <BarChart2 /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
+];
+export const OMAN_QUIZ_QUESTIONS = GRADE_7_QUESTIONS['OMAN_CLIMATE'] || QUIZ_QUESTIONS;
 
 export const EARTH_LAYERS_DATA: EarthLayer[] = [
     { id: 'crust', name: 'القشرة الأرضية', depth: '0-100 كم', temp: 'منخفضة', description: 'الطبقة الخارجية الصلبة.', state: 'صلبة', color: '#8B4513' },
@@ -37,83 +65,86 @@ export const EARTH_LAYERS_DATA: EarthLayer[] = [
     { id: 'inner_core', name: 'اللب الداخلي', depth: '1200 كم', temp: 'الأعلى حرارة', description: 'مركز الأرض الصلب.', state: 'صلبة', color: '#FF4500' }
 ];
 
-// --- 2. أقسام الدروس (تم حذف قسم "الاختبار" منها جميعاً) ---
-
-export const SECTIONS = [
-  { id: Section.INTRO, label: 'المقدمة', icon: <Info /> },
-  { id: Section.DEFINITION, label: 'المفهوم', icon: <BookOpen /> },
-  { id: Section.FACTORS, label: 'العوامل', icon: <Settings /> },
-  { id: Section.ELEMENTS, label: 'العناصر', icon: <CloudSun /> }
-];
-
-export const OMAN_SECTIONS = [
-    { id: Section.INTRO, label: 'مقدمة', icon: <Info /> },
-    { id: Section.FACTORS, label: 'العوامل المؤثرة', icon: <Settings /> },
-    { id: Section.REGIONS, label: 'الأقاليم المناخية', icon: <MapIcon /> },
-    { id: Section.SEASONS, label: 'فصول السنة', icon: <Sun /> },
-    { id: Section.DATA_ANALYSIS, label: 'تحليل البيانات', icon: <BarChart2 /> }
-];
-
 export const EARTH_SECTIONS = [
     { id: Section.INTRO, label: 'مقدمة', icon: <Info /> },
     { id: Section.LAYERS, label: 'طبقات الأرض', icon: <Layers /> },
     { id: Section.TECTONICS, label: 'الصفائح التكتونية', icon: <Activity /> },
-    { id: Section.PROCESSES, label: 'العمليات الداخلية', icon: <Mountain /> }
+    { id: Section.PROCESSES, label: 'العمليات الداخلية', icon: <Mountain /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const EARTH_QUIZ_QUESTIONS = GRADE_7_QUESTIONS['EARTH_LAYERS'] || QUIZ_QUESTIONS;
 
 export const EXTERNAL_SECTIONS = [
     { id: Section.INTRO, label: 'مقدمة', icon: <Info /> },
     { id: Section.WEATHERING, label: 'التجوية', icon: <Sun /> },
     { id: Section.EROSION, label: 'التعرية', icon: <Wind /> },
-    { id: Section.DEPOSITION, label: 'الترسيب', icon: <Layers /> }
+    { id: Section.DEPOSITION, label: 'الترسيب', icon: <Layers /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const EXTERNAL_QUIZ_QUESTIONS = GRADE_7_QUESTIONS['EXTERNAL_PROCESSES'] || QUIZ_QUESTIONS;
 
 export const ABBASID_SECTIONS = [
     { id: Section.INTRO, label: 'مقدمة', icon: <Info /> },
     { id: Section.POLITICAL_MAP, label: 'الخريطة السياسية', icon: <MapIcon /> },
     { id: Section.PROSPERITY, label: 'مظاهر الازدهار', icon: <Star /> },
     { id: Section.CRUSADES, label: 'الحملات الصليبية', icon: <Swords /> },
-    { id: Section.MONGOLS, label: 'الغزو المغولي', icon: <AlertTriangle /> }
+    { id: Section.MONGOLS, label: 'الغزو المغولي', icon: <AlertTriangle /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const ABBASID_QUIZ_QUESTIONS = GRADE_7_QUESTIONS['ABBASID_STATE'] || QUIZ_QUESTIONS;
 
 export const OMAN_ABBASID_SECTIONS = [
     { id: Section.INTRO, label: 'مقدمة', icon: <Info /> },
     { id: Section.IMAMATE_STABILITY, label: 'استقرار الإمامة', icon: <Shield /> },
     { id: Section.SOCOTRA_CAMPAIGN, label: 'حملة سقطرى', icon: <Ship /> },
     { id: Section.ABBASID_INVASION, label: 'الغزو العباسي', icon: <Swords /> },
-    { id: Section.NABHANID_ERA, label: 'دولة النباهنة', icon: <Crown /> }
+    { id: Section.NABHANID_ERA, label: 'دولة النباهنة', icon: <Crown /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const OMAN_ABBASID_QUIZ_QUESTIONS = GRADE_7_QUESTIONS['OMAN_ABBASID'] || QUIZ_QUESTIONS;
 
 export const OMAN_CIVILIZATION_SECTIONS = [
     { id: Section.OMAN_CIV_INTRO, label: 'مقدمة', icon: <Info /> },
     { id: Section.OMAN_CIV_CULTURE, label: 'الحياة الثقافية', icon: <BookOpen /> },
     { id: Section.OMAN_CIV_ECONOMY, label: 'الحياة الاقتصادية', icon: <Briefcase /> },
-    { id: Section.OMAN_CIV_ARCH, label: 'العمارة', icon: <Building2 /> }
+    { id: Section.OMAN_CIV_ARCH, label: 'العمارة', icon: <Building2 /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const OMAN_CIVILIZATION_QUIZ_QUESTIONS = GRADE_7_QUESTIONS['OMAN_CIVILIZATION'] || QUIZ_QUESTIONS;
 
 export const BASIC_STATUTE_SECTIONS = [
     { id: Section.STATUTE_INTRO, label: 'المقدمة', icon: <Info /> },
     { id: Section.STATUTE_STRUCTURE, label: 'هيكل النظام', icon: <LayoutDashboard /> },
     { id: Section.STATUTE_PILLARS, label: 'المرتكزات', icon: <Target /> },
     { id: Section.STATUTE_PRINCIPLES, label: 'المبادئ الموجهة', icon: <Book /> },
-    { id: Section.STATUTE_RUMORS, label: 'وعي قانوني', icon: <AlertTriangle /> }
+    { id: Section.STATUTE_RUMORS, label: 'وعي قانوني', icon: <AlertTriangle /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const BASIC_STATUTE_QUIZ_QUESTIONS = GRADE_7_QUESTIONS['BASIC_STATUTE'] || QUIZ_QUESTIONS;
 
 export const STATE_INSTITUTIONS_SECTIONS = [
     { id: Section.STATE_INTRO, label: 'مقدمة', icon: <Info /> },
     { id: Section.STATE_STRUCTURE, label: 'السلطات الثلاث', icon: <Scale /> },
     { id: Section.HEAD_OF_STATE, label: 'رئيس الدولة', icon: <Crown /> },
     { id: Section.GOV_INSTITUTIONS, label: 'المؤسسات', icon: <Building2 /> },
-    { id: Section.GOV_SERVICES, label: 'الخدمات', icon: <Hand /> }
+    { id: Section.GOV_SERVICES, label: 'الخدمات', icon: <Hand /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const STATE_INSTITUTIONS_QUIZ_QUESTIONS = GRADE_7_QUESTIONS['STATE_INSTITUTIONS'] || QUIZ_QUESTIONS;
 
-// --- Grade 6 Sections ---
+export const UNIT_1_ASSESSMENT_QUESTIONS = (GRADE_7_QUESTIONS['WEATHER'] || []).concat(GRADE_7_QUESTIONS['OMAN_CLIMATE'] || [], GRADE_7_QUESTIONS['EARTH_LAYERS'] || [], GRADE_7_QUESTIONS['EXTERNAL_PROCESSES'] || []);
+export const UNIT_2_ASSESSMENT_QUESTIONS = (GRADE_7_QUESTIONS['ABBASID_STATE'] || []).concat(GRADE_7_QUESTIONS['OMAN_ABBASID'] || [], GRADE_7_QUESTIONS['OMAN_CIVILIZATION'] || []);
+export const UNIT_3_ASSESSMENT_QUESTIONS = (GRADE_7_QUESTIONS['BASIC_STATUTE'] || []).concat(GRADE_7_QUESTIONS['STATE_INSTITUTIONS'] || []);
+
+// --- GRADE 6 CONSTANTS ---
 export const SIXTH_LOCATION_SECTIONS = [
     { id: Section.LOC_INTRO, label: 'المفهوم', icon: <Globe2 /> },
     { id: Section.LOC_COORDINATES, label: 'الإحداثيات', icon: <Navigation /> },
     { id: Section.LOC_TIME, label: 'حساب الزمن', icon: <Clock /> },
-    { id: Section.LOC_OMAN, label: 'موقع عمان', icon: <MapPin /> }
+    { id: Section.LOC_OMAN, label: 'موقع عمان', icon: <MapPin /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const SIXTH_LOCATION_QUIZ = GRADE_6_QUESTIONS['SIXTH_LOCATION'] || QUIZ_QUESTIONS;
 
 export const SIXTH_POPULATION_SECTIONS = [
     { id: Section.INTRO, label: 'المقدمة', icon: <Info /> },
@@ -122,24 +153,30 @@ export const SIXTH_POPULATION_SECTIONS = [
     { id: Section.CENSUS_EVOLUTION, label: 'تطور التعداد', icon: <TrendingUp /> },
     { id: Section.POP_IMPORTANCE, label: 'أهمية البيانات', icon: <Star /> },
     { id: Section.POP_ACTIVITY, label: 'نشاط تفاعلي', icon: <Activity /> },
-    { id: Section.SUMMARY, label: 'الخلاصة', icon: <CheckCircle /> }
+    { id: Section.SUMMARY, label: 'الخلاصة', icon: <CheckCircle /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const SIXTH_POPULATION_QUIZ = GRADE_6_QUESTIONS['SIXTH_POPULATION'] || QUIZ_QUESTIONS;
 
 export const SIXTH_STRUCTURE_SECTIONS = [
     { id: Section.INTRO, label: 'المقدمة', icon: <Info /> },
     { id: Section.FACTORS, label: 'البنية النوعية', icon: <Users /> },
     { id: Section.REGIONS, label: 'البنية العمرية', icon: <BarChart2 /> },
     { id: Section.DATA_ANALYSIS, label: 'الهرم السكاني', icon: <Activity /> },
-    { id: Section.PROCESSES, label: 'البنية الاقتصادية', icon: <Briefcase /> }
+    { id: Section.PROCESSES, label: 'البنية الاقتصادية', icon: <Briefcase /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const SIXTH_STRUCTURE_QUIZ = GRADE_6_QUESTIONS['SIXTH_STRUCTURE'] || QUIZ_QUESTIONS;
 
 export const SIXTH_GROWTH_SECTIONS = [
     { id: Section.GROWTH_INTRO, label: 'المقدمة', icon: <Info /> },
     { id: Section.OMAN_GROWTH_CHART, label: 'تحليل النمو', icon: <TrendingUp /> },
     { id: Section.NATURAL_INCREASE, label: 'الزيادة الطبيعية', icon: <Users /> },
     { id: Section.MIGRATION_IMPACT, label: 'الهجرة', icon: <ArrowDown /> },
-    { id: Section.GROWTH_EFFECTS, label: 'آثار النمو', icon: <AlertTriangle /> }
+    { id: Section.GROWTH_EFFECTS, label: 'آثار النمو', icon: <AlertTriangle /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const SIXTH_GROWTH_QUIZ = GRADE_6_QUESTIONS['SIXTH_GROWTH'] || QUIZ_QUESTIONS;
 
 export const SIXTH_DENSITY_SECTIONS = [
     { id: Section.DENSITY_INTRO, label: 'المقدمة', icon: <Info /> },
@@ -147,49 +184,63 @@ export const SIXTH_DENSITY_SECTIONS = [
     { id: Section.CITY_VILLAGE, label: 'المدينة والريف', icon: <Building2 /> },
     { id: Section.DENSITY_CALC, label: 'حساب الكثافة', icon: <Activity /> },
     { id: Section.DENSITY_MAP_ANALYSIS, label: 'تحليل الخرائط', icon: <MapIcon /> },
-    { id: Section.OMAN_DENSITY, label: 'كثافة عمان', icon: <MapPin /> }
+    { id: Section.OMAN_DENSITY, label: 'كثافة عمان', icon: <MapPin /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const SIXTH_DENSITY_QUIZ = GRADE_6_QUESTIONS['SIXTH_DENSITY'] || QUIZ_QUESTIONS;
 
 export const UMAYYAD_SECTIONS = [
     { id: Section.UMAYYAD_RISE, label: 'التأسيس', icon: <Crown /> },
     { id: Section.UMAYYAD_CONQUESTS, label: 'الفتوحات', icon: <MapIcon /> },
     { id: Section.UMAYYAD_ACHIEVEMENTS, label: 'المنجزات', icon: <Star /> },
-    { id: Section.UMAYYAD_FALL, label: 'السقوط', icon: <ArrowDown /> }
+    { id: Section.UMAYYAD_FALL, label: 'السقوط', icon: <ArrowDown /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const UMAYYAD_QUIZ_QUESTIONS = GRADE_6_QUESTIONS['SIXTH_UMAYYAD_STATE'] || QUIZ_QUESTIONS;
 
 export const OMAN_UMAYYAD_SECTIONS = [
     { id: Section.OMAN_UMAYYAD_INTRO, label: 'المقدمة والموقف', icon: <Info /> },
     { id: Section.OMAN_UMAYYAD_INDEPENDENCE, label: 'المقاومة', icon: <Shield /> },
     { id: Section.OMAN_UMAYYAD_CONTROL, label: 'حملات الحجاج', icon: <Swords /> },
-    { id: Section.OMAN_UMAYYAD_GOVERNORS, label: 'الولاة والهجرة', icon: <Users /> }
+    { id: Section.OMAN_UMAYYAD_GOVERNORS, label: 'الولاة والهجرة', icon: <Users /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const OMAN_UMAYYAD_QUIZ_QUESTIONS = GRADE_6_QUESTIONS['OMAN_UMAYYAD'] || QUIZ_QUESTIONS;
 
 export const OMAN_UMAYYAD_ACHIEVEMENTS_SECTIONS = [
     { id: Section.OMAN_ACHIEVEMENTS_INTRO, label: 'مقدمة', icon: <Info /> },
     { id: Section.OMAN_ACHIEVEMENTS_CULTURE, label: 'ثقافة وعلوم', icon: <BookOpen /> },
     { id: Section.OMAN_ACHIEVEMENTS_MILITARY, label: 'عسكري وسياسي', icon: <Swords /> },
-    { id: Section.OMAN_ACHIEVEMENTS_ECONOMY, label: 'اقتصاد وعمارة', icon: <Building2 /> }
+    { id: Section.OMAN_ACHIEVEMENTS_ECONOMY, label: 'اقتصاد وعمارة', icon: <Building2 /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const OMAN_UMAYYAD_ACHIEVEMENTS_QUIZ = GRADE_6_QUESTIONS['OMAN_UMAYYAD_ACHIEVEMENTS'] || QUIZ_QUESTIONS;
 
 export const CIVIL_SOCIETY_SECTIONS = [
     { id: Section.CIVIL_SOCIETY_INTRO, label: 'المفهوم', icon: <Info /> },
     { id: Section.CIVIL_SOCIETY_TYPES, label: 'الأنواع', icon: <Layers /> },
-    { id: Section.CIVIL_SOCIETY_IMPORTANCE, label: 'الأهمية', icon: <Star /> }
+    { id: Section.CIVIL_SOCIETY_IMPORTANCE, label: 'الأهمية', icon: <Star /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const CIVIL_SOCIETY_QUIZ = GRADE_6_QUESTIONS['SIXTH_CIVIL_SOCIETY'] || QUIZ_QUESTIONS;
 
 export const COMMUNITY_PARTICIPATION_SECTIONS = [
     { id: Section.COMMUNITY_INTRO, label: 'المفهوم', icon: <Info /> },
     { id: Section.COMMUNITY_FORMS, label: 'صور المشاركة', icon: <Users /> },
-    { id: Section.COMMUNITY_IMPORTANCE, label: 'الأهمية', icon: <Star /> }
+    { id: Section.COMMUNITY_IMPORTANCE, label: 'الأهمية', icon: <Star /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const COMMUNITY_PARTICIPATION_QUIZ = GRADE_6_QUESTIONS['SIXTH_COMMUNITY_PARTICIPATION'] || QUIZ_QUESTIONS;
 
 // --- GRADE 5 CONSTANTS ---
 export const MAPS_SECTIONS = [
     { id: Section.MAPS_INTRO, label: 'تطور الخرائط', icon: <History /> },
     { id: Section.MAPS_TYPES, label: 'أنواع الخرائط', icon: <Layers /> },
     { id: Section.MAPS_ELEMENTS, label: 'عناصر الخريطة', icon: <MapIcon /> },
-    { id: Section.MAPS_READING, label: 'قراءة الخريطة', icon: <Eye /> }
+    { id: Section.MAPS_READING, label: 'قراءة الخريطة', icon: <Eye /> },
+    { id: Section.QUIZ, label: 'الاختبار', icon: <CheckCircle /> }
 ];
+export const MAPS_QUIZ = QUIZ_QUESTIONS;
 
 export const FIFTH_SPHERES_SECTIONS = [
     { id: 'INTRO', label: 'المقدمة', icon: <Info /> },
@@ -197,8 +248,17 @@ export const FIFTH_SPHERES_SECTIONS = [
     { id: 'EARTH_LOCATION', label: 'موقع الأرض', icon: <Globe2 /> }
 ];
 
-// --- 3. هيكلية الوحدات والدروس (Units & Lessons) ---
+// Grade 5 Quizzes (Populated from Grade 5 Data)
+export const FIFTH_SPHERES_QUIZ = GRADE_5_QUESTIONS['FIFTH_SPHERES_1'] || QUIZ_QUESTIONS;
+export const FIFTH_SPHERES_RELATION_QUIZ = GRADE_5_QUESTIONS['FIFTH_SPHERES_2'] || QUIZ_QUESTIONS;
+export const FIFTH_RESOURCES_QUIZ = GRADE_5_QUESTIONS['FIFTH_RESOURCES'] || QUIZ_QUESTIONS;
+export const FIFTH_ISLAMIC_STATE_QUIZ = GRADE_5_QUESTIONS['FIFTH_ISLAMIC_STATE'] || QUIZ_QUESTIONS;
+export const FIFTH_OMAN_PROPHET_QUIZ = GRADE_5_QUESTIONS['FIFTH_OMAN_PROPHET'] || QUIZ_QUESTIONS;
+export const FIFTH_OMAN_PERSONALITIES_QUIZ = GRADE_5_QUESTIONS['FIFTH_OMAN_PERSONALITIES'] || QUIZ_QUESTIONS;
+export const FIFTH_RIGHTS_DUTIES_QUIZ = GRADE_5_QUESTIONS['FIFTH_RIGHTS_DUTIES'] || QUIZ_QUESTIONS;
+export const FIFTH_INSTITUTIONS_CONVENTIONS_QUIZ = GRADE_5_QUESTIONS['FIFTH_INSTITUTIONS'] || QUIZ_QUESTIONS;
 
+// Units Definitions
 // Grade 7 Units
 export const UNITS: Unit[] = [
   {
@@ -308,53 +368,3 @@ export const UNITS_FIFTH: Unit[] = [
     ]
   }
 ];
-
-// ============================================================================
-// 🚑 منطقة الأمان (Legacy Exports)
-// هذه المتغيرات موجودة فقط لكي لا تتوقف ملفات الدروس القديمة عن العمل.
-// هي فارغة ولن تظهر في التطبيق، لكنها ضرورية لنجاح الـ Build.
-// ============================================================================
-
-import { QuizQuestion } from './types';
-
-// متغير وهمي عام
-const DUMMY_QUIZ: QuizQuestion[] = [];
-
-// تصدير المتغيرات التي تبحث عنها ملفات الدروس (لإسكات الأخطاء)
-export const QUIZ_QUESTIONS = DUMMY_QUIZ;
-
-// الصف السابع
-export const OMAN_QUIZ_QUESTIONS = DUMMY_QUIZ;
-export const EARTH_QUIZ_QUESTIONS = DUMMY_QUIZ;
-export const EXTERNAL_QUIZ_QUESTIONS = DUMMY_QUIZ;
-export const ABBASID_QUIZ_QUESTIONS = DUMMY_QUIZ;
-export const OMAN_ABBASID_QUIZ_QUESTIONS = DUMMY_QUIZ;
-export const OMAN_CIVILIZATION_QUIZ_QUESTIONS = DUMMY_QUIZ;
-export const BASIC_STATUTE_QUIZ_QUESTIONS = DUMMY_QUIZ;
-export const STATE_INSTITUTIONS_QUIZ_QUESTIONS = DUMMY_QUIZ;
-export const UNIT_1_ASSESSMENT_QUESTIONS = DUMMY_QUIZ;
-export const UNIT_2_ASSESSMENT_QUESTIONS = DUMMY_QUIZ;
-export const UNIT_3_ASSESSMENT_QUESTIONS = DUMMY_QUIZ;
-
-// الصف السادس
-export const SIXTH_LOCATION_QUIZ = DUMMY_QUIZ;
-export const SIXTH_POPULATION_QUIZ = DUMMY_QUIZ;
-export const SIXTH_STRUCTURE_QUIZ = DUMMY_QUIZ;
-export const SIXTH_GROWTH_QUIZ = DUMMY_QUIZ;
-export const SIXTH_DENSITY_QUIZ = DUMMY_QUIZ;
-export const UMAYYAD_QUIZ_QUESTIONS = DUMMY_QUIZ;
-export const OMAN_UMAYYAD_QUIZ_QUESTIONS = DUMMY_QUIZ;
-export const OMAN_UMAYYAD_ACHIEVEMENTS_QUIZ = DUMMY_QUIZ;
-export const CIVIL_SOCIETY_QUIZ = DUMMY_QUIZ;
-export const COMMUNITY_PARTICIPATION_QUIZ = DUMMY_QUIZ;
-
-// الصف الخامس
-export const MAPS_QUIZ = DUMMY_QUIZ;
-export const FIFTH_SPHERES_QUIZ = DUMMY_QUIZ;
-export const FIFTH_SPHERES_RELATION_QUIZ = DUMMY_QUIZ;
-export const FIFTH_RESOURCES_QUIZ = DUMMY_QUIZ;
-export const FIFTH_ISLAMIC_STATE_QUIZ = DUMMY_QUIZ;
-export const FIFTH_OMAN_PROPHET_QUIZ = DUMMY_QUIZ;
-export const FIFTH_OMAN_PERSONALITIES_QUIZ = DUMMY_QUIZ;
-export const FIFTH_RIGHTS_DUTIES_QUIZ = DUMMY_QUIZ;
-export const FIFTH_INSTITUTIONS_CONVENTIONS_QUIZ = DUMMY_QUIZ;
